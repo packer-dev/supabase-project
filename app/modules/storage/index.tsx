@@ -7,16 +7,11 @@ import ItemMedia from "./ItemMedia";
 import useFetchData from "@/hooks/useFetchData";
 import supabase from "@/supabase";
 import { StorageContext } from "@/contexts/StorageContext";
-import {
-  ContextMenu,
-  ContextMenuContent,
-  ContextMenuItem,
-  ContextMenuTrigger,
-} from "@/components/ui/context-menu";
 import Image from "next/image";
 import { DialogTrigger } from "@/components/ui/dialog";
 import ModalFolder from "@/app/modals/storage/ModalFolder";
 import ModalDelete from "@/app/modals/storage/ModalDelete";
+import StorageContextMenu from "./StorageContextMenu";
 
 const Storage = () => {
   const {
@@ -189,62 +184,54 @@ const Storage = () => {
           />
         </div>
       </div>
-      <ContextMenu>
-        <ContextMenuTrigger>
-          <div
-            className={`w-full grid ${
-              !loading && !medias?.length ? "" : "grid-cols-4 my-5"
-            } gap-3`}
-          >
-            {loading && (
-              <>
-                <ItemMedia loading />
-                <ItemMedia loading />
-                <ItemMedia loading />
-                <ItemMedia loading />
-                <ItemMedia loading />
-                <ItemMedia loading />
-                <ItemMedia loading />
-                <ItemMedia loading />
-              </>
-            )}
-            {!loading &&
-              !!medias?.length &&
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              medias?.map((item: any) => (
-                <ItemMedia
-                  key={item?.name}
-                  item={item}
-                  loading={loading}
-                  mode={item?.metadata ? "image" : "folder"}
-                />
-              ))}
-            {!loading && !medias?.length && (
-              <div
-                className="flex justify-center items-center py-8 text-sm font-semibold flex-col 
+      <StorageContextMenu hideCopy>
+        <div
+          className={`w-full grid ${
+            !loading && !medias?.length ? "" : "grid-cols-4 my-5"
+          } gap-3`}
+        >
+          {loading && (
+            <>
+              <ItemMedia loading />
+              <ItemMedia loading />
+              <ItemMedia loading />
+              <ItemMedia loading />
+              <ItemMedia loading />
+              <ItemMedia loading />
+              <ItemMedia loading />
+              <ItemMedia loading />
+            </>
+          )}
+          {!loading &&
+            !!medias?.length &&
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            medias?.map((item: any) => (
+              <ItemMedia
+                key={item?.name}
+                item={item}
+                loading={loading}
+                mode={item?.metadata ? "image" : "folder"}
+              />
+            ))}
+          {!loading && !medias?.length && (
+            <div
+              className="flex justify-center items-center py-8 text-sm font-semibold flex-col 
           text-gray-500"
-              >
-                <div className="relative w-80 h-80">
-                  <Image
-                    src="https://media-explorer.cloudinary.com/assets/images/AssetFolderViewEmptyState..svg"
-                    alt=""
-                    fill
-                    sizes="true"
-                    className="w-80 h-80 object-contain"
-                  />
-                </div>
-                <p>No result.</p>
+            >
+              <div className="relative w-80 h-80">
+                <Image
+                  src="https://media-explorer.cloudinary.com/assets/images/AssetFolderViewEmptyState..svg"
+                  alt=""
+                  fill
+                  sizes="true"
+                  className="w-80 h-80 object-contain"
+                />
               </div>
-            )}
-          </div>
-        </ContextMenuTrigger>
-        <ContextMenuContent>
-          <ContextMenuItem>Copy</ContextMenuItem>
-          <ContextMenuItem className="opacity-50 cursor-not-allowed">
-            Parse
-          </ContextMenuItem>
-        </ContextMenuContent>
-      </ContextMenu>
+              <p>No result.</p>
+            </div>
+          )}
+        </div>
+      </StorageContextMenu>
     </div>
   );
 };

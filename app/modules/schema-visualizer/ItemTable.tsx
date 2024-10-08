@@ -15,7 +15,7 @@ import ItemColumn from "../ItemColumn";
 
 const ItemTable = ({ item }: { item: TableProps }) => {
   const {
-    state: { showModalForeign, tables },
+    state: { showModalForeign, tables, relationships },
     dispatch,
   } = useContext(SchemaVisualizerContext);
   return (
@@ -28,7 +28,7 @@ const ItemTable = ({ item }: { item: TableProps }) => {
           });
         }}
         draggable
-        className="absolute w-40 border-2 border-solid border-gray-500 rounded-lg pt-2 bg-gray-500"
+        className="absolute w-48 border-2 border-solid border-gray-500 rounded-lg pt-2 bg-gray-500"
         style={{
           left: item.position?.x ?? 0,
           top: item.position?.y ?? 0,
@@ -38,7 +38,7 @@ const ItemTable = ({ item }: { item: TableProps }) => {
           <div className="bg-gray-200 px-3 py-2 font-bold">
             {item.name.slice(0, 12)}
           </div>
-          <div className="flex flex-col gap-2 px-1.5">
+          <div className="flex flex-col gap-2 p-1.5">
             {showModalForeign === item.id && (
               <Dialog
                 open={!!showModalForeign}
@@ -50,6 +50,11 @@ const ItemTable = ({ item }: { item: TableProps }) => {
                 }
               >
                 <ModalForeign
+                  type={
+                    item.columns.find(
+                      (item) => item.type && item.mode === "primary"
+                    )?.type
+                  }
                   current={item}
                   closeDialog={() =>
                     dispatch({
@@ -69,6 +74,7 @@ const ItemTable = ({ item }: { item: TableProps }) => {
           <ContextMenuItem
             onClick={() => {
               dispatch({ key: "showModalTable", value: true });
+              dispatch({ key: "tableCurrent", value: item });
             }}
             className="flex items-center gap-2 cursor-pointer"
           >
@@ -76,12 +82,21 @@ const ItemTable = ({ item }: { item: TableProps }) => {
             <span>Edit</span>
           </ContextMenuItem>
           <ContextMenuItem
-            onClick={() =>
+            onClick={() => {
               dispatch({
                 key: "tables",
                 value: [...tables].filter((table) => table.id !== item.id),
-              })
-            }
+              });
+              dispatch({
+                key: "relationships",
+                value: [...relationships].filter(
+                  (relationship) =>
+                    relationship.list.findIndex(
+                      (child) => child.id === item.id
+                    ) === -1
+                ),
+              });
+            }}
             className="flex items-center gap-2 cursor-pointer"
           >
             <span className="bx bx-x text-xl text-red-500"></span>

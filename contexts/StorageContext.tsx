@@ -10,6 +10,13 @@ export type StorageContextProps = {
   showModal: string;
   path: string;
   refresh: number;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  renameCurrent: any;
+  copy: {
+    path: string;
+    name: string;
+    mode: "file" | "folder" | "";
+  };
 };
 
 type Action<T extends keyof StorageContextProps> = {
@@ -24,6 +31,12 @@ const init: StorageContextProps = {
   showModal: "",
   path: "",
   refresh: 0,
+  renameCurrent: null,
+  copy: {
+    path: "",
+    name: "",
+    mode: "",
+  },
 };
 
 // Reducer function

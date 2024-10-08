@@ -65,6 +65,10 @@ const ModalDelete = ({ show, setShow, items }: ModalDeleteProps) => {
         (_) => items.findIndex((child) => child.name === _.name) === -1
       ),
     });
+    dispatch({
+      key: "selected",
+      value: [],
+    });
     setShow(false);
   };
   //

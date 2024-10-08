@@ -15,6 +15,7 @@ const SchemaVisualizer = () => {
     state: { tables, relationships, tableCurrent, current, showModalTable },
     dispatch,
   } = useContext(SchemaVisualizerContext);
+  console.log(relationships);
   const refParent = useRef<HTMLDivElement>(null);
   const handleRandomPosition = () => {
     if (!refParent.current) return;
@@ -39,9 +40,10 @@ const SchemaVisualizer = () => {
       {showModalTable && (
         <Dialog
           open={showModalTable}
-          onOpenChange={(show: boolean) =>
-            dispatch({ key: "showModalTable", value: show })
-          }
+          onOpenChange={(show: boolean) => {
+            dispatch({ key: "showModalTable", value: show });
+            if (!show) dispatch({ key: "tableCurrent", value: null });
+          }}
         >
           <ModalTable
             submit={(table: TableProps) => {
@@ -102,18 +104,21 @@ const SchemaVisualizer = () => {
             );
           dispatch({
             key: "relationships",
-            value: [...relationships].map(handleCallback),
+            value: [...relationships].map((item) => ({
+              ...item,
+              list: handleCallback(item.list),
+            })),
           });
         }}
       >
         <svg className="w-[880px] h-[561px]">
           {[...relationships].map((relationship) => (
             <line
-              key={relationship[0].id + relationship[1].id}
-              x1={(relationship[0].position?.x ?? 0) + 80}
-              y1={relationship[0].position?.y}
-              x2={(relationship[1].position?.x ?? 0) + 80}
-              y2={relationship[1].position?.y}
+              key={relationship.list[0].id + relationship.list[1].id}
+              x1={(relationship.list[0].position?.x ?? 0) + 80}
+              y1={relationship.list[0].position?.y}
+              x2={(relationship.list[1].position?.x ?? 0) + 80}
+              y2={relationship.list[1].position?.y}
               stroke="gray"
             />
           ))}

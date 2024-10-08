@@ -12,13 +12,13 @@ import {
 } from "@/contexts/SchemaVisualizerContext";
 import React, { useContext, useState } from "react";
 
-const ModalForeign = ({
-  current,
-  closeDialog,
-}: {
+type ModalForeignProps = {
   current: TableProps;
   closeDialog: () => void;
-}) => {
+  type?: string;
+};
+
+const ModalForeign = ({ current, closeDialog, type }: ModalForeignProps) => {
   const {
     state: { tables, relationships },
     dispatch,
@@ -47,7 +47,8 @@ const ModalForeign = ({
               list={
                 tables
                   .find((item) => item.id === value)
-                  ?.columns?.map((column) => ({
+                  ?.columns?.filter((column) => column.type === type)
+                  .map((column) => ({
                     value: column.value,
                     label: column.value,
                   })) || []
@@ -65,7 +66,14 @@ const ModalForeign = ({
             if (relationship)
               dispatch({
                 key: "relationships",
-                value: [...relationships, [current, relationship]],
+                value: [
+                  ...relationships,
+                  {
+                    list: [current, relationship],
+                    column1: `${current.name}.id`,
+                    column2: `${value}.${data}`,
+                  },
+                ],
               });
             closeDialog();
           }}

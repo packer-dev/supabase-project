@@ -19,10 +19,16 @@ export type ColumnProps = {
   mode: "primary" | "foreign" | "normal";
 };
 
+export type RelationProps = {
+  list: TableProps[];
+  column1: string;
+  column2: string;
+};
+
 export type SchemaVisualizerContextProps = {
   tables: TableProps[];
   data: string;
-  relationships: TableProps[][];
+  relationships: RelationProps[];
   current: TableProps | null;
   showModalForeign: string;
   tableCurrent: TableProps | null;
@@ -44,19 +50,19 @@ const init: SchemaVisualizerContextProps = {
         {
           id: "0.21441415147745357",
           value: "id",
-          type: "int",
+          type: "Integer",
           mode: "primary",
         },
         {
           id: "0.34837708894952524",
           value: "name",
-          type: "str",
+          type: "String",
           mode: "normal",
         },
         {
           id: "0.23580182532587513",
           value: "age",
-          type: "str",
+          type: "String",
           mode: "normal",
         },
       ],
@@ -72,25 +78,25 @@ const init: SchemaVisualizerContextProps = {
         {
           id: "0.374428460354828",
           value: "id",
-          type: "int",
+          type: "Integer",
           mode: "primary",
         },
         {
           id: "0.6589503096061804",
           value: "id_user",
-          type: "int",
+          type: "Integer",
           mode: "normal",
         },
         {
           id: "0.27482616441682084",
           value: "content",
-          type: "str",
+          type: "String",
           mode: "normal",
         },
         {
           id: "0.8376206080627757",
           value: "is_deleted",
-          type: "bool",
+          type: "Boolean",
           mode: "normal",
         },
       ],
@@ -106,19 +112,19 @@ const init: SchemaVisualizerContextProps = {
         {
           id: "0.940859691307758",
           value: "id",
-          type: "int",
+          type: "Integer",
           mode: "primary",
         },
         {
           id: "0.1370438589209917",
           value: "id_user",
-          type: "int",
+          type: "Integer",
           mode: "normal",
         },
         {
           id: "0.4598807002893641",
           value: "id_post",
-          type: "int",
+          type: "Integer",
           mode: "normal",
         },
       ],

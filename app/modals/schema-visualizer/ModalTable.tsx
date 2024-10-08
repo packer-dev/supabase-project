@@ -63,16 +63,16 @@ const ModalTable = ({
                 <Combobox
                   list={[
                     {
-                      value: "int",
-                      label: "int",
+                      value: "Integer",
+                      label: "Integer",
                     },
                     {
-                      value: "str",
-                      label: "str",
+                      value: "String",
+                      label: "String",
                     },
                     {
-                      value: "bool",
-                      label: "bool",
+                      value: "Boolean",
+                      label: "Boolean",
                     },
                   ]}
                   value={item.type}
