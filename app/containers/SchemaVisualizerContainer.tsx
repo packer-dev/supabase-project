@@ -8,7 +8,7 @@ type ContainerProps = {
 const SchemaVisualizerContainer = ({ children }: ContainerProps) => {
   return (
     <SchemaVisualizerProvider>
-      <div className="w-full h-screen overflow-hidden">{children}</div>
+      <div className="">{children}</div>
     </SchemaVisualizerProvider>
   );
 };

@@ -59,8 +59,10 @@ const ItemColumn = ({ column, item }: ItemColumnProps) => {
               className={`flex w-2 h-2 rounded-full ${
                 column.mode === "primary" ? "bg-yellow-500" : colorMode
               }`}
-            ></span>
-            <span className="font-bold text-gray-600">{column.value}</span>
+            />
+            <span className="font-bold text-gray-600 dark:text-gray-300">
+              {column.value}
+            </span>
             <span>:</span>
             <span className="text-sm">{column.type}</span>
           </div>
@@ -72,7 +74,7 @@ const ItemColumn = ({ column, item }: ItemColumnProps) => {
             onClick={() => updateColumStatus(item, column, "primary")}
             className="flex items-center gap-2 cursor-pointer"
           >
-            <span className="bx bx-key text-xl text-yellow-500"></span>
+            <span className="bx bx-key text-xl text-yellow-500" />
             <span>Primary key</span>
           </ContextMenuItem>
         )}
@@ -83,7 +85,7 @@ const ItemColumn = ({ column, item }: ItemColumnProps) => {
             }
             className="flex items-center gap-2 cursor-pointer"
           >
-            <span className="bx bx-key primary text-xl text-blue-500"></span>
+            <span className="bx bx-key primary text-xl text-black" />
             <span>Foreign Key</span>
           </ContextMenuItem>
         )}
@@ -111,7 +113,7 @@ const ItemColumn = ({ column, item }: ItemColumnProps) => {
           }}
           className="flex items-center gap-2 cursor-pointer"
         >
-          <span className="bx bx-x text-xl text-red-500"></span>
+          <span className="bx bx-x text-xl text-red-500" />
           <span>Remove</span>
         </ContextMenuItem>
       </ContextMenuContent>

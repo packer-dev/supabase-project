@@ -30,7 +30,7 @@ const SchemaVisualizer = () => {
     };
   };
   return (
-    <div className="p-8 w-full h-full gap-2 flex-col flex bg-gray-100">
+    <div className="gap-2 flex-col flex">
       <Button
         onClick={() => dispatch({ key: "showModalTable", value: true })}
         className="w-28"
@@ -70,7 +70,8 @@ const SchemaVisualizer = () => {
       <div
         aria-hidden
         ref={refParent}
-        className="p-3 border border-solid border-gray-300 flex-1 shadow-lg bg-white relative overflow-scroll"
+        className="p-3 border border-solid border-gray-300 flex-1 shadow-lg bg-white dark:bg-black dark:border-gray-900 
+        relative overflow-scroll"
         onDragOver={(event) => event.preventDefault()}
         onDrop={(event) => {
           const newTableList = [...tables].map((item) => {

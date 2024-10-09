@@ -1,12 +1,15 @@
 import React from "react";
 import Storage from "../modules/storage";
 import StorageContainer from "../containers/StorageContainer";
+import Wrapper from "../Wrapper";
 
 const Page = () => {
   return (
-    <StorageContainer>
-      <Storage />
-    </StorageContainer>
+    <Wrapper>
+      <StorageContainer>
+        <Storage />
+      </StorageContainer>
+    </Wrapper>
   );
 };
 

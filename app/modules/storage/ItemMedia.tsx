@@ -95,7 +95,7 @@ const ItemMedia = ({ item, loading, mode }: ItemMediaProps) => {
                 />
               ) : (
                 <div className="absolute top-0 left-0 bottom-0 right-0 flex items-center justify-center">
-                  <span className="bx bxs-folder text-5xl text-gray-600 -mt-8"></span>
+                  <span className="bx bxs-folder text-5xl text-gray-600 -mt-8" />
                   <div className="absolute left-3 bottom-3">
                     <p className="font-semibold text-gray-800 pb-0.5">
                       {item?.name}
@@ -174,7 +174,7 @@ const ItemMedia = ({ item, loading, mode }: ItemMediaProps) => {
               </div>
             </label>
           ) : (
-            <div className="absolute top-0 left-0 bottom-0 right-0 bg-slate-200 flex items-center justify-center">
+            <div className="absolute top-0 left-0 bottom-0 right-0 bg-slate-200 dark:bg-gray-900 flex items-center justify-center">
               {item?.lastModified && (
                 <>
                   <Image
@@ -185,7 +185,7 @@ const ItemMedia = ({ item, loading, mode }: ItemMediaProps) => {
                     sizes="true"
                   />
                   <div className="absolute top-0 left-0 bottom-0 right-0  bg-slate-200 bg-opacity-50" />
-                  <span className="bx bx-loader-circle text-3xl relative z-10 animate-spin opacity-60"></span>
+                  <span className="bx bx-loader-circle text-3xl relative z-10 animate-spin opacity-60" />
                 </>
               )}
             </div>

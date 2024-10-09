@@ -23,7 +23,7 @@ const StorageContextMenu = ({
   item,
 }: StorageContextMenuProps) => {
   const {
-    state: { path, copy, medias },
+    state: { path, copy: copies, medias },
     dispatch,
   } = useContext(StorageContext);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -55,11 +55,14 @@ const StorageContextMenu = ({
             onClick={() => {
               dispatch({
                 key: "copy",
-                value: {
-                  path: `${path}/${item?.name}`,
-                  name: item?.name,
-                  mode: item.metadata ? "file" : "folder",
-                },
+                value: [
+                  ...copies,
+                  {
+                    path: `${path}/${item?.name}`,
+                    name: item?.name,
+                    mode: item.metadata ? "file" : "folder",
+                  },
+                ],
               });
               toast({
                 title: "Scheduled: Catch up ",
@@ -77,32 +80,39 @@ const StorageContextMenu = ({
         )}
         <ContextMenuItem
           onClick={async () => {
-            if (copy?.mode === "file") {
-              await supabase.storage
-                .from("packer-ui")
-                .copy(
-                  copy?.path.slice(1, copy?.path.length),
-                  `${path.slice(1, path.length)}/${copy?.name}`
-                );
-              dispatch({
-                key: "medias",
-                value: [{ name: copy?.name, metadata: true }, ...medias],
-              });
-            }
-            if (copy?.mode === "folder") {
-              const { data } = await supabase.storage
-                .from("packer-ui")
-                .list(copy?.path.slice(1, copy?.path.length));
-              if (data?.length) {
-                await loopCheck(data, copy?.path.slice(1, copy?.path.length));
+            let mediaList = [...medias];
+            for (const copy of copies) {
+              if (copy?.mode === "file") {
+                await supabase.storage
+                  .from("packer-ui")
+                  .copy(
+                    copy?.path.slice(1, copy?.path.length),
+                    `${path.slice(1, path.length)}/${copy?.name}`
+                  );
+                mediaList = [
+                  { name: copy?.name, metadata: true },
+                  ...mediaList,
+                ];
+              }
+              if (copy?.mode === "folder") {
+                const { data } = await supabase.storage
+                  .from("packer-ui")
+                  .list(copy?.path.slice(1, copy?.path.length));
+                if (data?.length) {
+                  await loopCheck(data, copy?.path.slice(1, copy?.path.length));
+                }
+                mediaList = [
+                  { name: copy?.name, metadata: false },
+                  ...mediaList,
+                ];
               }
               dispatch({
                 key: "medias",
-                value: [{ name: copy?.name, metadata: false }, ...medias],
+                value: mediaList,
               });
             }
           }}
-          disabled={!copy}
+          disabled={copies.length === 0}
         >
           Parse
         </ContextMenuItem>

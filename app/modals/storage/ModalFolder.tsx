@@ -127,7 +127,7 @@ const ModalFolder = ({ show, setShow, children, item }: ModalFolderProps) => {
       <DialogContent className="p-3 w-80">
         {loading && (
           <div className="absolute top-0 left-0 bottom-0 right-0 bg-white/50 flex items-center justify-center">
-            <span className="bx bx-loader-circle text-3xl animate-spin"></span>
+            <span className="bx bx-loader-circle text-3xl animate-spin" />
           </div>
         )}
         <DialogTitle>Confirm</DialogTitle>
@@ -138,7 +138,9 @@ const ModalFolder = ({ show, setShow, children, item }: ModalFolderProps) => {
           onChange={(event) => setName(event.target.value)}
         />
         <DialogFooter>
-          <Button variant="secondary">Cancel</Button>
+          <Button onClick={() => setShow(false)} variant="secondary">
+            Cancel
+          </Button>
           <Button onClick={handleSubmit} disabled={!name}>
             OK
           </Button>

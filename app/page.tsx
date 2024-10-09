@@ -1,6 +1,10 @@
+"use client";
+
+import Wrapper from "./Wrapper";
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const Page = () => {
-  return <div></div>;
+  return <Wrapper />;
 };
 
 export default Page;

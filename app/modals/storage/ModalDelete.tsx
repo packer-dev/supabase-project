@@ -77,13 +77,15 @@ const ModalDelete = ({ show, setShow, items }: ModalDeleteProps) => {
       <DialogContent className="p-3">
         {loading && (
           <div className="absolute top-0 left-0 bottom-0 right-0 bg-white/50 flex items-center justify-center">
-            <span className="bx bx-loader-circle text-3xl animate-spin"></span>
+            <span className="bx bx-loader-circle text-3xl animate-spin" />
           </div>
         )}
         <DialogTitle>Confirm</DialogTitle>
         <p>Are you sure delete this object?</p>
         <DialogFooter>
-          <Button variant="secondary">Cancel</Button>
+          <Button onClick={() => setShow(false)} variant="secondary">
+            Cancel
+          </Button>
           <Button onClick={handleSubmit}>OK</Button>
         </DialogFooter>
       </DialogContent>

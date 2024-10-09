@@ -8,7 +8,7 @@ type ContainerProps = {
 const StorageContainer = ({ children }: ContainerProps) => {
   return (
     <StorageProvider>
-      <div className="w-full h-screen overflow-hidden">{children}</div>
+      <div className="">{children}</div>
     </StorageProvider>
   );
 };

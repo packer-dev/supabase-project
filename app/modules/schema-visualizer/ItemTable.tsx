@@ -28,14 +28,14 @@ const ItemTable = ({ item }: { item: TableProps }) => {
           });
         }}
         draggable
-        className="absolute w-48 border-2 border-solid border-gray-500 rounded-lg pt-2 bg-gray-500"
+        className="absolute w-48 border-2 border-solid border-gray-500 rounded-lg pt-2 bg-gray-500 dark:bg-black/60"
         style={{
           left: item.position?.x ?? 0,
           top: item.position?.y ?? 0,
         }}
       >
-        <div className="bg-white w-full rounded-lg cursor-pointer">
-          <div className="bg-gray-200 px-3 py-2 font-bold">
+        <div className="bg-white w-full rounded-lg cursor-pointer dark:bg-black/80">
+          <div className="bg-gray-200 px-3 py-2 font-bold dark:bg-black">
             {item.name.slice(0, 12)}
           </div>
           <div className="flex flex-col gap-2 p-1.5">
@@ -78,7 +78,7 @@ const ItemTable = ({ item }: { item: TableProps }) => {
             }}
             className="flex items-center gap-2 cursor-pointer"
           >
-            <span className="bx bx-pencil text-xl text-orange-500"></span>
+            <span className="bx bx-pencil text-xl text-orange-500" />
             <span>Edit</span>
           </ContextMenuItem>
           <ContextMenuItem
@@ -99,7 +99,7 @@ const ItemTable = ({ item }: { item: TableProps }) => {
             }}
             className="flex items-center gap-2 cursor-pointer"
           >
-            <span className="bx bx-x text-xl text-red-500"></span>
+            <span className="bx bx-x text-xl text-red-500" />
             <span>Remove</span>
           </ContextMenuItem>
         </ContextMenuContent>

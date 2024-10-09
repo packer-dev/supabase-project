@@ -16,7 +16,7 @@ export type StorageContextProps = {
     path: string;
     name: string;
     mode: "file" | "folder" | "";
-  };
+  }[];
 };
 
 type Action<T extends keyof StorageContextProps> = {
@@ -32,11 +32,7 @@ const init: StorageContextProps = {
   path: "",
   refresh: 0,
   renameCurrent: null,
-  copy: {
-    path: "",
-    name: "",
-    mode: "",
-  },
+  copy: [],
 };
 
 // Reducer function

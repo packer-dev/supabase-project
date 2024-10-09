@@ -12,12 +12,41 @@ import { DialogTrigger } from "@/components/ui/dialog";
 import ModalFolder from "@/app/modals/storage/ModalFolder";
 import ModalDelete from "@/app/modals/storage/ModalDelete";
 import StorageContextMenu from "./StorageContextMenu";
+import { toast } from "@/hooks/use-toast";
+import { ToastAction } from "@/components/ui/toast";
 
 const Storage = () => {
   const {
-    state: { medias: mediasList, showModal, path, refresh, selected },
+    state: {
+      medias: mediasList,
+      showModal,
+      path,
+      refresh,
+      selected,
+      copy: copies,
+    },
     dispatch,
   } = useContext(StorageContext);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const loopCheck = async (list: any[], path_: string) => {
+    for (const obj of list) {
+      if (obj.metadata) {
+        await supabase.storage
+          .from("packer-ui")
+          .copy(
+            `${path_}/${obj.name}`,
+            `${path.slice(1, path.length)}/${path_}/${obj.name}`
+          );
+      } else {
+        const { data } = await supabase.storage
+          .from("packer-ui")
+          .list(`${path_}/${obj.name}`);
+        if (data?.length) {
+          await loopCheck(data, `${path_}/${obj.name}`);
+        }
+      }
+    }
+  };
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { loading } = useFetchData<any>(
     () =>
@@ -36,8 +65,82 @@ const Storage = () => {
     (item) => item.name !== ".emptyFolderPlaceholder"
   );
   const listFolder = path.split("/");
+  const down = async (e: KeyboardEvent) => {
+    if (e.key === "a" && (e.metaKey || e.ctrlKey)) {
+      e.preventDefault();
+      dispatch({
+        key: "selected",
+        value: medias,
+      });
+    }
+    if (e.key === "c" && (e.metaKey || e.ctrlKey)) {
+      dispatch({
+        key: "copy",
+        value: [...selected].map((item) => ({
+          path: `${path}/${item?.name}`,
+          name: item?.name,
+          mode: item.metadata ? "file" : "folder",
+        })),
+      });
+      toast({
+        title: "Copied successfully",
+        description: `You copied ${selected.length} items.`,
+        action: <ToastAction altText="Goto schedule to undo">Undo</ToastAction>,
+      });
+    }
+    if (e.key === "v" && (e.metaKey || e.ctrlKey)) {
+      if (copies.length > 0) {
+        let mediaList = [...medias];
+        for (const copy of copies) {
+          if (copy?.mode === "file") {
+            await supabase.storage
+              .from("packer-ui")
+              .copy(
+                copy?.path.slice(1, copy?.path.length),
+                `${path.slice(1, path.length)}/${copy?.name}`
+              );
+            mediaList = [{ name: copy?.name, metadata: true }, ...mediaList];
+          }
+          if (copy?.mode === "folder") {
+            const { data } = await supabase.storage
+              .from("packer-ui")
+              .list(copy?.path.slice(1, copy?.path.length));
+            if (data?.length) {
+              await loopCheck(data, copy?.path.slice(1, copy?.path.length));
+            }
+            mediaList = [{ name: copy?.name, metadata: false }, ...mediaList];
+          }
+          dispatch({
+            key: "medias",
+            value: mediaList,
+          });
+        }
+      }
+      toast({
+        title: "Parsed successfully",
+        description: `You parse ${copies.length} items.`,
+        action: <ToastAction altText="Goto schedule to undo">Undo</ToastAction>,
+      });
+    }
+    if (e.key === "Escape") {
+      dispatch({
+        key: "copy",
+        value: [],
+      });
+      dispatch({
+        key: "selected",
+        value: [],
+      });
+    }
+  };
+  React.useEffect(() => {
+    document.removeEventListener("keydown", down);
+    document.addEventListener("keydown", down);
+    return () => document.removeEventListener("keydown", down);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [medias]);
   return (
-    <div className="w-3/4 mx-auto p-10">
+    <div className="mx-auto">
       <div className="flex-row flex gap-3 justify-between items-center pb-3">
         <span className="font-bold text-2xl">Media explorer</span>
         <Input spellCheck={false} className="w-1/2 border-gray-300" />
@@ -60,7 +163,7 @@ const Storage = () => {
             .filter((item) => item)
             .map((item, index) => (
               <Fragment key={item}>
-                <span className="bx bx-chevron-right"></span>
+                <span className="bx bx-chevron-right" />
                 <span
                   aria-hidden
                   onClick={() => {
@@ -87,16 +190,26 @@ const Storage = () => {
         <div className="flex gap-3 items-center">
           <span
             aria-hidden
-            onClick={() =>
+            onClick={() => {
+              dispatch({
+                key: "selected",
+                value: [],
+              });
+              dispatch({
+                key: "copy",
+                value: [],
+              });
               dispatch({
                 key: "refresh",
                 value: Math.random(),
-              })
-            }
+              });
+            }}
             className="bx bx-refresh cursor-pointer"
-          ></span>
+          />
           <span className="text-gray-600">|</span>
-          <span className="text-gray-600">Showing 19 folders and 36 files</span>
+          <span className="text-gray-600 dark:text-gray-300">
+            Showing 19 folders and 36 files
+          </span>
         </div>
         <div className="flex gap-6 items-center">
           {selected.length > 0 && (
@@ -135,7 +248,7 @@ const Storage = () => {
           >
             <DialogTrigger>
               <div className="flex gap-2 items-center cursor-pointer">
-                <span className="bx bx-plus"></span>
+                <span className="bx bx-plus" />
                 <span>New folder</span>
               </div>
             </DialogTrigger>
@@ -186,6 +299,7 @@ const Storage = () => {
       </div>
       <StorageContextMenu hideCopy>
         <div
+          aria-hidden
           className={`w-full grid ${
             !loading && !medias?.length ? "" : "grid-cols-4 my-5"
           } gap-3`}
