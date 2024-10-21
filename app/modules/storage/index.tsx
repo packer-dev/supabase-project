@@ -301,7 +301,9 @@ const Storage = () => {
         <div
           aria-hidden
           className={`w-full grid ${
-            !loading && !medias?.length ? "" : "grid-cols-4 my-5"
+            !loading && !medias?.length
+              ? ""
+              : "lg:grid-cols-5 xl:grid-cols-6 md:grid-cols-4 my-5"
           } gap-3`}
         >
           {loading && (
