@@ -1,43 +1,60 @@
 "use client";
 
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+} from "@/components/ui/sidebar";
+import { Calendar, Inbox, AlarmClock } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import React from "react";
 
+const items = [
+  {
+    title: "Storage",
+    url: "/storage",
+    icon: Inbox,
+  },
+  {
+    title: "Schema Visualizer",
+    url: "/schema-visualizer",
+    icon: Calendar,
+  },
+  {
+    title: "English course",
+    url: "/english-course",
+    icon: AlarmClock,
+  },
+];
+
 const Navbar = () => {
-  const pathname = usePathname();
   return (
-    <div className="w-80">
-      <div className="flex flex-col gap-3 p-5">
-        <p className="text-gray-600 font-semibold mb-2 dark:text-gray-300">
-          Projects
-        </p>
-        <Link
-          href="/storage"
-          className={`${
-            pathname === "/storage" ? "" : "hover:"
-          }text-black cursor-pointer dark:text-white dark:hover:text-gray-300`}
-        >
-          Storage
-        </Link>
-        <Link
-          href="/schema-visualizer"
-          className={`${
-            pathname === "/schema-visualizer" ? "" : "hover:"
-          }text-black cursor-pointer dark:text-white dark:hover:text-gray-300`}
-        >
-          Schema Visualizer
-        </Link>
-        <Link
-          href="/new"
-          className={`${
-            pathname === "/new" ? "" : "hover:"
-          }text-black cursor-pointer dark:text-white dark:hover:text-gray-300`}
-        >
-          New
-        </Link>
-      </div>
-    </div>
+    <Sidebar>
+      <SidebarContent>
+        <SidebarGroup>
+          <SidebarGroupLabel>Application</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {items.map((item) => (
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton asChild>
+                    <Link href={item.url}>
+                      <item.icon />
+                      <span>{item.title}</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+      </SidebarContent>
+    </Sidebar>
   );
 };
 
