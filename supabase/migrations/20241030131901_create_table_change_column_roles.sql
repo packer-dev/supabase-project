@@ -1,0 +1,1 @@
+ALTER TABLE roles RENAME COLUMN role_id TO id;
