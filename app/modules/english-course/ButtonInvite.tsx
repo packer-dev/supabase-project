@@ -62,7 +62,6 @@ const ButtonInvite = ({
       open={!!userId}
       onOpenChange={(open) => setShow(open ? userId : "")}
     >
-      {JSON.stringify(userId)}
       <Button onClick={() => setShow(true)} variant="outline">
         Invite user
       </Button>

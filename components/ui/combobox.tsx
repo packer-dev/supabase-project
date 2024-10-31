@@ -18,7 +18,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-export function Combobox({
+export const Combobox = ({
   value,
   setValue,
   list,
@@ -28,7 +28,7 @@ export function Combobox({
   setValue: Function;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   list: any[];
-}) {
+}) => {
   const [open, setOpen] = React.useState(false);
 
   return (
@@ -77,4 +77,4 @@ export function Combobox({
       </PopoverContent>
     </Popover>
   );
-}
+};
