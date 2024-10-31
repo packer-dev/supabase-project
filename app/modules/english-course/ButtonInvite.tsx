@@ -1,87 +1,71 @@
-import { Combobox } from "@/app/common/Combobox";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+
+import ModalUser from "./ModalUser";
 import supabase from "@/supabase";
-import { DialogTitle } from "@radix-ui/react-dialog";
-import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { Dialog } from "@/components/ui/dialog";
+import { toast } from "@/hooks/use-toast";
 
-const ButtonInvite = ({ refetch }: { refetch: any }) => {
-  const [show, setShow] = useState(false);
-  const [value, setValue] = useState("");
-  const fetchRoles = async () => {
-    const { data: roles } = await supabase.from("roles").select(`*`);
+const ButtonInvite = ({
+  refetch,
+  userId,
+  setShow,
+}: {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  refetch: any;
+  userId: string | boolean;
+  setShow: (id: string | boolean) => void;
+}) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleSave = async (data: any) => {
+    const id = typeof userId === "boolean" ? "" : userId;
+    const { data: getUserAuth } = await supabase.auth.admin.getUserById(id);
+    const { data: user, error: errorCreateUser } = !id
+      ? await supabase.auth.admin.createUser({
+          email: data?.email,
+          password: "dev@",
+        })
+      : await supabase.auth.admin.updateUserById(id, {
+          ...(getUserAuth.user || {}),
+          email: data?.email,
+        });
+    const { error: errorInsertUser } = id
+      ? await supabase
+          .from("users")
+          .update({
+            ...data,
+          })
+          .eq("password", id)
+      : await supabase.from("users").insert([
+          {
+            ...data,
+            password: user?.user?.id,
+          },
+        ]);
+    if (!errorCreateUser && !errorInsertUser) {
+      setShow("");
+      refetch?.();
+      toast({
+        title: " user success",
+        description: "Friday, February 10, 2023 at 5:57 PM",
+      });
+      return;
+    }
 
-    return roles;
-  };
-  const { data: roles } = useQuery({
-    queryKey: ["fetchRoles"],
-    queryFn: fetchRoles,
-  });
-  const handleSave = async () => {
-    const { error: errorCreateUser } = await supabase.auth.admin.createUser({
-      email: value,
-      password: "dev@",
+    toast({
+      title: " user fail",
+      description: "Friday, February 10, 2023 at 5:57 PM",
     });
-    const { error: errorInsertUser } = await supabase.from("users").insert([
-      {
-        username: value.split("@")[0],
-        password: "dev@",
-        email: value,
-        role_id: Number(value),
-      },
-    ]);
-    if (!errorCreateUser && !errorInsertUser) setShow(false);
-    refetch?.();
   };
-  const roleData = (Array.isArray(roles) ? roles : []).map((item) => ({
-    value: item.id,
-    label: item.role_name,
-  }));
+
   return (
-    <Dialog open={show} onOpenChange={setShow}>
-      <DialogTrigger asChild>
-        <Button variant="outline">Invite user</Button>
-      </DialogTrigger>
-      {show && (
-        <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
-            <DialogTitle>Invite user</DialogTitle>
-          </DialogHeader>
-          <div className="grid gap-4 py-4">
-            <div className="w-full flex flex-col gap-4">
-              <Label htmlFor="name" className="text-left block">
-                Email
-              </Label>
-              <Input
-                onChange={(event) => setValue(event.target.value)}
-                id="name"
-                placeholder="example@gmail.com"
-                className="w-full"
-              />
-            </div>
-            <div className="w-full flex flex-col gap-4">
-              <Label htmlFor="name" className="text-left block">
-                Role
-              </Label>
-              <Combobox list={roleData} />
-            </div>
-          </div>
-          <DialogFooter>
-            <Button onClick={handleSave} type="submit">
-              Save
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      )}
+    <Dialog
+      open={!!userId}
+      onOpenChange={(open) => setShow(open ? userId : "")}
+    >
+      <Button onClick={() => setShow(true)} variant="outline">
+        Invite user
+      </Button>
+      {userId && <ModalUser handleSave={handleSave} userId={userId} />}
     </Dialog>
   );
 };

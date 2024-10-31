@@ -15,7 +15,6 @@ const SchemaVisualizer = () => {
     state: { tables, relationships, tableCurrent, current, showModalTable },
     dispatch,
   } = useContext(SchemaVisualizerContext);
-  console.log(relationships);
   const refParent = useRef<HTMLDivElement>(null);
   const handleRandomPosition = () => {
     if (!refParent.current) return;

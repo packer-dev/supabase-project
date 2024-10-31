@@ -19,16 +19,21 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-export function Combobox({
+export const Combobox = ({
   list,
+  setItem,
+  defaultValue,
 }: {
   list: {
     value: string;
     label: string;
   }[];
-}) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  setItem?: (item: any) => void;
+  defaultValue?: string;
+}) => {
   const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState("");
+
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
@@ -38,8 +43,8 @@ export function Combobox({
           aria-expanded={open}
           className="w-full justify-between"
         >
-          {value
-            ? list.find((item) => item.value === value)?.label
+          {defaultValue
+            ? list.find((item) => item.value === defaultValue)?.label
             : "Select item..."}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
@@ -55,14 +60,14 @@ export function Combobox({
                   key={item.value}
                   value={item.value}
                   onSelect={() => {
-                    setValue(item.value);
+                    setItem?.(item.value);
                     setOpen(false);
                   }}
                 >
                   <Check
                     className={cn(
                       "mr-2 h-4 w-4",
-                      value === item.value ? "opacity-100" : "opacity-0"
+                      defaultValue === item.value ? "opacity-100" : "opacity-0"
                     )}
                   />
                   {item.label}
@@ -74,4 +79,4 @@ export function Combobox({
       </PopoverContent>
     </Popover>
   );
-}
+};
