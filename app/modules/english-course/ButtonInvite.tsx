@@ -1,3 +1,4 @@
+import { Combobox } from "@/app/common/Combobox";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -10,20 +11,41 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import supabase from "@/supabase";
 import { DialogTitle } from "@radix-ui/react-dialog";
+import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 
 const ButtonInvite = ({ refetch }: { refetch: any }) => {
   const [show, setShow] = useState(false);
   const [value, setValue] = useState("");
-  const handleSave = async () => {
-    const { data, error } = await supabase.auth.admin.createUser({
-      email: value,
-      password: "dev@", // You can generate this or have them set it later,
-      user_metadata: { name: "packer-dev" },
-    });
-    console.log(data, error);
-    if (!error) setShow(false);
+  const fetchRoles = async () => {
+    const { data: roles } = await supabase.from("roles").select(`*`);
+
+    return roles;
   };
+  const { data: roles } = useQuery({
+    queryKey: ["fetchRoles"],
+    queryFn: fetchRoles,
+  });
+  const handleSave = async () => {
+    const { error: errorCreateUser } = await supabase.auth.admin.createUser({
+      email: value,
+      password: "dev@",
+    });
+    const { error: errorInsertUser } = await supabase.from("users").insert([
+      {
+        username: value.split("@")[0],
+        password: "dev@",
+        email: value,
+        role_id: Number(value),
+      },
+    ]);
+    if (!errorCreateUser && !errorInsertUser) setShow(false);
+    refetch?.();
+  };
+  const roleData = (Array.isArray(roles) ? roles : []).map((item) => ({
+    value: item.id,
+    label: item.role_name,
+  }));
   return (
     <Dialog open={show} onOpenChange={setShow}>
       <DialogTrigger asChild>
@@ -45,6 +67,12 @@ const ButtonInvite = ({ refetch }: { refetch: any }) => {
                 placeholder="example@gmail.com"
                 className="w-full"
               />
+            </div>
+            <div className="w-full flex flex-col gap-4">
+              <Label htmlFor="name" className="text-left block">
+                Role
+              </Label>
+              <Combobox list={roleData} />
             </div>
           </div>
           <DialogFooter>
