@@ -65,8 +65,8 @@ const ModalUser = ({
     queryFn: fetchGetUserById,
   });
 
+  console.log(userId, getUser);
   useEffect(() => {
-    if (getUser?.length === 0) return;
     setValue("username", getUser?.[0]?.username);
     setValue("email", getUser?.[0]?.email);
     setValue("role_id", getUser?.[0]?.role_id);
