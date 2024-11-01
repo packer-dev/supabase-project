@@ -106,3 +106,18 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+.spon-link {
+  transition: all 0.2s ease;
+  transform: translate(-50%, -50%);
+  will-change: transform;
+}
+
+.spon-link:hover {
+  z-index: 10;
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+.spon-link:hover .spon-tooltip {
+  opacity: 1;
+}

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Game Tetris</title>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+      }
+
+      h1 {
+        margin-top: 20px;
+      }
+
+      .game-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+      }
+
+      .grid {
+        width: 200px;
+        height: 400px;
+        display: grid;
+        grid-template-columns: repeat(10, 20px);
+        grid-template-rows: repeat(20, 20px);
+        background-color: #222;
+        border: 2px solid #000;
+      }
+
+      .cell {
+        width: 20px;
+        height: 20px;
+        border: 1px solid #333;
+        background-color: #444;
+      }
+
+      .active {
+        background-color: #f39c12;
+      }
+
+      .score-board {
+        margin-top: 10px;
+        font-size: 18px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Game Tetris</h1>
+    <div class="game-container">
+      <div class="grid" id="grid">
+        <!-- Khối ô của game sẽ được thêm vào đây -->
+      </div>
+    </div>
+    <div class="score-board">
+      <p>Score: <span id="score">0</span></p>
+    </div>
+    <script>
+      const grid = document.getElementById("grid");
+      const scoreDisplay = document.getElementById("score");
+      const width = 10; // số ô mỗi hàng
+      let score = 0;
+      let timerId;
+      let currentPosition = 4; // Vị trí hiện tại của khối
+      let currentRotation = 0;
+
+      // Tạo grid cho game
+      for (let i = 0; i < 200; i++) {
+        const cell = document.createElement("div");
+        cell.classList.add("cell");
+        grid.appendChild(cell);
+      }
+
+      for (let i = 0; i < 10; i++) {
+        const cell = document.createElement("div");
+        cell.classList.add("cell");
+        cell.style.visibility = "hidden"; // các ô ở cuối để kiểm tra va chạm
+        grid.appendChild(cell);
+      }
+
+      const cells = Array.from(document.querySelectorAll(".grid .cell"));
+
+      // Các khối Tetris
+      const lTetromino = [
+        [1, width + 1, width * 2 + 1, 2],
+        [width, width + 1, width + 2, width * 2 + 2],
+        [1, width + 1, width * 2 + 1, width * 2],
+        [width, width * 2, width * 2 + 1, width * 2 + 2],
+      ];
+
+      const zTetromino = [
+        [0, width, width + 1, width * 2 + 1],
+        [width + 1, width + 2, width * 2, width * 2 + 1],
+        [0, width, width + 1, width * 2 + 1],
+        [width + 1, width + 2, width * 2, width * 2 + 1],
+      ];
+
+      const tTetromino = [
+        [1, width, width + 1, width + 2],
+        [1, width + 1, width + 2, width * 2 + 1],
+        [width, width + 1, width + 2, width * 2 + 1],
+        [1, width, width + 1, width * 2 + 1],
+      ];
+
+      const oTetromino = [
+        [0, 1, width, width + 1],
+        [0, 1, width, width + 1],
+        [0, 1, width, width + 1],
+        [0, 1, width, width + 1],
+      ];
+
+      const iTetromino = [
+        [1, width + 1, width * 2 + 1, width * 3 + 1],
+        [width, width + 1, width + 2, width + 3],
+        [1, width + 1, width * 2 + 1, width * 3 + 1],
+        [width, width + 1, width + 2, width + 3],
+      ];
+
+      const tetrominoes = [
+        lTetromino,
+        zTetromino,
+        tTetromino,
+        oTetromino,
+        iTetromino,
+      ];
+
+      let random = Math.floor(Math.random() * tetrominoes.length);
+      let current = tetrominoes[random][currentRotation];
+
+      // Vẽ khối Tetris
+      function draw() {
+        current.forEach((index) => {
+          cells[currentPosition + index].classList.add("active");
+        });
+      }
+
+      // Xóa khối Tetris
+      function undraw() {
+        current.forEach((index) => {
+          cells[currentPosition + index].classList.remove("active");
+        });
+      }
+
+      // Điều khiển các khối
+      function control(e) {
+        if (e.keyCode === 37) moveLeft();
+        if (e.keyCode === 38) rotate();
+        if (e.keyCode === 39) moveRight();
+        if (e.keyCode === 40) moveDown();
+      }
+      document.addEventListener("keydown", control);
+
+      // Di chuyển xuống
+      function moveDown() {
+        undraw();
+        currentPosition += width;
+        draw();
+        freeze();
+      }
+
+      // Di chuyển sang trái
+      function moveLeft() {
+        undraw();
+        const isAtLeftEdge = current.some(
+          (index) => (currentPosition + index) % width === 0
+        );
+        if (!isAtLeftEdge) currentPosition -= 1;
+        if (
+          current.some((index) =>
+            cells[currentPosition + index].classList.contains("taken")
+          )
+        ) {
+          currentPosition += 1;
+        }
+        draw();
+      }
+
+      // Di chuyển sang phải
+      function moveRight() {
+        undraw();
+        const isAtRightEdge = current.some(
+          (index) => (currentPosition + index) % width === width - 1
+        );
+        if (!isAtRightEdge) currentPosition += 1;
+        if (
+          current.some((index) =>
+            cells[currentPosition + index].classList.contains("taken")
+          )
+        ) {
+          currentPosition -= 1;
+        }
+        draw();
+      }
+
+      // Xoay khối
+      function rotate() {
+        undraw();
+        currentRotation++;
+        if (currentRotation === current.length) {
+          currentRotation = 0;
+        }
+        current = tetrominoes[random][currentRotation];
+        draw();
+      }
+
+      // Kiểm tra và dừng khối khi chạm đáy
+      function freeze() {
+        if (
+          current.some((index) =>
+            cells[currentPosition + index + width].classList.contains("taken")
+          )
+        ) {
+          current.forEach((index) =>
+            cells[currentPosition + index].classList.add("taken")
+          );
+          random = Math.floor(Math.random() * tetrominoes.length);
+          current = tetrominoes[random][currentRotation];
+          currentPosition = 4;
+          draw();
+          addScore();
+          gameOver();
+        }
+      }
+
+      // Thêm điểm khi xóa hàng đầy
+      function addScore() {
+        for (let i = 0; i < 199; i += width) {
+          const row = Array.from({ length: width }, (_, k) => i + k);
+          if (row.every((index) => cells[index].classList.contains("taken"))) {
+            score += 10;
+            scoreDisplay.innerHTML = score;
+            row.forEach((index) =>
+              cells[index].classList.remove("taken", "active")
+            );
+            const removed = cells.splice(i, width);
+            cells.unshift(...removed);
+            cells.forEach((cell) => grid.appendChild(cell));
+          }
+        }
+      }
+
+      // Kiểm tra Game Over
+      function gameOver() {
+        if (
+          current.some((index) =>
+            cells[currentPosition + index].classList.contains("taken")
+          )
+        ) {
+          scoreDisplay.innerHTML = "Game Over";
+          clearInterval(timerId);
+        }
+      }
+
+      // Khởi động game
+      timerId = setInterval(moveDown, 1000);
+    </script>
+  </body>
+</html>

@@ -10,7 +10,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { Calendar, Inbox, AlarmClock } from "lucide-react";
+import { Calendar, Inbox, AlarmClock, BookKey } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
@@ -29,6 +29,11 @@ const items = [
     title: "English course",
     url: "/english-course",
     icon: AlarmClock,
+  },
+  {
+    title: "Coding",
+    url: "/coding",
+    icon: BookKey,
   },
 ];
 
