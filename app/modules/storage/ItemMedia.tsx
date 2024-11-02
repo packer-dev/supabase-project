@@ -169,6 +169,22 @@ const ItemMedia = ({ item, loading, mode }: ItemMediaProps) => {
                     >
                       <span>Delete</span>
                     </p>
+                    <p
+                      onClick={() => {
+                        navigator.clipboard?.writeText(
+                          `${
+                            process.env.NEXT_PUBLIC_SUPABASE_URL
+                          }/storage/v1/object/public/packer-ui/${path}/${item?.name?.replace(
+                            "packer-ui/",
+                            ""
+                          )}`
+                        );
+                      }}
+                      aria-hidden
+                      className="p-2 border-y border-gray-100 hover:bg-gray-50 cursor-pointer"
+                    >
+                      <span>Get URL</span>
+                    </p>
                   </PopoverContent>
                 </Popover>
               </div>

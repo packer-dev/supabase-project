@@ -283,17 +283,17 @@ const Storage = () => {
                       }
                     : item
                 );
+                dispatch({
+                  key: "medias",
+                  value: newResultLast,
+                });
               }
-              dispatch({
-                key: "medias",
-                value: newResultLast,
-              });
             }}
             type="file"
             className="hidden"
             id="file"
             multiple
-            accept="jpg"
+            accept="jpg, gif"
           />
         </div>
       </div>
