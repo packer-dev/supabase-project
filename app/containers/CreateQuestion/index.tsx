@@ -2,56 +2,127 @@
 
 import { Input } from "@/components/ui/input";
 import FormItem from "./FormItem";
-import { Combobox } from "@/components/ui/combobox";
 import GivenHeading from "./GivenHeading";
 import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
-import ItemQuestion from "./ItemQuestion";
 import GivenInformation from "./GivenInformation";
+import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import schema from "./schema";
+import { Combobox } from "@/app/common/Combobox";
+import { useState } from "react";
+import { defaultValues, FormFields } from "./utils";
+import QuestionList from "./QuestionList";
 
 type CreateQuestionProps = {
   isGivenHeading?: boolean;
 };
 
 const CreateQuestion = ({ isGivenHeading }: CreateQuestionProps) => {
+  const {
+    control,
+    register,
+    handleSubmit,
+    setValue,
+    clearErrors,
+    formState: { errors },
+  } = useForm<FormFields>({
+    resolver: yupResolver(schema(isGivenHeading)),
+    defaultValues: defaultValues(isGivenHeading),
+  });
+  const givenHeadings = useFieldArray({
+    control,
+    name: "givenHeadings" as never,
+  });
+  const givenInformation = useFieldArray({
+    control,
+    name: "givenInformation.items" as never,
+  });
+  const questionList = useFieldArray({
+    control,
+    name: "questionList" as never,
+  });
+  const handleCreateQuestion: SubmitHandler<FormFields> = async (data) => {
+    alert(Object.keys(data).join("-"));
+  };
+  const [questionType, setQuestionType] = useState("");
+  const items = [
+    {
+      label: "Yes/No",
+      value: "yes/no",
+    },
+  ];
   return (
-    <form className="p-3">
+    <form onSubmit={handleSubmit(handleCreateQuestion)} className="p-3">
       <p className="font-bold text-xl">Create questions</p>
       <div className="flex flex-row mt-6 gap-6">
-        <FormItem className="w-40" label="Question start from" required>
-          <Input placeholder="2" />
+        <FormItem
+          className="w-40"
+          label="Question start from"
+          required
+          error={errors["questionStartFrom"]?.message}
+        >
+          <Input placeholder="2" {...register("questionStartFrom")} />
         </FormItem>
-        <FormItem className="flex-1" label="Question type" required>
-          <Combobox list={[]} setValue={() => {}} value="" />
+        <FormItem
+          className="flex-1"
+          label="Question type"
+          required
+          error={errors["questionType"]?.message}
+        >
+          <Combobox
+            list={items}
+            setItem={(item) => {
+              setValue("questionType", item);
+              setQuestionType(item);
+              clearErrors("questionType");
+            }}
+            defaultValue={questionType}
+          />
         </FormItem>
       </div>
-      <FormItem className="mt-6" label="Question intruction" required>
-        <div className="w-full h-40 rounded-sm border border-gray-200" />
+      <FormItem
+        className="mt-6"
+        label="Question instruction"
+        required
+        error={errors["questionInstruction"]?.message}
+      >
+        <div
+          className="w-full h-40 rounded-sm border border-gray-200 flex items-center justify-center bg-gray-100 text-gray-500 text-sm font-semibold 
+        italic"
+        >
+          Editor here
+        </div>
       </FormItem>
       <FormItem
         className="mt-6"
         label={`Given ${isGivenHeading ? "Headings" : "Information"}`}
       >
-        {isGivenHeading ? <GivenHeading /> : <GivenInformation />}
+        {isGivenHeading ? (
+          <GivenHeading
+            givenHeadings={givenHeadings}
+            register={register}
+            errors={errors}
+          />
+        ) : (
+          <GivenInformation
+            givenInformation={givenInformation}
+            errors={errors}
+            register={register}
+          />
+        )}
       </FormItem>
-      <FormItem className="mt-6" label="Questions">
-        <FormItem label="Title" optional>
-          <Input placeholder="Correct the heading" />
-        </FormItem>
-        <FormItem label="List" required>
-          <div className="border-dashed p-3 border-2 rounded-sm flex flex-col gap-3">
-            <ItemQuestion />
-            <ItemQuestion />
-          </div>
-        </FormItem>
-        <Button variant="secondary" className="flex py-0 items-center gap-2">
-          <Plus />
-          <span>Add new question</span>
-        </Button>
-      </FormItem>
+      <QuestionList
+        questionList={questionList}
+        errors={errors}
+        clearErrors={clearErrors}
+        register={register}
+        setValue={setValue}
+      />
       <div className="flex justify-end my-6 gap-3">
-        <Button variant="secondary">Cancel</Button>
-        <Button>Create</Button>
+        <Button type="button" variant="secondary">
+          Cancel
+        </Button>
+        <Button type="submit">Create</Button>
       </div>
     </form>
   );

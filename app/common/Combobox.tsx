@@ -19,21 +19,22 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-export const Combobox = ({
-  list,
-  setItem,
-  defaultValue,
-}: {
+type ComboboxProps = {
   list: {
     value: string;
     label: string;
   }[];
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  setItem?: (item: any) => void;
+  setItem?: (item: string) => void;
   defaultValue?: string;
-}) => {
-  const [open, setOpen] = React.useState(false);
+};
 
+export const Combobox = ({ list, setItem, defaultValue }: ComboboxProps) => {
+  const [open, setOpen] = React.useState(false);
+  React.useEffect(() => {
+    setItem?.(defaultValue ?? "");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [defaultValue]);
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>

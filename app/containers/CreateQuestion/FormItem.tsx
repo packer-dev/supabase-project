@@ -6,10 +6,10 @@ type FormItemProps = {
   className?: string;
   required?: boolean;
   label?: string;
-  optional?: boolean;
   styles?: {
     label?: string;
   };
+  error?: string;
 };
 
 const FormItem = ({
@@ -17,17 +17,19 @@ const FormItem = ({
   className = "",
   required,
   label,
-  optional,
   styles = { label: "font-semibold" },
+  error,
 }: FormItemProps) => {
   return (
     <div className={`flex flex-col gap-2 ${className}`.trim()}>
-      <Label className="flex items-center gap-1">
-        <span className={styles?.label?.trim()}>{label}</span>
-        {optional && <span className="italic">(optional)</span>}
-        {required && <span className="text-red-500">*</span>}
-      </Label>
+      {label && (
+        <Label className="flex items-center gap-1">
+          <span className={styles?.label?.trim()}>{label}</span>
+          {required && <span className="text-red-500">*</span>}
+        </Label>
+      )}
       {children}
+      {error && <p className="text-red-500 text-sm">{error}</p>}
     </div>
   );
 };
