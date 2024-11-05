@@ -7,7 +7,7 @@ import {
   UseFieldArrayReturn,
   UseFormRegister,
 } from "react-hook-form";
-import { FormFields } from ".";
+import { FormFields } from "./utils";
 
 type GivenHeadingProps = {
   givenInformation: UseFieldArrayReturn<FormFields, never, "id">;
