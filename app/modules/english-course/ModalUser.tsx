@@ -8,28 +8,33 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import supabase from "@/supabase";
 import { DialogTitle } from "@radix-ui/react-dialog";
-import { useQuery } from "@tanstack/react-query";
+import { UseMutateFunction, useQuery } from "@tanstack/react-query";
 import * as yup from "yup";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Combobox } from "@/app/common/Combobox";
 import { Button } from "@/components/ui/button";
 
 const schema = yup
   .object({
-    username: yup.string().required(),
     email: yup.string().email().required(),
-    role_id: yup.string(),
+    role_id: yup.string().required(),
   })
   .required();
-const ModalUser = ({
-  handleSave,
-  userId,
-}: {
+
+type ModalUserProps = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  handleSave: SubmitHandler<any>;
+  handleSave: UseMutateFunction<
+    void,
+    Error,
+    { email: string; role_id: string },
+    unknown
+  >;
   userId: string | boolean;
-}) => {
+  loading?: boolean;
+};
+
+const ModalUser = ({ handleSave, userId, loading }: ModalUserProps) => {
   const {
     register,
     handleSubmit,
@@ -40,7 +45,10 @@ const ModalUser = ({
   });
   const [role, setRole] = useState("");
   const fetchRoles = async () => {
-    const { data: roles } = await supabase.from("roles").select(`*`);
+    const { data: roles } = await supabase
+      .from("roles")
+      .select(`*`)
+      .neq("role_name", "superuser");
     if (!Array.isArray(roles)) return [];
     if (roles.length > 0) {
       const filterRole = roles.find((item) => item.role_name === "admin");
@@ -65,9 +73,7 @@ const ModalUser = ({
     queryFn: fetchGetUserById,
   });
 
-  console.log(userId, getUser);
   useEffect(() => {
-    setValue("username", getUser?.[0]?.username);
     setValue("email", getUser?.[0]?.email);
     setValue("role_id", getUser?.[0]?.role_id);
     setRole(getUser?.[0]?.role_id);
@@ -81,26 +87,10 @@ const ModalUser = ({
   return (
     <DialogContent className="sm:max-w-[425px]">
       <DialogHeader>
-        <DialogTitle>Invite user</DialogTitle>
+        <DialogTitle>Invite a member to this organization</DialogTitle>
       </DialogHeader>
-      <form action="" onSubmit={handleSubmit(handleSave)}>
+      <form action="" onSubmit={handleSubmit((data) => handleSave(data))}>
         <div className="grid gap-4 py-4">
-          <div className="w-full flex flex-col gap-4">
-            <Label htmlFor="name" className="text-left block">
-              Username
-            </Label>
-            <Input
-              {...register("username")}
-              id="username"
-              placeholder="Username"
-              className="w-full"
-            />
-            {errors["username"] && (
-              <p className="text-red-500 text-sm">
-                {errors["username"].message}
-              </p>
-            )}
-          </div>
           <div className="w-full flex flex-col gap-4">
             <Label htmlFor="name" className="text-left block">
               Email
@@ -130,7 +120,7 @@ const ModalUser = ({
           </div>
         </div>
         <DialogFooter>
-          <Button type="submit">Save</Button>
+          <Button type="submit">{loading ? "Saving" : "Save"}</Button>
         </DialogFooter>
       </form>
     </DialogContent>

@@ -121,3 +121,8 @@ body {
 .spon-link:hover .spon-tooltip {
   opacity: 1;
 }
+
+.popover-content-width-same-as-its-trigger {
+  width: var(--radix-popover-trigger-width);
+  max-height: var(--radix-popover-content-available-height);
+}

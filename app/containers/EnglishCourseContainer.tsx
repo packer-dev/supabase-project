@@ -11,9 +11,18 @@ import {
 import supabase from "@/supabase";
 import { useQuery } from "@tanstack/react-query";
 import ButtonInvite from "../modules/english-course/ButtonInvite";
-import { Button } from "@/components/ui/button";
-import { toast } from "@/hooks/use-toast";
 import { useState } from "react";
+import { Input } from "@/components/ui/input";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { CircleHelp, EllipsisVertical, X } from "lucide-react";
+import Image from "next/image";
+import { Popover, PopoverTrigger } from "@/components/ui/popover";
+import { PopoverContent } from "@radix-ui/react-popover";
+import { toast } from "@/hooks/use-toast";
 
 export const EnglishCourseContainer = () => {
   //
@@ -37,7 +46,7 @@ export const EnglishCourseContainer = () => {
   });
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleDelete = async (item: any) => {
+  const handleCancelInvitation = async (item: any) => {
     const { error: errorDatabase } = await supabase
       .from("users")
       .delete()
@@ -61,17 +70,29 @@ export const EnglishCourseContainer = () => {
 
   //
   return (
-    <div>
-      <div className="flex justify-end py-5">
+    <div className="w-11/12 mx-auto">
+      <div className="flex justify-between items-center py-5">
+        <Input className="w-60" placeholder="Filter member" />
         <ButtonInvite refetch={refetch} userId={userId} setShow={setUserId} />
       </div>
-      <Table>
+      <Table className="border">
         <TableHeader>
-          <TableRow>
-            <TableHead>Username</TableHead>
-            <TableHead>Email</TableHead>
-            <TableHead>Role</TableHead>
-            <TableHead>Edit/delete</TableHead>
+          <TableRow className="bg-gray-100">
+            <TableHead className="w-1/2">User</TableHead>
+            <TableHead className="w-40 text-center">Enabled MFA</TableHead>
+            <TableHead className="flex-1">
+              <Tooltip>
+                <TooltipTrigger>
+                  <div className="flex items-center gap-2">
+                    <span>Role</span>
+                    <CircleHelp size={16} />
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>How to configure access control?</p>
+                </TooltipContent>
+              </Tooltip>
+            </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -84,24 +105,66 @@ export const EnglishCourseContainer = () => {
           ) : (
             data?.map((user) => (
               <TableRow key={user.id}>
-                <TableCell className="font-medium">{user.username}</TableCell>
-                <TableCell>{user.email}</TableCell>
-                <TableCell>{user.roles?.role_name}</TableCell>
-                <TableCell className="w-20">
-                  <div className="flex items-center gap-3 justify-end">
-                    <Button onClick={() => setUserId(user?.password)}>
-                      <i className="bx bx-pencil" />
-                    </Button>
-                    <Button
-                      onClick={() => handleDelete(user)}
-                      className="bg-red-500"
-                    >
-                      <i className="bx bx-trash" />
-                    </Button>
+                <TableCell className="flex items-center justify-between">
+                  <div className="w-full flex items-center gap-5">
+                    <Image
+                      className="rounded-full object-cover"
+                      width={45}
+                      height={45}
+                      src="https://nqhlmtbglaailxpcvkwb.supabase.co/storage/v1/object/public/packer-ui/1728536336079_69659d3d-0e5f-4361-8a1c-ee918ae688a5.webp"
+                      alt=""
+                    />
+                    <span className="font-semibold">{user.email}</span>
+                  </div>
+                  <div className="flex-1 px-4">
+                    <span className="py-1.5 px-2 text-xs font-300 rounded-sm text-orange-500 border border-orange-500">
+                      Invited
+                    </span>
+                  </div>
+                </TableCell>
+                <TableCell className="w-40">
+                  <X size={14} className="mx-auto opacity-80" />
+                </TableCell>
+                <TableCell className="flex-1">
+                  <div className="w-full flex items-center justify-between">
+                    <span>{user.roles?.role_name}</span>
+                    <Popover>
+                      <PopoverTrigger>
+                        <EllipsisVertical size={15} />
+                      </PopoverTrigger>
+                      <PopoverContent align="end">
+                        <div className="shadow-lg border border-gray-100 rounded-sm bg-white p-1">
+                          <div
+                            aria-hidden
+                            onClick={() => handleCancelInvitation(user)}
+                            className="border-b border-solid border-gray-200 p-2 cursor-pointer hover:bg-gray-100"
+                          >
+                            <p>Cancel invitation</p>
+                            <p className="text-sm text-gray-500">
+                              Revoke this invitation.
+                            </p>
+                          </div>
+                          <div className="p-2 cursor-pointer hover:bg-gray-100">
+                            <p>Resend invitation</p>
+                            <p className="text-sm text-gray-500">
+                              Invites expire after 24hrs.
+                            </p>
+                          </div>
+                        </div>
+                      </PopoverContent>
+                    </Popover>
                   </div>
                 </TableCell>
               </TableRow>
             ))
+          )}
+          {!!data?.length && (
+            <TableRow className="bg-gray-100">
+              <TableCell
+                className="px-4 py-2 text-gray-500 text-sm"
+                colSpan={3}
+              >{`${data.length} users`}</TableCell>
+            </TableRow>
           )}
         </TableBody>
       </Table>
