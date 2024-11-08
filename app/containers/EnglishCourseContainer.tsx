@@ -77,7 +77,7 @@ export const EnglishCourseContainer = () => {
       </div>
       <Table className="border">
         <TableHeader>
-          <TableRow className="bg-gray-100">
+          <TableRow className="bg-gray-100 dark:bg-black">
             <TableHead className="w-1/2">User</TableHead>
             <TableHead className="w-40 text-center">Enabled MFA</TableHead>
             <TableHead className="flex-1">
@@ -133,18 +133,18 @@ export const EnglishCourseContainer = () => {
                         <EllipsisVertical size={15} />
                       </PopoverTrigger>
                       <PopoverContent align="end">
-                        <div className="shadow-lg border border-gray-100 rounded-sm bg-white p-1">
+                        <div className="shadow-lg border border-gray-100 rounded-sm bg-white dark:bg-black p-1">
                           <div
                             aria-hidden
                             onClick={() => handleCancelInvitation(user)}
-                            className="border-b border-solid border-gray-200 p-2 cursor-pointer hover:bg-gray-100"
+                            className="border-b border-solid border-gray-200 p-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-black/60"
                           >
                             <p>Cancel invitation</p>
                             <p className="text-sm text-gray-500">
                               Revoke this invitation.
                             </p>
                           </div>
-                          <div className="p-2 cursor-pointer hover:bg-gray-100">
+                          <div className="p-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-black">
                             <p>Resend invitation</p>
                             <p className="text-sm text-gray-500">
                               Invites expire after 24hrs.
@@ -159,7 +159,7 @@ export const EnglishCourseContainer = () => {
             ))
           )}
           {!!data?.length && (
-            <TableRow className="bg-gray-100">
+            <TableRow className="bg-gray-100 dark:bg-black">
               <TableCell
                 className="px-4 py-2 text-gray-500 text-sm"
                 colSpan={3}

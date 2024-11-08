@@ -26,9 +26,11 @@ const GivenHeading = ({
         <FormItem
           key={item.id}
           error={errors.givenHeadings?.[index]?.value?.message}
+          name={`givenHeadings.${index}`}
         >
           <div className="flex items-center gap-3">
             <Input
+              id={`givenHeadings.${index}`}
               className="flex-1"
               placeholder="Heading 01"
               {...register(`givenHeadings.${index}.value`)}

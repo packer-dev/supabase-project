@@ -41,12 +41,11 @@ const ButtonInvite = ({
       email: data?.email,
       password: "dev@",
     });
-    console.log(data);
     await supabase.from("users").insert([
       {
         ...data,
         password: user?.user?.id,
-        username: "test",
+        username: data.email?.split("@")[0],
       },
     ]);
   };

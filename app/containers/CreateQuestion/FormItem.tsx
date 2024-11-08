@@ -10,6 +10,7 @@ type FormItemProps = {
     label?: string;
   };
   error?: string;
+  name?: string;
 };
 
 const FormItem = ({
@@ -19,11 +20,12 @@ const FormItem = ({
   label,
   styles = { label: "font-semibold" },
   error,
+  name = "",
 }: FormItemProps) => {
   return (
     <div className={`flex flex-col gap-2 ${className}`.trim()}>
       {label && (
-        <Label className="flex items-center gap-1">
+        <Label htmlFor={name} className="flex items-center gap-1">
           <span className={styles?.label?.trim()}>{label}</span>
           {required && <span className="text-red-500">*</span>}
         </Label>

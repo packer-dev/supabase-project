@@ -60,14 +60,20 @@ const CreateQuestion = ({ isGivenHeading }: CreateQuestionProps) => {
           label="Question start from"
           required
           error={errors["questionStartFrom"]?.message}
+          name="questionStartFrom"
         >
-          <Input placeholder="2" {...register("questionStartFrom")} />
+          <Input
+            id="questionStartFrom"
+            placeholder="2"
+            {...register("questionStartFrom")}
+          />
         </FormItem>
         <FormItem
           className="flex-1"
           label="Question type"
           required
           error={errors["questionType"]?.message}
+          name="questionType"
         >
           <Combobox
             list={items}

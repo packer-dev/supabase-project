@@ -22,8 +22,13 @@ const GivenInformation = ({
 }: GivenHeadingProps) => {
   return (
     <div className="flex flex-col gap-3">
-      <FormItem label="Title" error={errors.givenInformation?.title?.message}>
+      <FormItem
+        label="Title"
+        name="title"
+        error={errors.givenInformation?.title?.message}
+      >
         <Input
+          id="title"
           placeholder="What makes people happy"
           {...register("givenInformation.title")}
         />

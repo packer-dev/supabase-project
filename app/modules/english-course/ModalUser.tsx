@@ -92,7 +92,7 @@ const ModalUser = ({ handleSave, userId, loading }: ModalUserProps) => {
       <form action="" onSubmit={handleSubmit((data) => handleSave(data))}>
         <div className="grid gap-4 py-4">
           <div className="w-full flex flex-col gap-4">
-            <Label htmlFor="name" className="text-left block">
+            <Label htmlFor="email" className="text-left block">
               Email
             </Label>
             <Input
@@ -106,7 +106,7 @@ const ModalUser = ({ handleSave, userId, loading }: ModalUserProps) => {
             )}
           </div>
           <div className="w-full flex flex-col gap-4">
-            <Label htmlFor="name" className="text-left block">
+            <Label htmlFor="role_id" className="text-left block">
               Role
             </Label>
             <Combobox
