@@ -26,6 +26,7 @@ import { toast } from "@/hooks/use-toast";
 
 export const EnglishCourseContainer = () => {
   //
+  const [value, setValue] = useState("");
   const fetchUsers = async () => {
     const { data: users } = await supabase
       .from("users")
@@ -35,13 +36,14 @@ export const EnglishCourseContainer = () => {
       roles!inner(*)
     `
       )
-      .eq("roles.role_name", "admin");
+      .eq("roles.role_name", "admin")
+      .like("email", `%${value}%`);
 
     return users;
   };
   const [userId, setUserId] = useState<boolean | string>("");
   const { data, isLoading, refetch } = useQuery({
-    queryKey: ["users"],
+    queryKey: ["users", value],
     queryFn: fetchUsers,
   });
 
@@ -72,7 +74,12 @@ export const EnglishCourseContainer = () => {
   return (
     <div className="w-11/12 mx-auto">
       <div className="flex justify-between items-center py-5">
-        <Input className="w-60" placeholder="Filter member" />
+        <Input
+          value={value}
+          onChange={(event) => setValue(event.target.value)}
+          className="w-60"
+          placeholder="Filter member"
+        />
         <ButtonInvite refetch={refetch} userId={userId} setShow={setUserId} />
       </div>
       <Table className="border">
@@ -98,7 +105,7 @@ export const EnglishCourseContainer = () => {
         <TableBody>
           {isLoading ? (
             <TableRow>
-              <TableCell colSpan={4} className="py-40 text-center">
+              <TableCell colSpan={4} className="py-8 text-center">
                 <i className="bx bx-loader animate-spin text-3xl" />
               </TableCell>
             </TableRow>
@@ -157,6 +164,19 @@ export const EnglishCourseContainer = () => {
                 </TableCell>
               </TableRow>
             ))
+          )}
+          {!isLoading && value && !data?.length && (
+            <TableRow className="bg-gray-100 dark:bg-black">
+              <TableCell
+                className="px-4 py-2 text-gray-500 text-sm"
+                colSpan={3}
+              >
+                <div className="flex items-center gap-3">
+                  <CircleHelp size={16} />
+                  <span>No users matched the search query {`"${value}"`}</span>
+                </div>
+              </TableCell>
+            </TableRow>
           )}
           {!!data?.length && (
             <TableRow className="bg-gray-100 dark:bg-black">
