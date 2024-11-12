@@ -1,28 +1,22 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { MinusCircle, Plus } from "lucide-react";
-import {
-  FieldErrors,
-  UseFieldArrayReturn,
-  UseFormRegister,
-} from "react-hook-form";
-import { FormFields } from "./utils";
-import FormItem from "./FormItem";
+import { UseFieldArrayReturn, useFormContext } from "react-hook-form";
+import { FormFields } from "../utils";
+import FormItem from "../FormItem";
 
 type GivenHeadingProps = {
-  givenHeadings: UseFieldArrayReturn<FormFields, never, "id">;
-  register: UseFormRegister<FormFields>;
-  errors: FieldErrors<FormFields>;
+  fieldArray: UseFieldArrayReturn<FormFields, never, "id">;
 };
 
-const GivenHeading = ({
-  givenHeadings,
-  register,
-  errors,
-}: GivenHeadingProps) => {
+const GivenHeading = ({ fieldArray }: GivenHeadingProps) => {
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext<FormFields>();
   return (
     <div className="flex flex-col gap-3">
-      {givenHeadings.fields.map((item, index) => (
+      {fieldArray.fields.map((item, index) => (
         <FormItem
           key={item.id}
           error={errors.givenHeadings?.[index]?.value?.message}
@@ -38,9 +32,9 @@ const GivenHeading = ({
             <Button
               type="button"
               onClick={() => {
-                givenHeadings.remove(index);
-                if (givenHeadings.fields.length === 1) {
-                  givenHeadings.append({
+                fieldArray.remove(index);
+                if (fieldArray.fields.length === 1) {
+                  fieldArray.append({
                     value: "",
                   });
                 }
@@ -55,7 +49,7 @@ const GivenHeading = ({
       <Button
         type="button"
         onClick={() =>
-          givenHeadings.append({
+          fieldArray.append({
             value: "",
           })
         }

@@ -1,5 +1,4 @@
 import { Input } from "@/components/ui/input";
-import FormItem from "./FormItem";
 import { Combobox } from "@/app/common/Combobox";
 import { Button } from "@/components/ui/button";
 import { Trash } from "lucide-react";
@@ -10,7 +9,8 @@ import {
   UseFormSetValue,
 } from "react-hook-form";
 import { useState } from "react";
-import { FormFields } from "./utils";
+import { FormFields } from "../utils";
+import FormItem from "../FormItem";
 
 type ItemQuestionProps = {
   handleRemoveQuestion: () => void;

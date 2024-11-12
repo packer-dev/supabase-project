@@ -1,6 +1,6 @@
 import React from "react";
 import Wrapper from "../Wrapper";
-import CreateQuestion from "../containers/CreateQuestion";
+import CreateQuestion from "../containers/create-question";
 
 const New = () => {
   return (

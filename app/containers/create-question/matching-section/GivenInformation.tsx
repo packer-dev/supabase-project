@@ -1,25 +1,19 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { MinusCircle, Plus } from "lucide-react";
-import FormItem from "./FormItem";
-import {
-  FieldErrors,
-  UseFieldArrayReturn,
-  UseFormRegister,
-} from "react-hook-form";
-import { FormFields } from "./utils";
+import { UseFieldArrayReturn, useFormContext } from "react-hook-form";
+import { FormFields } from "../utils";
+import FormItem from "../FormItem";
 
 type GivenHeadingProps = {
-  givenInformation: UseFieldArrayReturn<FormFields, never, "id">;
-  register: UseFormRegister<FormFields>;
-  errors: FieldErrors<FormFields>;
+  fieldArray: UseFieldArrayReturn<FormFields, never, "id">;
 };
 
-const GivenInformation = ({
-  givenInformation,
-  register,
-  errors,
-}: GivenHeadingProps) => {
+const GivenInformation = ({ fieldArray }: GivenHeadingProps) => {
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext<FormFields>();
   return (
     <div className="flex flex-col gap-3">
       <FormItem
@@ -34,7 +28,7 @@ const GivenInformation = ({
         />
       </FormItem>
       <FormItem className="" label="List" required>
-        {givenInformation.fields.map((item, index) => (
+        {fieldArray.fields.map((item, index) => (
           <FormItem
             key={item.id}
             error={errors.givenInformation?.items?.[index]?.value?.message}
@@ -48,7 +42,7 @@ const GivenInformation = ({
               <Button
                 type="button"
                 onClick={() => {
-                  givenInformation.remove(index);
+                  fieldArray.remove(index);
                 }}
                 variant="secondary"
               >
@@ -61,7 +55,7 @@ const GivenInformation = ({
       <Button
         type="button"
         onClick={() =>
-          givenInformation.append({
+          fieldArray.append({
             value: "",
           })
         }

@@ -20,19 +20,19 @@ import {
 } from "@/components/ui/popover";
 
 type ComboboxProps = {
-  list: {
+  list: ({
     value: string;
     label: string;
-  }[];
+  } & { [key: string]: string })[];
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  setItem?: (item: string) => void;
+  setItem?: (item: any) => void;
   defaultValue?: string;
 };
 
 export const Combobox = ({ list, setItem, defaultValue }: ComboboxProps) => {
   const [open, setOpen] = React.useState(false);
   React.useEffect(() => {
-    setItem?.(defaultValue ?? "");
+    setItem?.(list.find((item) => item.value === (defaultValue ?? "")));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [defaultValue]);
   return (
@@ -61,7 +61,7 @@ export const Combobox = ({ list, setItem, defaultValue }: ComboboxProps) => {
                   key={item.value}
                   value={item.value}
                   onSelect={() => {
-                    setItem?.(item.value);
+                    setItem?.(item);
                     setOpen(false);
                   }}
                 >

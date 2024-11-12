@@ -1,32 +1,22 @@
 import { Input } from "@/components/ui/input";
-import FormItem from "./FormItem";
-import {
-  FieldErrors,
-  UseFieldArrayReturn,
-  UseFormClearErrors,
-  UseFormRegister,
-  UseFormSetValue,
-} from "react-hook-form";
-import { FormFields } from "./utils";
-import ItemQuestion from "./ItemQuestion";
+import FormItem from "../FormItem";
+import { UseFieldArrayReturn, useFormContext } from "react-hook-form";
+import { FormFields } from "../utils";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
+import ItemQuestion from "./ItemQuestion";
 
 type QuestionListProps = {
   questionList: UseFieldArrayReturn<FormFields, never, "id">;
-  register: UseFormRegister<FormFields>;
-  errors: FieldErrors<FormFields>;
-  clearErrors: UseFormClearErrors<FormFields>;
-  setValue: UseFormSetValue<FormFields>;
 };
 
-const QuestionList = ({
-  register,
-  errors,
-  questionList,
-  clearErrors,
-  setValue,
-}: QuestionListProps) => {
+const QuestionList = ({ questionList }: QuestionListProps) => {
+  const {
+    register,
+    formState: { errors },
+    clearErrors,
+    setValue,
+  } = useFormContext<FormFields>();
   return (
     <FormItem className="mt-6" label="Questions">
       <FormItem label="Title" error={errors.questionTitle?.message}>
