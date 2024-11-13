@@ -1,7 +1,7 @@
 import { Input } from "@/components/ui/input";
 import FormItem from "../FormItem";
 import { UseFieldArrayReturn, useFormContext } from "react-hook-form";
-import { FormFields } from "../utils";
+import { FormFields } from "../schema";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import ItemQuestion from "./ItemQuestion";

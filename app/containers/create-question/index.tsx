@@ -11,10 +11,9 @@ import {
   useFormContext,
 } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import schema from "./schema";
 import { Combobox } from "@/app/common/Combobox";
 import { useState } from "react";
-import { FormFields, questionTypes } from "./utils";
+import { schema, FormFields, questionTypes, defaultValues } from "./schema";
 import MultipleChoiceQuestion from "./matching-section/MultipleChoiceQuestion";
 import ListOfQuestion from "./matching-section/ListOfQuestion";
 import MatchingSection from "./matching-section";
@@ -106,7 +105,7 @@ const CreateQuestion = ({
 const CreateQuestionContainer = () => {
   const [questionType, setQuestionType] = useState<any>(questionTypes[0]);
   const handleCreateQuestion: SubmitHandler<FormFields> = async (data) => {
-    alert(Object.keys(data).join("-"));
+    console.log(data);
   };
 
   return (
@@ -114,6 +113,7 @@ const CreateQuestionContainer = () => {
       onSubmit={handleCreateQuestion}
       className="p-3"
       yupResolver={yupResolver(schema(questionType?.mode ?? "")) as any}
+      defaultValues={defaultValues(questionType?.mode ?? "")}
     >
       <CreateQuestion
         questionType={questionType}
@@ -151,17 +151,13 @@ const RenderByQuestionType = ({
     control,
     name: "yesNo" as never,
   });
-  const multipleChoice = useFieldArray({
-    control,
-    name: "multipleChoice" as never,
-  });
   switch (type) {
     case "yesNo":
       return <ListOfQuestion listOfQuestion={yesNo} isYesNo />;
     case "trueFalse":
       return <ListOfQuestion listOfQuestion={trueFalse} />;
     case "multipleChoice":
-      return <MultipleChoiceQuestion multipleChoiceQuestion={multipleChoice} />;
+      return <MultipleChoiceQuestion />;
     case "information":
     case "headings":
       return (

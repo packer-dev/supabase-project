@@ -9,7 +9,7 @@ import {
   UseFormSetValue,
 } from "react-hook-form";
 import { useState } from "react";
-import { FormFields } from "../utils";
+import { FormFields } from "../schema";
 import FormItem from "../FormItem";
 
 type ItemQuestionProps = {

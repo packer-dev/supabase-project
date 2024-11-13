@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { MinusCircle, Plus } from "lucide-react";
 import { UseFieldArrayReturn, useFormContext } from "react-hook-form";
-import { FormFields } from "../utils";
+import { FormFields } from "../schema";
 import FormItem from "../FormItem";
 
 type GivenHeadingProps = {

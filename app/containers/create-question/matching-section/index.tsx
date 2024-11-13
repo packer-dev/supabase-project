@@ -1,5 +1,5 @@
 import { UseFieldArrayReturn } from "react-hook-form";
-import { FormFields } from "../utils";
+import { FormFields } from "../schema";
 import FormItem from "../FormItem";
 import GivenHeading from "./GivenHeading";
 import QuestionList from "./QuestionList";

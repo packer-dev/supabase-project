@@ -1,6 +1,6 @@
 import { UseFieldArrayReturn } from "react-hook-form";
 import FormItem from "../FormItem";
-import { FormFields } from "../utils";
+import { FormFields } from "../schema";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Combobox } from "@/app/common/Combobox";
