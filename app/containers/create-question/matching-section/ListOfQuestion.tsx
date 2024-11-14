@@ -1,4 +1,4 @@
-import { UseFieldArrayReturn } from "react-hook-form";
+import { useFieldArray, useFormContext } from "react-hook-form";
 import FormItem from "../FormItem";
 import { FormFields } from "../schema";
 import { Button } from "@/components/ui/button";
@@ -7,11 +7,10 @@ import { Combobox } from "@/app/common/Combobox";
 import { MinusCircle, Plus } from "lucide-react";
 
 type ListOfQuestionProps = {
-  listOfQuestion: UseFieldArrayReturn<FormFields, never, "id">;
   isYesNo?: boolean;
 };
 
-const ListOfQuestion = ({ listOfQuestion, isYesNo }: ListOfQuestionProps) => {
+const ListOfQuestion = ({ isYesNo }: ListOfQuestionProps) => {
   const value1 = isYesNo ? "Yes" : "True";
   const value2 = isYesNo ? "No" : "False";
   const optionItems = [
@@ -28,6 +27,11 @@ const ListOfQuestion = ({ listOfQuestion, isYesNo }: ListOfQuestionProps) => {
       value: "Not given",
     },
   ];
+  const { control } = useFormContext<FormFields>();
+  const listOfQuestion = useFieldArray<FormFields>({
+    control,
+    name: isYesNo ? "yesNo" : "trueFalse",
+  });
   return (
     <FormItem className="mt-6" label="List of question" required>
       <div className="flex flex-col gap-2 w-full">

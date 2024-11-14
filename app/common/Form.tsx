@@ -18,7 +18,6 @@ export default function Form({
 
   useEffect(() => {
     reset(defaultValues);
-    console.log("defaultValues =>>", defaultValues);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [JSON.stringify(defaultValues)]);
 

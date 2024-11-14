@@ -1,22 +1,21 @@
 import { Input } from "@/components/ui/input";
 import FormItem from "../FormItem";
-import { UseFieldArrayReturn, useFormContext } from "react-hook-form";
+import { useFieldArray, useFormContext } from "react-hook-form";
 import { FormFields } from "../schema";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import ItemQuestion from "./ItemQuestion";
 
-type QuestionListProps = {
-  questionList: UseFieldArrayReturn<FormFields, never, "id">;
-};
-
-const QuestionList = ({ questionList }: QuestionListProps) => {
+const QuestionList = () => {
   const {
     register,
     formState: { errors },
-    clearErrors,
-    setValue,
   } = useFormContext<FormFields>();
+  const { control } = useFormContext<FormFields>();
+  const questionList = useFieldArray<FormFields>({
+    control,
+    name: "questionList",
+  });
   return (
     <FormItem className="mt-6" label="Questions">
       <FormItem label="Title" error={errors.questionTitle?.message}>
@@ -40,10 +39,6 @@ const QuestionList = ({ questionList }: QuestionListProps) => {
                 }
               }}
               index={index}
-              register={register}
-              errors={errors}
-              clearErrors={clearErrors}
-              setValue={setValue}
             />
           ))}
         </div>

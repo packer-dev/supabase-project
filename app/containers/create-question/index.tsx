@@ -1,15 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { Input } from "@/components/ui/input";
 import FormItem from "./FormItem";
 import { Button } from "@/components/ui/button";
-import {
-  SubmitHandler,
-  useFieldArray,
-  UseFieldArrayReturn,
-  useFormContext,
-} from "react-hook-form";
+import { SubmitHandler, useFormContext } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Combobox } from "@/app/common/Combobox";
 import { useState } from "react";
@@ -29,16 +25,12 @@ const CreateQuestion = ({
   questionType,
 }: CreateQuestionProps) => {
   const {
-    control,
     setValue,
     register,
     formState: { errors },
     clearErrors,
   } = useFormContext<FormFields>();
-  const questionList = useFieldArray({
-    control,
-    name: "questionList" as never,
-  });
+
   return (
     <div>
       <p className="font-bold text-xl">Create questions</p>
@@ -90,7 +82,6 @@ const CreateQuestion = ({
       <RenderByQuestionType
         type={questionType?.mode}
         label={questionType?.name}
-        fieldListQuestion={questionList}
       />
       <div className="flex justify-end my-6 gap-3">
         <Button type="button" variant="secondary">
@@ -104,9 +95,7 @@ const CreateQuestion = ({
 
 const CreateQuestionContainer = () => {
   const [questionType, setQuestionType] = useState<any>(questionTypes[0]);
-  const handleCreateQuestion: SubmitHandler<FormFields> = async (data) => {
-    console.log(data);
-  };
+  const handleCreateQuestion: SubmitHandler<FormFields> = async (data) => {};
 
   return (
     <Form
@@ -126,47 +115,20 @@ const CreateQuestionContainer = () => {
 type RenderByQuestionTypeProps = {
   label: string;
   type: string;
-  fieldListQuestion: UseFieldArrayReturn<FormFields, never, "id">;
 };
 
-const RenderByQuestionType = ({
-  type,
-  fieldListQuestion,
-  label,
-}: RenderByQuestionTypeProps) => {
-  const { control } = useFormContext<FormFields>();
-  const givenHeadings = useFieldArray({
-    control,
-    name: "givenHeadings" as never,
-  });
-  const givenInformation = useFieldArray({
-    control,
-    name: "givenInformation.items" as never,
-  });
-  const trueFalse = useFieldArray({
-    control,
-    name: "trueFalse" as never,
-  });
-  const yesNo = useFieldArray({
-    control,
-    name: "yesNo" as never,
-  });
+const RenderByQuestionType = ({ type, label }: RenderByQuestionTypeProps) => {
   switch (type) {
     case "yesNo":
-      return <ListOfQuestion listOfQuestion={yesNo} isYesNo />;
+      return <ListOfQuestion isYesNo />;
     case "trueFalse":
-      return <ListOfQuestion listOfQuestion={trueFalse} />;
+      return <ListOfQuestion />;
     case "multipleChoice":
       return <MultipleChoiceQuestion />;
     case "information":
     case "headings":
       return (
-        <MatchingSection
-          fieldGiven={type === "headings" ? givenHeadings : givenInformation}
-          fieldListQuestion={fieldListQuestion}
-          label={label}
-          haveList={type === "information"}
-        />
+        <MatchingSection label={label} haveList={type === "information"} />
       );
     default:
       return <></>;

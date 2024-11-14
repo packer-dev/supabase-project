@@ -2,33 +2,23 @@ import { Input } from "@/components/ui/input";
 import { Combobox } from "@/app/common/Combobox";
 import { Button } from "@/components/ui/button";
 import { Trash } from "lucide-react";
-import {
-  FieldErrors,
-  UseFormClearErrors,
-  UseFormRegister,
-  UseFormSetValue,
-} from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { FormFields } from "../schema";
 import FormItem from "../FormItem";
 
 type ItemQuestionProps = {
   handleRemoveQuestion: () => void;
-  register: UseFormRegister<FormFields>;
-  errors: FieldErrors<FormFields>;
   index: number;
-  clearErrors: UseFormClearErrors<FormFields>;
-  setValue: UseFormSetValue<FormFields>;
 };
 
-const ItemQuestion = ({
-  handleRemoveQuestion,
-  register,
-  errors,
-  index,
-  clearErrors,
-  setValue,
-}: ItemQuestionProps) => {
+const ItemQuestion = ({ handleRemoveQuestion, index }: ItemQuestionProps) => {
+  const {
+    formState: { errors },
+    register,
+    setValue,
+    clearErrors,
+  } = useForm<FormFields>();
   const items = [
     { label: "A", value: "a" },
     { label: "B", value: "b" },

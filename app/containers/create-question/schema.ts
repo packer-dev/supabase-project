@@ -120,6 +120,8 @@ export type FormFields = {
     }[];
     is_done?: boolean;
   }[];
+  yesNo: { value: string }[];
+  trueFalse: { value: string }[];
 };
 
 export const defaultValues = (type: string) => {
