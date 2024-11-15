@@ -44,23 +44,34 @@ const renderSchemaByType = (type: string): any => {
       };
     case "multipleChoice":
       return {
-        multipleChoice: yup.array().of(
-          yup.object({
-            content: yup.string(),
-            answers: yup.array().of(
-              yup.object({
-                content: yup.string().when("is_new", {
-                  is: false,
-                  then: (schema_) => schema_.required(),
-                  otherwise: (schema_) => schema_.optional(),
-                }),
-                is_correct: yup.boolean().default(false),
-                is_new: yup.boolean(),
-              })
-            ),
-            is_done: yup.boolean().default(false),
-          })
-        ),
+        multipleChoice: yup
+          .array()
+          .of(
+            yup.object({
+              question: yup.string().when("is_done", {
+                is: false,
+                then: (schema_) => schema_.required(),
+                otherwise: (schema_) => schema_.optional(),
+              }),
+              answers: yup
+                .array()
+                .of(
+                  yup.object({
+                    content: yup.string().when("is_new", {
+                      is: false,
+                      then: (schema_) => schema_.required(),
+                      otherwise: (schema_) => schema_.optional(),
+                    }),
+                    is_correct: yup.boolean().default(false),
+                    is_new: yup.boolean(),
+                  })
+                )
+                .required(),
+              is_done: yup.boolean().default(false),
+            })
+          )
+          .min(1)
+          .required(),
       };
     default:
       return {};
@@ -112,7 +123,7 @@ export type FormFields = {
     correctHeading: string;
   }[];
   multipleChoice: {
-    content: string;
+    question: string;
     answers: {
       content: string;
       is_new?: boolean;

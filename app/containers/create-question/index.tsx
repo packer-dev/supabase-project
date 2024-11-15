@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { SubmitHandler, useFormContext } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Combobox } from "@/app/common/Combobox";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { schema, FormFields, questionTypes, defaultValues } from "./schema";
 import MultipleChoiceQuestion from "./matching-section/MultipleChoiceQuestion";
 import ListOfQuestion from "./matching-section/ListOfQuestion";
@@ -30,7 +30,10 @@ const CreateQuestion = ({
     formState: { errors },
     clearErrors,
   } = useFormContext<FormFields>();
-
+  useEffect(() => {
+    setValue("questionType", questionType?.value);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [questionType]);
   return (
     <div>
       <p className="font-bold text-xl">Create questions</p>
@@ -95,8 +98,9 @@ const CreateQuestion = ({
 
 const CreateQuestionContainer = () => {
   const [questionType, setQuestionType] = useState<any>(questionTypes[0]);
-  const handleCreateQuestion: SubmitHandler<FormFields> = async (data) => {};
-
+  const handleCreateQuestion: SubmitHandler<FormFields> = async (data) => {
+    alert(data);
+  };
   return (
     <Form
       onSubmit={handleCreateQuestion}
