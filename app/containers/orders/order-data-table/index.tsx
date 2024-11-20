@@ -13,6 +13,7 @@ import { DownloadIcon } from 'lucide-react';
 import { useApi } from '@/services/api';
 import ConfirmActionOrder from './ConfirmActionOrder';
 import useEventEmitter from '@/app/hooks/use-event-emitter';
+import { saveAs } from 'file-saver';
 
 export default function OrderDataTable() {
   const [tabCurrent, setTabCurrent] = useState('Pending');
@@ -54,11 +55,26 @@ export default function OrderDataTable() {
           tabCurrent={tabCurrent}
           setTabCurrent={(tab) => setTabCurrent(tab)}
         />
-        <Button>
+        <Button type='button' onClick={async () => {
+          const data = await order.exportData('', tabCurrent);
+          const formatData = data.map(item => ({
+            "Order ID": item.id,
+            "Customer": `${item?.users?.email ?? 'xxx@gmail.com'} ${item?.users?.phone ?? "03*****989"}`,
+            "Customer type": "Phu Huynh",
+            "Course": item?.courses?.name,
+            "Order price": item.price.toLocaleString('it-IT', { style: 'currency', currency: 'VND' }).replace("VND", "VNĐ"),
+            "Status": item.status,
+            "Last update": item.updated_at
+          }))
+          const headers = ["Order ID", "Customer", "Customer type", "Course", "Order price", "Status", "Last update"].join(",")
+          const rows = formatData.map(obj => Object.values(obj).join(","))
+          const blob = new Blob([[headers, ...rows].join("\n")], { type: 'text/csv;charset=utf-8;' });
+          saveAs(blob, 'countries.csv');
+        }}>
           <DownloadIcon size={16} />
           <span className='ml-2'>Export</span>
         </Button>
-      </div>
+      </div >
       <div className='flex justify-between'>
         <div className='w-1/2'>
           <Input
@@ -88,17 +104,19 @@ export default function OrderDataTable() {
         />
       </div>
       {showConfirmAction}
-      {showConfirmAction && (
-        <ConfirmActionOrder
-          action={showConfirmAction as any}
-          orderId={orderIdRef.current ?? ''}
-          onClose={() => {
-            orderIdRef.current = null;
-            setShowConfirmAction('');
-          }}
-          show={!!showConfirmAction}
-        />
-      )}
+      {
+        showConfirmAction && (
+          <ConfirmActionOrder
+            action={showConfirmAction as any}
+            orderId={orderIdRef.current ?? ''}
+            onClose={() => {
+              orderIdRef.current = null;
+              setShowConfirmAction('');
+            }}
+            show={!!showConfirmAction}
+          />
+        )
+      }
     </>
   );
 }

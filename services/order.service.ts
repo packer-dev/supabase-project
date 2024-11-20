@@ -34,7 +34,7 @@ const topics = {
       courses(*) 
     `
       )
-      .ilike('users.fullname', `%${value}%`)
+      .ilike('users.full_name', `%${value}%`)
       .order('updated_at');
 
     if (error) throw error;
@@ -53,6 +53,25 @@ const topics = {
       },
     };
   },
+  exportData: async (value: string, status: string) => {
+    const { data, error } = await supabase
+      .from('orders')
+      .select(
+        `
+    *,
+    users(*),
+    courses(*) 
+  `
+      )
+      .ilike('users.full_name', `%${value}%`)
+      .ilike(
+        'status',
+        `%${status.toLowerCase() === 'all' ? '' : status.toLowerCase()}%`
+      )
+      .order('updated_at');
+    if (error) throw error;
+    return data;
+  },
   getById: async (id: string) => {
     const { data, error } = await supabase
       .from('orders')
@@ -62,7 +81,7 @@ const topics = {
     return data[0] || {};
   },
   insert: async (payload: Order) => {
-    const { data, error } = await supabase.from('exam_topics').insert(payload);
+    const { data, error } = await supabase.from('orders').insert(payload);
     if (error) throw error;
     return data;
   },

@@ -22,11 +22,25 @@ export const authService = {
     }
     return data;
   },
-  uploadAvatar: async (file: File) => {
+  uploadAvatar: async (image: string, file: File) => {
+    await supabase.storage
+      .from('packer-ui')
+      .remove([`profile/${image.split('/')[image.split('/').length - 1]}`]);
     const { data, error } = await supabase.storage
       .from('packer-ui')
-      .upload('/profile/', file);
+      .upload(
+        `/profile/${Math.random()
+          .toString()
+          .substring(2, 15)}.${file.type.replace('image/', '')}`,
+        file
+      );
     if (error) throw error;
+    await supabase
+      .from('users')
+      .update({
+        avatar: `https://nqhlmtbglaailxpcvkwb.supabase.co/storage/v1/object/public${data.fullPath}`,
+      })
+      .eq('id', '72');
     return data;
   },
 };

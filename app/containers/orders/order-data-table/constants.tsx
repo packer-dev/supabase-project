@@ -22,8 +22,8 @@ export const columns: ColumnDef<Order>[] = [
     header: 'Customer',
     cell: ({ row }) => (
       <div>
-        <p>{row.original.users.email}</p>
-        <p>{row.original.users.phone ?? '03******989'}</p>
+        <p>{row.original.users?.email}</p>
+        <p>{row.original.users?.phone ?? '03******989'}</p>
       </div>
     ),
   },
@@ -35,7 +35,7 @@ export const columns: ColumnDef<Order>[] = [
   {
     accessorKey: 'course',
     header: 'Course',
-    cell: ({ row }) => <p>{row.original.courses.name}</p>,
+    cell: ({ row }) => <p>{row.original.courses?.name}</p>,
   },
   {
     accessorKey: 'price',
