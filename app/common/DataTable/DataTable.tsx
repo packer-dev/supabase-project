@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
   ColumnFiltersState,
@@ -10,7 +10,7 @@ import {
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
-} from "@tanstack/react-table";
+} from '@tanstack/react-table';
 import {
   Ref,
   forwardRef,
@@ -18,9 +18,9 @@ import {
   useImperativeHandle,
   useRef,
   useState,
-} from "react";
+} from 'react';
 
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button';
 import {
   Table,
   TableBody,
@@ -28,13 +28,13 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from '@/components/ui/table';
 
-import { cn } from "@/lib/utils";
-import { DataTableProps } from "./type";
-import EventEmitter from "@/utils/event-emitter";
-import Spinner from "../Spinner";
-import { getColumns } from "./util";
+import { cn } from '@/lib/utils';
+import { DataTableProps } from './type';
+import EventEmitter from '@/utils/event-emitter';
+import Spinner from '../Spinner';
+import { getColumns } from './util';
 
 const DataTable = forwardRef(function DataTable(
   props: DataTableProps,
@@ -45,6 +45,7 @@ const DataTable = forwardRef(function DataTable(
     datasource = [],
     enableRowSelection = false,
     stripedRows = true,
+    cellInsideClick,
   } = props;
   const eventEmitter = useRef<EventEmitter>();
 
@@ -86,7 +87,7 @@ const DataTable = forwardRef(function DataTable(
 
   useEffect(() => {
     eventEmitter.current?.emit(
-      "rowSelectionChange",
+      'rowSelectionChange',
       table.getSelectedRowModel().rows
     );
   }, [table, selectRow]);
@@ -101,7 +102,7 @@ const DataTable = forwardRef(function DataTable(
         events: {
           on: {
             rowSelectionChange: (listener: any) => {
-              eventEmitter.current?.on("rowSelectionChange", (rows: any) => {
+              eventEmitter.current?.on('rowSelectionChange', (rows: any) => {
                 listener(rows);
               });
             },
@@ -149,16 +150,20 @@ const DataTable = forwardRef(function DataTable(
             table.getRowModel().rows.map((row) => (
               <TableRow
                 key={row.id}
-                data-state={row.getIsSelected() && "selected"}
-                className={cn(stripedRows && "odd:bg-white even:bg-slate-50")}
+                data-state={row.getIsSelected() && 'selected'}
+                className={cn(stripedRows && 'odd:bg-white even:bg-slate-50')}
               >
                 {row.getVisibleCells().map((cell) => (
                   <TableCell key={cell.id} className="p-3">
-                    <div onClick={() => props.onCellClick?.(row, cell)}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
+                    <div
+                      onClick={() =>
+                        !cellInsideClick && props.onCellClick?.(row, cell)
+                      }
+                    >
+                      {flexRender(cell.column.columnDef.cell, {
+                        ...cell.getContext(),
+                        onCellClick: props.onCellClick,
+                      })}
                     </div>
                   </TableCell>
                 ))}
@@ -178,7 +183,7 @@ const DataTable = forwardRef(function DataTable(
       </Table>
       <div className="flex items-center justify-end space-x-2 pt-4">
         <div className="flex-1 text-sm text-muted-foreground">
-          {table.getFilteredSelectedRowModel().rows.length} of{" "}
+          {table.getFilteredSelectedRowModel().rows.length} of{' '}
           {table.getFilteredRowModel().rows.length} row(s) selected.
         </div>
         <div className="space-x-2">

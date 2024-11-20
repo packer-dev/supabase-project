@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-"use client";
+'use client';
 
-import { useEffect } from "react";
-import { FormProvider, useForm } from "react-hook-form";
+import { useEffect } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
 
 export default function Form({
   defaultValues,

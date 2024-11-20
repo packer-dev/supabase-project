@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { createContext, Dispatch, ReactNode, useMemo, useReducer } from "react";
+import { createContext, Dispatch, ReactNode, useMemo, useReducer } from 'react';
 
 export type StorageContextProps = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -15,7 +15,7 @@ export type StorageContextProps = {
   copy: {
     path: string;
     name: string;
-    mode: "file" | "folder" | "";
+    mode: 'file' | 'folder' | '';
   }[];
 };
 
@@ -28,8 +28,8 @@ type Action<T extends keyof StorageContextProps> = {
 const init: StorageContextProps = {
   medias: [],
   selected: [],
-  showModal: "",
-  path: "",
+  showModal: '',
+  path: '',
   refresh: 0,
   renameCurrent: null,
   copy: [],

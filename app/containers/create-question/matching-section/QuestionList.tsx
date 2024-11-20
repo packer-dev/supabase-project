@@ -1,10 +1,10 @@
-import { Input } from "@/components/ui/input";
-import FormItem from "../FormItem";
-import { useFieldArray, useFormContext } from "react-hook-form";
-import { FormFields } from "../schema";
-import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
-import ItemQuestion from "./ItemQuestion";
+import { Input } from '@/components/ui/input';
+import FormItem from '../FormItem';
+import { useFieldArray, useFormContext } from 'react-hook-form';
+import { FormFields } from '../schema';
+import { Button } from '@/components/ui/button';
+import { Plus } from 'lucide-react';
+import ItemQuestion from './ItemQuestion';
 
 const QuestionList = () => {
   const {
@@ -14,14 +14,14 @@ const QuestionList = () => {
   const { control } = useFormContext<FormFields>();
   const questionList = useFieldArray<FormFields>({
     control,
-    name: "questionList",
+    name: 'questionList',
   });
   return (
     <FormItem className="mt-6" label="Questions">
       <FormItem label="Title" error={errors.questionTitle?.message}>
         <Input
           placeholder="Correct the heading"
-          {...register("questionTitle")}
+          {...register('questionTitle')}
         />
       </FormItem>
       <FormItem label="List" required error={errors.questionList?.message}>
@@ -33,8 +33,8 @@ const QuestionList = () => {
                 questionList.remove(index);
                 if (questionList.fields.length === 1) {
                   questionList.append({
-                    section: "",
-                    correctHeading: "",
+                    section: '',
+                    correctHeading: '',
                   });
                 }
               }}
@@ -46,8 +46,8 @@ const QuestionList = () => {
       <Button
         onClick={() =>
           questionList.append({
-            section: "",
-            correctHeading: "",
+            section: '',
+            correctHeading: '',
           })
         }
         type="button"

@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { createContext, Dispatch, ReactNode, useMemo, useReducer } from "react";
+import { createContext, Dispatch, ReactNode, useMemo, useReducer } from 'react';
 
 export type AppContextProps = {
-  theme: "dark" | "light" | "system";
+  theme: 'dark' | 'light' | 'system';
 };
 
 type Action<T extends keyof AppContextProps> = {
@@ -13,7 +13,7 @@ type Action<T extends keyof AppContextProps> = {
 
 // Initial state
 const init: AppContextProps = {
-  theme: "system",
+  theme: 'system',
 };
 
 // Reducer function

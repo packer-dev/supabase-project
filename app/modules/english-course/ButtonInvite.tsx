@@ -1,10 +1,10 @@
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button';
 
-import ModalUser from "./ModalUser";
-import supabase from "@/supabase";
-import { Dialog } from "@/components/ui/dialog";
-import { toast } from "@/hooks/use-toast";
-import { useMutation } from "@tanstack/react-query";
+import ModalUser from './ModalUser';
+import supabase from '@/supabase';
+import { Dialog } from '@/components/ui/dialog';
+import { toast } from '@/hooks/use-toast';
+import { useMutation } from '@tanstack/react-query';
 
 const ButtonInvite = ({
   refetch,
@@ -24,14 +24,14 @@ const ButtonInvite = ({
     onSuccess: () => {
       refetch();
       toast({
-        title: "Add user successfully",
-        description: "Add user successfully",
+        title: 'Add user successfully',
+        description: 'Add user successfully',
       });
       setShow(false);
     },
     onError: (error) => {
       toast({
-        title: "Error",
+        title: 'Error',
         description: error.message,
       });
     },
@@ -39,13 +39,13 @@ const ButtonInvite = ({
   const handleSave = async (data: { email: string; role_id: string }) => {
     const { data: user } = await supabase.auth.admin.createUser({
       email: data?.email,
-      password: "dev@",
+      password: 'dev@',
     });
-    await supabase.from("users").insert([
+    await supabase.from('users').insert([
       {
         ...data,
         password: user?.user?.id,
-        username: data.email?.split("@")[0],
+        username: data.email?.split('@')[0],
       },
     ]);
   };
@@ -53,7 +53,7 @@ const ButtonInvite = ({
   return (
     <Dialog
       open={!!userId}
-      onOpenChange={(open) => setShow(open ? userId : "")}
+      onOpenChange={(open) => setShow(open ? userId : '')}
     >
       <Button onClick={() => setShow(true)} variant="outline">
         Invite user

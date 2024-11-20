@@ -1,22 +1,22 @@
-import ModalDelete from "@/app/modals/storage/ModalDelete";
-import ModalFolder from "@/app/modals/storage/ModalFolder";
-import { Checkbox } from "@/components/ui/checkbox";
+import ModalDelete from '@/app/modals/storage/ModalDelete';
+import ModalFolder from '@/app/modals/storage/ModalFolder';
+import { Checkbox } from '@/components/ui/checkbox';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover";
-import { StorageContext } from "@/contexts/StorageContext";
-import supabase from "@/supabase";
-import Image from "next/image";
-import React, { useContext, useState } from "react";
-import StorageContextMenu from "./StorageContextMenu";
+} from '@/components/ui/popover';
+import { StorageContext } from '@/contexts/StorageContext';
+import supabase from '@/supabase';
+import Image from 'next/image';
+import React, { useContext, useState } from 'react';
+import StorageContextMenu from './StorageContextMenu';
 
 type ItemMediaProps = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   item?: any;
   loading?: boolean;
-  mode?: "folder" | "image" | "video" | "file";
+  mode?: 'folder' | 'image' | 'video' | 'file';
 };
 const ItemMedia = ({ item, loading, mode }: ItemMediaProps) => {
   const {
@@ -33,29 +33,29 @@ const ItemMedia = ({ item, loading, mode }: ItemMediaProps) => {
         <div
           onDoubleClick={() =>
             dispatch({
-              key: "path",
+              key: 'path',
               value: `${path}/${item.name}`,
             })
           }
           aria-hidden
           className={`relative border-2 border-solid  ${
-            check ? "bg-transparent" : "border-blue-500"
+            check ? 'bg-transparent' : 'border-blue-500'
           } rounded-sm shadow-sm ${
-            loading || item?.lastModified ? "animate-pulse" : ""
+            loading || item?.lastModified ? 'animate-pulse' : ''
           }`.trim()}
-          style={{ paddingTop: "100%" }}
+          style={{ paddingTop: '100%' }}
         >
-          {showModal === "rename" && renameCurrent?.name === item?.name && (
+          {showModal === 'rename' && renameCurrent?.name === item?.name && (
             <ModalFolder
               show={true}
               setShow={(show) => {
                 dispatch({
-                  key: "showModal",
-                  value: show ? "rename" : "",
+                  key: 'showModal',
+                  value: show ? 'rename' : '',
                 });
                 if (!show)
                   dispatch({
-                    key: "renameCurrent",
+                    key: 'renameCurrent',
                     value: null,
                   });
               }}
@@ -68,7 +68,7 @@ const ItemMedia = ({ item, loading, mode }: ItemMediaProps) => {
                 <Checkbox
                   onCheckedChange={(_) => {
                     dispatch({
-                      key: "selected",
+                      key: 'selected',
                       value: _
                         ? [...selected, item]
                         : [...selected].filter(
@@ -80,13 +80,13 @@ const ItemMedia = ({ item, loading, mode }: ItemMediaProps) => {
                   id={item.name}
                 />
               </div>
-              {mode === "image" ? (
+              {mode === 'image' ? (
                 <Image
                   src={`${
                     process.env.NEXT_PUBLIC_SUPABASE_URL
                   }/storage/v1/object/public/packer-ui/${path}/${item?.name?.replace(
-                    "packer-ui/",
-                    ""
+                    'packer-ui/',
+                    ''
                   )}`}
                   alt=""
                   className="absolute top-0 left-0 bottom-0 right-0 object-cover z-10"
@@ -120,11 +120,11 @@ const ItemMedia = ({ item, loading, mode }: ItemMediaProps) => {
                       aria-hidden
                       onClick={() => {
                         dispatch({
-                          key: "showModal",
-                          value: "rename",
+                          key: 'showModal',
+                          value: 'rename',
                         });
                         dispatch({
-                          key: "renameCurrent",
+                          key: 'renameCurrent',
                           value: item,
                         });
                       }}
@@ -137,15 +137,15 @@ const ItemMedia = ({ item, loading, mode }: ItemMediaProps) => {
                         setShowPopover(false);
                         const path_ = `${path}/${item.name}`;
                         const { data } = await supabase.storage
-                          .from("packer-ui")
+                          .from('packer-ui')
                           .download(path_.slice(1, path_.length));
                         if (data) {
                           const blob = new Blob([data], {
-                            type: "application/octet-stream",
+                            type: 'application/octet-stream',
                           });
                           const urlFromBlob = window.URL.createObjectURL(blob);
-                          const a = document.createElement("a");
-                          a.style.display = "none";
+                          const a = document.createElement('a');
+                          a.style.display = 'none';
                           a.href = urlFromBlob;
                           a.download = item.name;
                           document.body.appendChild(a);
@@ -175,8 +175,8 @@ const ItemMedia = ({ item, loading, mode }: ItemMediaProps) => {
                           `${
                             process.env.NEXT_PUBLIC_SUPABASE_URL
                           }/storage/v1/object/public/packer-ui/${path}/${item?.name?.replace(
-                            "packer-ui/",
-                            ""
+                            'packer-ui/',
+                            ''
                           )}`
                         );
                       }}

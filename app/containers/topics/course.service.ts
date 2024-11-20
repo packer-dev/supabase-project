@@ -1,5 +1,5 @@
-import { Page } from "@/shared/models";
-import supabase from "@/supabase";
+import { Page } from '@/shared/models';
+import supabase from '@/supabase';
 
 export type Course = {
   id: string;
@@ -19,8 +19,8 @@ const course = {
   //     data: [
   //       {
   //         id: Math.random().toString(36).substring(2, 15),
-  //         name: "Bức phá IELTS 3.0 - 4.5+",
-  //         description: "Bức phá IELTS 3.0 - 4.5+",
+  //         name: 'Bức phá IELTS 3.0 - 4.5+',
+  //         description: 'Bức phá IELTS 3.0 - 4.5+',
   //         price: 1000000,
   //         discount_percent: 6,
   //         modules: 10,
@@ -28,8 +28,8 @@ const course = {
   //       },
   //       {
   //         id: Math.random().toString(36).substring(2, 15),
-  //         name: "Phát âm tiếng anh",
-  //         description: "Phát âm tiếng anh",
+  //         name: 'Phát âm tiếng anh',
+  //         description: 'Phát âm tiếng anh',
   //         price: 1000000,
   //         discount_percent: 6,
   //         modules: 10,
@@ -40,9 +40,9 @@ const course = {
   // },
   search: async (value: string): Promise<Page<Course>> => {
     const { data, error } = await supabase
-      .from("courses")
+      .from('courses')
       .select(`*`)
-      .like("name", `%${value}%`);
+      .like('name', `%${value}%`);
     if (error) throw error;
     return {
       data,
@@ -50,31 +50,31 @@ const course = {
   },
   getById: async (id: string) => {
     const { data, error } = await supabase
-      .from("courses")
-      .select("*")
-      .eq("id", id);
+      .from('courses')
+      .select('*')
+      .eq('id', id);
     if (error) throw error;
     return data;
   },
   insert: async (payload: Course): Promise<Page<Course>> => {
     const { data, error } = await supabase
-      .from("courses")
+      .from('courses')
       .insert({ ...payload });
     if (error) throw error;
     return data;
   },
   update: async (payload: Course): Promise<Page<Course>> => {
     const { data, error } = await supabase
-      .from("courses")
+      .from('courses')
       .update({ ...payload });
     if (error) throw error;
     return data;
   },
   delete: async (id: string) => {
     const { data, error } = await supabase
-      .from("courses")
+      .from('courses')
       .delete()
-      .eq("id", id);
+      .eq('id', id);
     if (error) throw error;
     return data;
   },

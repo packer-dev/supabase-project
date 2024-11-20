@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import Form from "@/app/common/Form";
-import FormField from "@/app/common/FormField";
-import FormGroup from "@/app/common/FormGroup";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { toast } from "@/hooks/use-toast";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useMutation } from "@tanstack/react-query";
-import * as yup from "yup";
+import Form from '@/app/common/Form';
+import FormField from '@/app/common/FormField';
+import FormGroup from '@/app/common/FormGroup';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { toast } from '@/hooks/use-toast';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useMutation } from '@tanstack/react-query';
+import * as yup from 'yup';
 
 const schema = yup.object({
   fullname: yup.string().required(),
@@ -17,21 +17,21 @@ const schema = yup.object({
 
 const FormProfile = () => {
   const mutation = useMutation({
-    mutationKey: [""],
+    mutationKey: [''],
     mutationFn: async () => {},
     onSuccess: () => {
       toast({
-        title: "Update profile successfully.",
+        title: 'Update profile successfully.',
       });
     },
     onError: () => {
       toast({
-        title: "Update profile fail.",
+        title: 'Update profile fail.',
       });
     },
   });
   const buttonText = () => {
-    return mutation.isPending ? "Saving" : "Save";
+    return mutation.isPending ? 'Saving' : 'Save';
   };
   return (
     <Form onSubmit={mutation.mutate} yupResolver={yupResolver(schema)}>

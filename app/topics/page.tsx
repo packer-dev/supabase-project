@@ -1,4 +1,4 @@
-import Topics from "../containers/topics";
+import Topics from '../containers/topics';
 
 const Page = () => {
   return (

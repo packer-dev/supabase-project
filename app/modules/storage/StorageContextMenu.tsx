@@ -3,12 +3,12 @@ import {
   ContextMenuContent,
   ContextMenuItem,
   ContextMenuTrigger,
-} from "@/components/ui/context-menu";
-import { ToastAction } from "@/components/ui/toast";
-import { StorageContext } from "@/contexts/StorageContext";
-import { toast } from "@/hooks/use-toast";
-import supabase from "@/supabase";
-import React, { ReactNode, useContext } from "react";
+} from '@/components/ui/context-menu';
+import { ToastAction } from '@/components/ui/toast';
+import { StorageContext } from '@/contexts/StorageContext';
+import { toast } from '@/hooks/use-toast';
+import supabase from '@/supabase';
+import React, { ReactNode, useContext } from 'react';
 
 type StorageContextMenuProps = {
   children: ReactNode;
@@ -31,14 +31,14 @@ const StorageContextMenu = ({
     for (const obj of list) {
       if (obj.metadata) {
         await supabase.storage
-          .from("packer-ui")
+          .from('packer-ui')
           .copy(
             `${path_}/${obj.name}`,
             `${path.slice(1, path.length)}/${path_}/${obj.name}`
           );
       } else {
         const { data } = await supabase.storage
-          .from("packer-ui")
+          .from('packer-ui')
           .list(`${path_}/${obj.name}`);
         if (data?.length) {
           await loopCheck(data, `${path_}/${obj.name}`);
@@ -54,19 +54,19 @@ const StorageContextMenu = ({
           <ContextMenuItem
             onClick={() => {
               dispatch({
-                key: "copy",
+                key: 'copy',
                 value: [
                   ...copies,
                   {
                     path: `${path}/${item?.name}`,
                     name: item?.name,
-                    mode: item.metadata ? "file" : "folder",
+                    mode: item.metadata ? 'file' : 'folder',
                   },
                 ],
               });
               toast({
-                title: "Scheduled: Catch up ",
-                description: "Friday, February 10, 2023 at 5:57 PM",
+                title: 'Scheduled: Catch up ',
+                description: 'Friday, February 10, 2023 at 5:57 PM',
                 action: (
                   <ToastAction altText="Goto schedule to undo">
                     Undo
@@ -82,9 +82,9 @@ const StorageContextMenu = ({
           onClick={async () => {
             let mediaList = [...medias];
             for (const copy of copies) {
-              if (copy?.mode === "file") {
+              if (copy?.mode === 'file') {
                 await supabase.storage
-                  .from("packer-ui")
+                  .from('packer-ui')
                   .copy(
                     copy?.path.slice(1, copy?.path.length),
                     `${path.slice(1, path.length)}/${copy?.name}`
@@ -94,9 +94,9 @@ const StorageContextMenu = ({
                   ...mediaList,
                 ];
               }
-              if (copy?.mode === "folder") {
+              if (copy?.mode === 'folder') {
                 const { data } = await supabase.storage
-                  .from("packer-ui")
+                  .from('packer-ui')
                   .list(copy?.path.slice(1, copy?.path.length));
                 if (data?.length) {
                   await loopCheck(data, copy?.path.slice(1, copy?.path.length));
@@ -107,7 +107,7 @@ const StorageContextMenu = ({
                 ];
               }
               dispatch({
-                key: "medias",
+                key: 'medias',
                 value: mediaList,
               });
             }

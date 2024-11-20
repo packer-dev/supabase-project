@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode } from 'react';
 
 export function PageMain({ children }: { children: ReactNode }) {
   return (

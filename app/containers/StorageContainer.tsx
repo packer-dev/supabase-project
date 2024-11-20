@@ -1,5 +1,5 @@
-import { StorageProvider } from "@/contexts/StorageContext";
-import React, { ReactNode } from "react";
+import { StorageProvider } from '@/contexts/StorageContext';
+import React, { ReactNode } from 'react';
 
 type ContainerProps = {
   children?: ReactNode;

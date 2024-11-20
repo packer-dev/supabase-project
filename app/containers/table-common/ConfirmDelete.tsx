@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-function-type */
-import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { useMutation } from "@tanstack/react-query";
-import React from "react";
+import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { useMutation } from '@tanstack/react-query';
+import React from 'react';
 
 type ConfirmDeleteType = {
   show: boolean;
@@ -30,7 +30,7 @@ const ConfirmDelete = ({
   return (
     <Dialog open={show} onOpenChange={setShow}>
       <DialogContent>
-        <p>{title ?? "Do you want to delete this?"}</p>
+        <p>{title ?? 'Do you want to delete this?'}</p>
         <div className="flex justify-end pt-6 gap-3">
           <Button type="button" variant="secondary">
             Cancel
@@ -41,7 +41,7 @@ const ConfirmDelete = ({
             className="bg-red-500"
             disabled={mutation.isPending}
           >
-            {mutation.isPending ? "Deleting" : "Delete"}
+            {mutation.isPending ? 'Deleting' : 'Delete'}
           </Button>
         </div>
       </DialogContent>

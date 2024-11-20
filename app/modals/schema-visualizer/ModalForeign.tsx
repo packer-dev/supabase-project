@@ -1,16 +1,16 @@
-import { Button } from "@/components/ui/button";
-import { Combobox } from "@/components/ui/combobox";
+import { Button } from '@/components/ui/button';
+import { Combobox } from '@/components/ui/combobox';
 import {
   DialogContent,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
+} from '@/components/ui/dialog';
 import {
   SchemaVisualizerContext,
   TableProps,
-} from "@/contexts/SchemaVisualizerContext";
-import React, { useContext, useState } from "react";
+} from '@/contexts/SchemaVisualizerContext';
+import React, { useContext, useState } from 'react';
 
 type ModalForeignProps = {
   current: TableProps;
@@ -23,8 +23,8 @@ const ModalForeign = ({ current, closeDialog, type }: ModalForeignProps) => {
     state: { tables, relationships },
     dispatch,
   } = useContext(SchemaVisualizerContext);
-  const [value, setValue] = useState("");
-  const [data, setData] = useState("");
+  const [value, setValue] = useState('');
+  const [data, setData] = useState('');
   return (
     <DialogContent className="sm:max-w-[425px]">
       <DialogHeader>
@@ -53,7 +53,7 @@ const ModalForeign = ({ current, closeDialog, type }: ModalForeignProps) => {
                     label: column.value,
                   })) || []
               }
-              value={data || "id"}
+              value={data || 'id'}
               setValue={setData}
             />
           )}
@@ -65,7 +65,7 @@ const ModalForeign = ({ current, closeDialog, type }: ModalForeignProps) => {
             const relationship = tables.find((child) => child.id === value);
             if (relationship)
               dispatch({
-                key: "relationships",
+                key: 'relationships',
                 value: [
                   ...relationships,
                   {

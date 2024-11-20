@@ -1,11 +1,11 @@
-import { Course } from "@/services/course.service";
-import { ColumnDef } from "@tanstack/react-table";
-import * as yup from "yup";
+import { Course } from '@/services/course.service';
+import { ColumnDef } from '@tanstack/react-table';
+import * as yup from 'yup';
 
 export const columns: ColumnDef<Course>[] = [
   {
-    accessorKey: "name",
-    header: "Exam topic name",
+    accessorKey: 'name',
+    header: 'Exam topic name',
     cell: ({ row }) => (
       <span className="font-semibold text-primary cursor-pointer underline">
         {row.original.name}
@@ -13,8 +13,8 @@ export const columns: ColumnDef<Course>[] = [
     ),
   },
   {
-    accessorKey: "created_at",
-    header: "Created At",
+    accessorKey: 'created_at',
+    header: 'Created At',
     cell: ({ row }) => <span>{row.original.created_at}</span>,
   },
 ];

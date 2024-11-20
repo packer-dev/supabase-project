@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
   Table,
@@ -7,65 +7,65 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import supabase from "@/supabase";
-import { useQuery } from "@tanstack/react-query";
-import ButtonInvite from "../modules/english-course/ButtonInvite";
-import { useState } from "react";
-import { Input } from "@/components/ui/input";
+} from '@/components/ui/table';
+import supabase from '@/supabase';
+import { useQuery } from '@tanstack/react-query';
+import ButtonInvite from '../modules/english-course/ButtonInvite';
+import { useState } from 'react';
+import { Input } from '@/components/ui/input';
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { CircleHelp, EllipsisVertical, X } from "lucide-react";
-import Image from "next/image";
-import { Popover, PopoverTrigger } from "@/components/ui/popover";
-import { PopoverContent } from "@radix-ui/react-popover";
-import { toast } from "@/hooks/use-toast";
+} from '@/components/ui/tooltip';
+import { CircleHelp, EllipsisVertical, X } from 'lucide-react';
+import Image from 'next/image';
+import { Popover, PopoverTrigger } from '@/components/ui/popover';
+import { PopoverContent } from '@radix-ui/react-popover';
+import { toast } from '@/hooks/use-toast';
 
 export const EnglishCourseContainer = () => {
   //
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState('');
   const fetchUsers = async () => {
     const { data: users } = await supabase
-      .from("users")
+      .from('users')
       .select(
         `
       *,
       roles!inner(*)
     `
       )
-      .eq("roles.role_name", "admin")
-      .like("email", `%${value}%`);
+      .eq('roles.role_name', 'admin')
+      .like('email', `%${value}%`);
 
     return users;
   };
-  const [userId, setUserId] = useState<boolean | string>("");
+  const [userId, setUserId] = useState<boolean | string>('');
   const { data, isLoading, refetch } = useQuery({
-    queryKey: ["users", value],
+    queryKey: ['users', value],
     queryFn: fetchUsers,
   });
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleCancelInvitation = async (item: any) => {
     const { error: errorDatabase } = await supabase
-      .from("users")
+      .from('users')
       .delete()
-      .eq("id", item?.id);
+      .eq('id', item?.id);
     const { error: errorAuth } = await supabase.auth.admin.deleteUser(
       item?.password
     );
     refetch();
     if (errorAuth || errorDatabase) {
       toast({
-        title: "Delete fail",
-        description: "Friday, February 10, 2023 at 5:57 PM",
+        title: 'Delete fail',
+        description: 'Friday, February 10, 2023 at 5:57 PM',
       });
     } else {
       toast({
-        title: "Delete success",
-        description: "Friday, February 10, 2023 at 5:57 PM",
+        title: 'Delete success',
+        description: 'Friday, February 10, 2023 at 5:57 PM',
       });
     }
   };
@@ -173,7 +173,7 @@ export const EnglishCourseContainer = () => {
               >
                 <div className="flex items-center gap-3">
                   <CircleHelp size={16} />
-                  <span>No users matched the search query {`"${value}"`}</span>
+                  <span>No users matched the search query {`'${value}'`}</span>
                 </div>
               </TableCell>
             </TableRow>

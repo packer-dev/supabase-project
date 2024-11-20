@@ -1,9 +1,9 @@
-import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogFooter } from "@/components/ui/dialog";
-import { StorageContext } from "@/contexts/StorageContext";
-import supabase from "@/supabase";
-import { DialogTitle } from "@radix-ui/react-dialog";
-import React, { useContext, useState } from "react";
+import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogFooter } from '@/components/ui/dialog';
+import { StorageContext } from '@/contexts/StorageContext';
+import supabase from '@/supabase';
+import { DialogTitle } from '@radix-ui/react-dialog';
+import React, { useContext, useState } from 'react';
 
 type ModalDeleteProps = {
   show: boolean;
@@ -21,15 +21,15 @@ const ModalDelete = ({ show, setShow, items }: ModalDeleteProps) => {
   const [loading, setLoading] = useState(false);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const loopCheck = async (list: any[], path: string) => {
-    let newValue = "";
+    let newValue = '';
     for (const obj of list) {
       if (obj.metadata) {
         await supabase.storage
-          .from("packer-ui")
+          .from('packer-ui')
           .remove([`${path}/${obj.name}`]);
       } else {
         const { data } = await supabase.storage
-          .from("packer-ui")
+          .from('packer-ui')
           .list(`${path}/${obj.name}`);
         if (data?.length) {
           loopCheck(data, `${path}/${obj.name}`);
@@ -48,25 +48,25 @@ const ModalDelete = ({ show, setShow, items }: ModalDeleteProps) => {
         // eslint-disable-next-line prefer-const
         let child = `${path}/${item.name}`;
         child = child.slice(1, child.length);
-        const { data } = await supabase.storage.from("packer-ui").list(child);
+        const { data } = await supabase.storage.from('packer-ui').list(child);
         if (data?.length) {
           loopCheck(data, child);
         }
       } else {
         const newPath = `${path}/${item.name}`;
         await supabase.storage
-          .from("packer-ui")
+          .from('packer-ui')
           .remove([newPath.slice(1, newPath.length)]);
       }
     }
     dispatch({
-      key: "medias",
+      key: 'medias',
       value: [...medias].filter(
         (_) => items.findIndex((child) => child.name === _.name) === -1
       ),
     });
     dispatch({
-      key: "selected",
+      key: 'selected',
       value: [],
     });
     setShow(false);

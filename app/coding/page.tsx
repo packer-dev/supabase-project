@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import React, { forwardRef, useEffect, useRef, useState } from "react";
-import Wrapper from "../Wrapper";
-import { v4 } from "uuid";
+import React, { forwardRef, useEffect, useRef, useState } from 'react';
+import Wrapper from '../Wrapper';
+import { v4 } from 'uuid';
 
 type ItemProps = {
   id: string;
@@ -24,7 +24,7 @@ const Coding = () => {
           clearTimeout(timeOut);
           return;
         }
-        const left = +ref.current.style.left.replace("px", "");
+        const left = +ref.current.style.left.replace('px', '');
         if (time + 1 < 15) {
           setTime(time + 1);
         } else {
@@ -39,26 +39,26 @@ const Coding = () => {
     );
   }, [time, done, ref, mode, isFast]);
   useEffect(() => {
-    window.addEventListener("keyup", (event) => {
+    window.addEventListener('keyup', (event) => {
       if (ref.current) {
         let deg: number | string = ref.current.style.transform;
-        deg = deg.replace("rotate(", "").replace("deg)", "");
+        deg = deg.replace('rotate(', '').replace('deg)', '');
         deg = +deg;
-        const left = +ref.current.style.left.replace("px", "");
+        const left = +ref.current.style.left.replace('px', '');
         const oneLine = mode === 1 ? 100 : 40;
         switch (event.key) {
-          case "ArrowDown":
+          case 'ArrowDown':
             setIsFast(true);
             break;
-          case "ArrowUp":
+          case 'ArrowUp':
             ref.current.style.transform = `rotate(${
               deg + 90 > 360 ? 0 : deg + 90
             }deg)`;
             break;
-          case "ArrowLeft":
+          case 'ArrowLeft':
             ref.current.style.left = `${left - oneLine < 0 ? 0 : left - 40}px`;
             break;
-          case "ArrowRight":
+          case 'ArrowRight':
             ref.current.style.left = `${
               left + oneLine > 400 ? 300 : left + 40
             }px`;
@@ -76,7 +76,7 @@ const Coding = () => {
         <div className="w-[400px] h-[600px] border-gray-300 border relative overflow-hidden">
           <div
             className="grid"
-            style={{ gridTemplateColumns: "repeat(10, 1fr)" }}
+            style={{ gridTemplateColumns: 'repeat(10, 1fr)' }}
           >
             {Array(600)
               .fill(0)
@@ -117,7 +117,7 @@ const Item = forwardRef(function Item(
       style={{
         top: item.top,
         left: item.left,
-        transform: "rotate(0deg)",
+        transform: 'rotate(0deg)',
       }}
     >
       <div className="w-[120px] h-[40px] relative outline-none">

@@ -1,15 +1,15 @@
-import { Button } from "@/components/ui/button";
-import { Combobox } from "@/components/ui/combobox";
+import { Button } from '@/components/ui/button';
+import { Combobox } from '@/components/ui/combobox';
 import {
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { ColumnProps, TableProps } from "@/contexts/SchemaVisualizerContext";
-import { useState } from "react";
+} from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { ColumnProps, TableProps } from '@/contexts/SchemaVisualizerContext';
+import { useState } from 'react';
 
 const ModalTable = ({
   submit,
@@ -63,16 +63,16 @@ const ModalTable = ({
                 <Combobox
                   list={[
                     {
-                      value: "Integer",
-                      label: "Integer",
+                      value: 'Integer',
+                      label: 'Integer',
                     },
                     {
-                      value: "String",
-                      label: "String",
+                      value: 'String',
+                      label: 'String',
                     },
                     {
-                      value: "Boolean",
-                      label: "Boolean",
+                      value: 'Boolean',
+                      label: 'Boolean',
                     },
                   ]}
                   value={item.type}
@@ -110,9 +110,9 @@ const ModalTable = ({
             ...columns,
             {
               id: Math.random().toString(),
-              value: "",
-              type: "",
-              mode: "normal",
+              value: '',
+              type: '',
+              mode: 'normal',
             },
           ])
         }

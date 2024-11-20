@@ -1,17 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import { PlusCircleIcon } from "lucide-react";
-import React from "react";
-import FormTopic from "./FormTopic";
-import { useMutation } from "@tanstack/react-query";
-import { useApi } from "@/services/api";
+} from '@/components/ui/dialog';
+import { PlusCircleIcon } from 'lucide-react';
+import React from 'react';
+import FormTopic from './FormTopic';
+import { useMutation } from '@tanstack/react-query';
+import { useApi } from '@/services/api';
 
 type CreateTopicType = {
   id: string | null;
@@ -46,7 +46,7 @@ const CreateTopic = ({ id, open, onOpenChange, refetch }: CreateTopicType) => {
         <DialogHeader className="-mt-2 mb-4">
           <DialogTitle>
             <p className="text-xl font-semibold">
-              {id ? "Edit" : "Create"} new topic
+              {id ? 'Edit' : 'Create'} new topic
             </p>
           </DialogTitle>
         </DialogHeader>

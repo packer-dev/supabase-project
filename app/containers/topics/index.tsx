@@ -1,17 +1,17 @@
-"use client";
+'use client';
 
-import { DataTable } from "@/components/shared/DataTable";
-import { useQuery } from "@tanstack/react-query";
-import { columns } from "./constants";
-import { Input } from "@/components/ui/input";
-import { useApi } from "@/services/api";
-import { useState } from "react";
-import CreateExampleTopic from "./CreateTopic";
-import ConfirmDeleteTopic from "../table-common/ConfirmDelete";
+import { DataTable } from '@/components/shared/DataTable';
+import { useQuery } from '@tanstack/react-query';
+import { columns } from './constants';
+import { Input } from '@/components/ui/input';
+import { useApi } from '@/services/api';
+import { useState } from 'react';
+import CreateExampleTopic from './CreateTopic';
+import ConfirmDeleteTopic from '../table-common/ConfirmDelete';
 
 const Topic = () => {
-  const [value, setValue] = useState("");
-  const [examTopicId, setTopicId] = useState<string | null>("");
+  const [value, setValue] = useState('');
+  const [examTopicId, setTopicId] = useState<string | null>('');
   const [showTopic, setShowTopic] = useState(false);
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
   const { examTopic } = useApi();
@@ -19,7 +19,7 @@ const Topic = () => {
     return examTopic.search(value);
   };
   const { data, isLoading, isPending, isRefetching, refetch } = useQuery({
-    queryKey: ["courses", value],
+    queryKey: ['courses', value],
     queryFn: fetchTopic,
   });
   return (

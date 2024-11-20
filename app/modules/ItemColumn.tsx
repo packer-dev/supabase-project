@@ -3,13 +3,13 @@ import {
   ContextMenuContent,
   ContextMenuItem,
   ContextMenuTrigger,
-} from "@/components/ui/context-menu";
+} from '@/components/ui/context-menu';
 import {
   ColumnProps,
   SchemaVisualizerContext,
   TableProps,
-} from "@/contexts/SchemaVisualizerContext";
-import React, { useContext } from "react";
+} from '@/contexts/SchemaVisualizerContext';
+import React, { useContext } from 'react';
 
 type ItemColumnProps = {
   column: ColumnProps;
@@ -21,14 +21,14 @@ const ItemColumn = ({ column, item }: ItemColumnProps) => {
     state: { tables },
     dispatch,
   } = useContext(SchemaVisualizerContext);
-  const colorMode = column.mode === "foreign" ? "bg-blue-500" : "bg-gray-500";
+  const colorMode = column.mode === 'foreign' ? 'bg-blue-500' : 'bg-gray-500';
   const updateColumStatus = (
     item: TableProps,
     column: ColumnProps,
-    mode: "primary" | "foreign" | "normal"
+    mode: 'primary' | 'foreign' | 'normal'
   ) => {
     dispatch({
-      key: "tables",
+      key: 'tables',
       value: [...tables].map((table) => {
         if (table.id === item.id) {
           return {
@@ -41,7 +41,7 @@ const ItemColumn = ({ column, item }: ItemColumnProps) => {
                 };
               return {
                 ...child,
-                mode: child.mode !== mode ? child.mode : "normal",
+                mode: child.mode !== mode ? child.mode : 'normal',
               };
             }),
           };
@@ -57,7 +57,7 @@ const ItemColumn = ({ column, item }: ItemColumnProps) => {
           <div className="flex gap-2 items-center flex-1">
             <span
               className={`flex w-2 h-2 rounded-full ${
-                column.mode === "primary" ? "bg-yellow-500" : colorMode
+                column.mode === 'primary' ? 'bg-yellow-500' : colorMode
               }`}
             />
             <span className="font-bold text-gray-600 dark:text-gray-300">
@@ -69,19 +69,19 @@ const ItemColumn = ({ column, item }: ItemColumnProps) => {
         </div>
       </ContextMenuTrigger>
       <ContextMenuContent>
-        {column.mode !== "primary" && (
+        {column.mode !== 'primary' && (
           <ContextMenuItem
-            onClick={() => updateColumStatus(item, column, "primary")}
+            onClick={() => updateColumStatus(item, column, 'primary')}
             className="flex items-center gap-2 cursor-pointer"
           >
             <span className="bx bx-key text-xl text-yellow-500" />
             <span>Primary key</span>
           </ContextMenuItem>
         )}
-        {column.mode !== "foreign" && (
+        {column.mode !== 'foreign' && (
           <ContextMenuItem
             onClick={() =>
-              dispatch({ key: "showModalForeign", value: item.id })
+              dispatch({ key: 'showModalForeign', value: item.id })
             }
             className="flex items-center gap-2 cursor-pointer"
           >
@@ -92,7 +92,7 @@ const ItemColumn = ({ column, item }: ItemColumnProps) => {
         <ContextMenuItem
           onClick={() => {
             dispatch({
-              key: "tables",
+              key: 'tables',
               value: [...tables].map((table) => {
                 if (table.id === item.id) {
                   return {
@@ -101,7 +101,7 @@ const ItemColumn = ({ column, item }: ItemColumnProps) => {
                       child.id === column.id
                         ? {
                             ...child,
-                            mode: "normal",
+                            mode: 'normal',
                           }
                         : child
                     ),

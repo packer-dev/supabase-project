@@ -1,5 +1,5 @@
-import EnglishCourseContainer from "../containers/EnglishCourseContainer";
-import Wrapper from "../Wrapper";
+import EnglishCourseContainer from '../containers/EnglishCourseContainer';
+import Wrapper from '../Wrapper';
 
 const EnglishCourse = () => {
   return (

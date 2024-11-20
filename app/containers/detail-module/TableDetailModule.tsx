@@ -1,16 +1,16 @@
-"use client";
+'use client';
 
-import { DataTable } from "@/components/shared/DataTable";
-import { useQuery } from "@tanstack/react-query";
-import { Input } from "@/components/ui/input";
-import { useApi } from "@/services/api";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { columns } from "./constants";
-import CreateLesson from "../create-lesson";
+import { DataTable } from '@/components/shared/DataTable';
+import { useQuery } from '@tanstack/react-query';
+import { Input } from '@/components/ui/input';
+import { useApi } from '@/services/api';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { columns } from './constants';
+import CreateLesson from '../create-lesson';
 
 const TableDetailModule = () => {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState('');
   const router = useRouter();
   const [showCreateModule, setShowCreateModule] = useState(false);
   const { module } = useApi();
@@ -18,7 +18,7 @@ const TableDetailModule = () => {
     return module.search(value);
   };
   const { data, isLoading, isPending, isRefetching, refetch } = useQuery({
-    queryKey: ["modules", value],
+    queryKey: ['modules', value],
     queryFn: fetchModules,
   });
   return (
@@ -44,11 +44,11 @@ const TableDetailModule = () => {
       <div className="p-4 bg-white rounded shadow-md">
         <DataTable
           onCellClick={(row, cell) => {
-            if (cell.column.id === "name") {
+            if (cell.column.id === 'name') {
               router.push(
                 `/courses/${row.original.name
                   .toLowerCase()
-                  .replaceAll(" ", "-")}`
+                  .replaceAll(' ', '-')}`
               );
             }
           }}

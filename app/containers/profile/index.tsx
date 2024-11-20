@@ -1,8 +1,8 @@
-import { TriangleAlert } from "lucide-react";
-import FormProfile from "./form-profile";
-import FormPassword from "./form-password";
-import { Button } from "@/components/ui/button";
-import { FormAvatar } from "./form-avatar";
+import { TriangleAlert } from 'lucide-react';
+import FormProfile from './form-profile';
+import FormPassword from './form-password';
+import { Button } from '@/components/ui/button';
+import { FormAvatar } from './form-avatar';
 
 const Profile = () => {
   return (

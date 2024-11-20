@@ -1,6 +1,6 @@
-import { Label } from "@/components/ui/label";
-import { nanoid } from "nanoid";
-import { Children, createElement, ReactElement } from "react";
+import { Label } from '@/components/ui/label';
+import { nanoid } from 'nanoid';
+import { Children, createElement, ReactElement } from 'react';
 
 export type FormGroupProps = {
   id?: string;

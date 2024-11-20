@@ -1,5 +1,5 @@
-import { createClient, SupabaseClient } from "@supabase/supabase-js";
-import order from "./order.service";
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
+import order from './order.service';
 
 class SupabaseClientConfig {
   get client(): SupabaseClient {
@@ -7,7 +7,7 @@ class SupabaseClientConfig {
     const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
     if (!supabaseUrl || !supabaseAnonKey) {
-      throw new Error("Supabase URL or Anon Key is not defined");
+      throw new Error('Supabase URL or Anon Key is not defined');
     }
 
     const supabase = createClient(supabaseUrl, supabaseAnonKey);

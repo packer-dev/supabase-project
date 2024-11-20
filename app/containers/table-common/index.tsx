@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Input } from "@/components/ui/input";
-import { useQuery } from "@tanstack/react-query";
-import React, { ReactNode, useState } from "react";
-import ButtonCreate from "./ButtonCreate";
-import ConfirmDelete from "./ConfirmDelete";
+import { Input } from '@/components/ui/input';
+import { useQuery } from '@tanstack/react-query';
+import React, { ReactNode, useState } from 'react';
+import ButtonCreate from './ButtonCreate';
+import ConfirmDelete from './ConfirmDelete';
 
 export type CommonTableType = {
   queryFn: () => Promise<any>;
@@ -33,8 +33,8 @@ const TableCommon = ({
   name,
 }: CommonTableType) => {
   //
-  const [value, setValue] = useState("");
-  const [id, setId] = useState<string | null>("");
+  const [value, setValue] = useState('');
+  const [id, setId] = useState<string | null>('');
   const [showDialog, setShowDialog] = useState(false);
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
   const { data, isLoading, isPending, isRefetching, refetch } = useQuery({

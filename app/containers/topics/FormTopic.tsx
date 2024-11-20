@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import FormField from "@/components/shared/FormField";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { yupResolver } from "@hookform/resolvers/yup/dist/yup.js";
-import { UseMutateFunction, useQuery } from "@tanstack/react-query";
-import Form from "@/components/shared/Form";
-import { Button } from "@/components/ui/button";
-import { schema } from "./constant";
-import { useApi } from "@/services/api";
+import FormField from '@/components/shared/FormField';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { yupResolver } from '@hookform/resolvers/yup/dist/yup.js';
+import { UseMutateFunction, useQuery } from '@tanstack/react-query';
+import Form from '@/components/shared/Form';
+import { Button } from '@/components/ui/button';
+import { schema } from './constant';
+import { useApi } from '@/services/api';
 
 export type FormTopicType = {
   id: string | null;
@@ -26,15 +26,15 @@ const FormTopic = ({ id, mutate, isPending }: FormTopicType) => {
     isPending: isPendingById,
     isLoading,
   } = useQuery({
-    queryKey: ["fetchTopicById", id],
+    queryKey: ['fetchTopicById', id],
     queryFn: fetchTopicById,
   });
   const defaultValues = {
     ...(data || {}),
   };
   const buttonText = () => {
-    if (isPending) return id ? "Editing" : "Creating";
-    return id ? "Edit" : "Create";
+    if (isPending) return id ? 'Editing' : 'Creating';
+    return id ? 'Edit' : 'Create';
   };
   return (
     <Form

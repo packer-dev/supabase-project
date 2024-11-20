@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { Card } from "@/components/ui/card";
-import HeaderDetailLesson from "./HeaderDetailLesson";
+import { Card } from '@/components/ui/card';
+import HeaderDetailLesson from './HeaderDetailLesson';
 
 const DetailLesson = () => {
   //

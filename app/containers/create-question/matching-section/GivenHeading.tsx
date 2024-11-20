@@ -1,12 +1,12 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { MinusCircle, Plus } from "lucide-react";
-import { UseFieldArrayReturn, useFormContext } from "react-hook-form";
-import { FormFields } from "../schema";
-import FormItem from "../FormItem";
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { MinusCircle, Plus } from 'lucide-react';
+import { UseFieldArrayReturn, useFormContext } from 'react-hook-form';
+import { FormFields } from '../schema';
+import FormItem from '../FormItem';
 
 type GivenHeadingProps = {
-  fieldArray: UseFieldArrayReturn<FormFields, never, "id">;
+  fieldArray: UseFieldArrayReturn<FormFields, never, 'id'>;
 };
 
 const GivenHeading = ({ fieldArray }: GivenHeadingProps) => {
@@ -35,7 +35,7 @@ const GivenHeading = ({ fieldArray }: GivenHeadingProps) => {
                 fieldArray.remove(index);
                 if (fieldArray.fields.length === 1) {
                   fieldArray.append({
-                    value: "",
+                    value: '',
                   });
                 }
               }}
@@ -50,7 +50,7 @@ const GivenHeading = ({ fieldArray }: GivenHeadingProps) => {
         type="button"
         onClick={() =>
           fieldArray.append({
-            value: "",
+            value: '',
           })
         }
         variant="secondary"

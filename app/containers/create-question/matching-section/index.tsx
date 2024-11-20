@@ -1,9 +1,9 @@
-import { useFieldArray, useForm } from "react-hook-form";
-import { FormFields } from "../schema";
-import FormItem from "../FormItem";
-import GivenHeading from "./GivenHeading";
-import QuestionList from "./QuestionList";
-import GivenInformation from "./GivenInformation";
+import { useFieldArray, useForm } from 'react-hook-form';
+import { FormFields } from '../schema';
+import FormItem from '../FormItem';
+import GivenHeading from './GivenHeading';
+import QuestionList from './QuestionList';
+import GivenInformation from './GivenInformation';
 
 type MatchingSectionProps = {
   label: string;
@@ -14,7 +14,7 @@ const MatchingSection = ({ label, haveList }: MatchingSectionProps) => {
   const { control } = useForm<FormFields>();
   const fieldGiven = useFieldArray<FormFields>({
     control,
-    name: haveList ? "givenInformation.items" : "givenHeadings",
+    name: haveList ? 'givenInformation.items' : 'givenHeadings',
   });
   return (
     <>

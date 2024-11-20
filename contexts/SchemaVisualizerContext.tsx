@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { createContext, Dispatch, ReactNode, useMemo, useReducer } from "react";
+import { createContext, Dispatch, ReactNode, useMemo, useReducer } from 'react';
 
 export type TableProps = {
   id: string;
@@ -16,7 +16,7 @@ export type ColumnProps = {
   id: string;
   value: string;
   type: string;
-  mode: "primary" | "foreign" | "normal";
+  mode: 'primary' | 'foreign' | 'normal';
 };
 
 export type RelationProps = {
@@ -44,26 +44,26 @@ type Action<T extends keyof SchemaVisualizerContextProps> = {
 const init: SchemaVisualizerContextProps = {
   tables: [
     {
-      id: "0.206695142112302",
-      name: "user",
+      id: '0.206695142112302',
+      name: 'user',
       columns: [
         {
-          id: "0.21441415147745357",
-          value: "id",
-          type: "Integer",
-          mode: "primary",
+          id: '0.21441415147745357',
+          value: 'id',
+          type: 'Integer',
+          mode: 'primary',
         },
         {
-          id: "0.34837708894952524",
-          value: "name",
-          type: "String",
-          mode: "normal",
+          id: '0.34837708894952524',
+          value: 'name',
+          type: 'String',
+          mode: 'normal',
         },
         {
-          id: "0.23580182532587513",
-          value: "age",
-          type: "String",
-          mode: "normal",
+          id: '0.23580182532587513',
+          value: 'age',
+          type: 'String',
+          mode: 'normal',
         },
       ],
       position: {
@@ -72,32 +72,32 @@ const init: SchemaVisualizerContextProps = {
       },
     },
     {
-      id: "0.5239534653839841",
-      name: "post",
+      id: '0.5239534653839841',
+      name: 'post',
       columns: [
         {
-          id: "0.374428460354828",
-          value: "id",
-          type: "Integer",
-          mode: "primary",
+          id: '0.374428460354828',
+          value: 'id',
+          type: 'Integer',
+          mode: 'primary',
         },
         {
-          id: "0.6589503096061804",
-          value: "id_user",
-          type: "Integer",
-          mode: "normal",
+          id: '0.6589503096061804',
+          value: 'id_user',
+          type: 'Integer',
+          mode: 'normal',
         },
         {
-          id: "0.27482616441682084",
-          value: "content",
-          type: "String",
-          mode: "normal",
+          id: '0.27482616441682084',
+          value: 'content',
+          type: 'String',
+          mode: 'normal',
         },
         {
-          id: "0.8376206080627757",
-          value: "is_deleted",
-          type: "Boolean",
-          mode: "normal",
+          id: '0.8376206080627757',
+          value: 'is_deleted',
+          type: 'Boolean',
+          mode: 'normal',
         },
       ],
       position: {
@@ -106,26 +106,26 @@ const init: SchemaVisualizerContextProps = {
       },
     },
     {
-      id: "0.47389059574818937",
-      name: "comment",
+      id: '0.47389059574818937',
+      name: 'comment',
       columns: [
         {
-          id: "0.940859691307758",
-          value: "id",
-          type: "Integer",
-          mode: "primary",
+          id: '0.940859691307758',
+          value: 'id',
+          type: 'Integer',
+          mode: 'primary',
         },
         {
-          id: "0.1370438589209917",
-          value: "id_user",
-          type: "Integer",
-          mode: "normal",
+          id: '0.1370438589209917',
+          value: 'id_user',
+          type: 'Integer',
+          mode: 'normal',
         },
         {
-          id: "0.4598807002893641",
-          value: "id_post",
-          type: "Integer",
-          mode: "normal",
+          id: '0.4598807002893641',
+          value: 'id_post',
+          type: 'Integer',
+          mode: 'normal',
         },
       ],
       position: {
@@ -134,10 +134,10 @@ const init: SchemaVisualizerContextProps = {
       },
     },
   ],
-  data: "",
+  data: '',
   relationships: [],
   current: null,
-  showModalForeign: "",
+  showModalForeign: '',
   tableCurrent: null,
   showModalTable: false,
 };

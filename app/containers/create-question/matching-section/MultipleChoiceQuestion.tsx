@@ -1,20 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from "react";
-import { useFieldArray, useFormContext } from "react-hook-form";
-import { FormFields } from "../schema";
-import FormItem from "../FormItem";
-import { Button } from "@/components/ui/button";
-import { CirclePlus, MinusCircle, Pen, Plus, Trash } from "lucide-react";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Input } from "@/components/ui/input";
+import React from 'react';
+import { useFieldArray, useFormContext } from 'react-hook-form';
+import { FormFields } from '../schema';
+import FormItem from '../FormItem';
+import { Button } from '@/components/ui/button';
+import { CirclePlus, MinusCircle, Pen, Plus, Trash } from 'lucide-react';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Input } from '@/components/ui/input';
 
 const MultipleChoiceQuestion = () => {
   const { control, watch, trigger } = useFormContext<FormFields>();
-  const fieldArray = useFieldArray<FormFields, `multipleChoice`, "id">({
+  const fieldArray = useFieldArray<FormFields, `multipleChoice`, 'id'>({
     control,
     name: `multipleChoice`,
   });
-  const items = watch("multipleChoice");
+  const items = watch('multipleChoice');
   return (
     <FormItem className="mt-6" label="List of question" required>
       <div className="flex flex-col gap-2 w-full">
@@ -43,12 +43,12 @@ const MultipleChoiceQuestion = () => {
                 is_done: true,
               });
               fieldArray.append({
-                question: "",
+                question: '',
                 answers: [
                   {
                     is_new: true,
                     is_correct: false,
-                    content: "",
+                    content: '',
                   },
                 ],
               });
@@ -81,13 +81,13 @@ const FormMultipleChoice = ({ index }: FormMultipleChoiceProps) => {
   const fieldArray = useFieldArray<
     FormFields,
     `multipleChoice.${number}.answers`,
-    "id"
+    'id'
   >({ control, name: `multipleChoice.${index}.answers` });
   return (
     <div className="border-dashed border-2 border-gray-200 p-3 rounded-sm">
       <FormItem
         label="Question"
-        error={errors[`multipleChoice`]?.[index]?.question?.message ?? ""}
+        error={errors[`multipleChoice`]?.[index]?.question?.message ?? ''}
         required
       >
         <textarea
@@ -152,7 +152,7 @@ const FormMultipleChoice = ({ index }: FormMultipleChoiceProps) => {
                         fieldArray.append({
                           is_correct: false,
                           is_new: true,
-                          content: "",
+                          content: '',
                         });
                       }
                     }
@@ -176,7 +176,7 @@ const FormMultipleChoice = ({ index }: FormMultipleChoiceProps) => {
 
 const ItemMultipleChoice = ({ item, index }: { item: any; index: number }) => {
   const { control } = useFormContext<FormFields>();
-  const fieldArray = useFieldArray<FormFields, `multipleChoice`, "id">({
+  const fieldArray = useFieldArray<FormFields, `multipleChoice`, 'id'>({
     control,
     name: `multipleChoice`,
   });
@@ -188,15 +188,15 @@ const ItemMultipleChoice = ({ item, index }: { item: any; index: number }) => {
       <div className="flex-1">
         <p>{item?.question}</p>
         <div className="flex flex-col gap-0.5 mt-2">
-          {["A", "B", "C", "D", "E", "F", "G", "H", "J", "K"]
+          {['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K']
             .slice(0, item?.answers?.length - 1)
             .map((_, index) => (
               <div key={_} className="flex gap-2 items-start">
                 <span
                   className={`rounded-full px-1.5 block ${
                     item?.answers?.[index]?.is_correct
-                      ? "border border-black"
-                      : ""
+                      ? 'border border-black'
+                      : ''
                   }`}
                 >
                   {_}

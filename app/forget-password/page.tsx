@@ -1,5 +1,5 @@
-import ForgetPassword from "../containers/ForgetPassword";
-import Wrapper from "../Wrapper";
+import ForgetPassword from '../containers/ForgetPassword';
+import Wrapper from '../Wrapper';
 
 const Page = () => {
   return (

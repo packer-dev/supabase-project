@@ -1,10 +1,10 @@
-import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogFooter } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { StorageContext } from "@/contexts/StorageContext";
-import supabase from "@/supabase";
-import { DialogTitle } from "@radix-ui/react-dialog";
-import React, { ReactNode, useContext, useState } from "react";
+import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogFooter } from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { StorageContext } from '@/contexts/StorageContext';
+import supabase from '@/supabase';
+import { DialogTitle } from '@radix-ui/react-dialog';
+import React, { ReactNode, useContext, useState } from 'react';
 
 type ModalFolderProps = {
   show: boolean;
@@ -20,8 +20,8 @@ const ModalFolder = ({ show, setShow, children, item }: ModalFolderProps) => {
     state: { medias, path },
     dispatch,
   } = useContext(StorageContext);
-  const typeFile = item?.name.split(".")[item?.name.split(".").length - 1];
-  const [name, setName] = useState(item?.name?.split(".")[0] || "");
+  const typeFile = item?.name.split('.')[item?.name.split('.').length - 1];
+  const [name, setName] = useState(item?.name?.split('.')[0] || '');
   const [loading, setLoading] = useState(false);
   const handleSubmit = async () => {
     if (loading) return;
@@ -31,13 +31,13 @@ const ModalFolder = ({ show, setShow, children, item }: ModalFolderProps) => {
       await handleRename();
     } else {
       await supabase.storage
-        .from("packer-ui")
+        .from('packer-ui')
         .upload(
           `${path}/${name}/.emptyFolderPlaceholder`,
-          new Blob([""], { type: "text/plain" })
+          new Blob([''], { type: 'text/plain' })
         );
       dispatch({
-        key: "medias",
+        key: 'medias',
         value: [
           {
             name,
@@ -48,24 +48,24 @@ const ModalFolder = ({ show, setShow, children, item }: ModalFolderProps) => {
     }
     setShow(false);
     setLoading(false);
-    setName("");
+    setName('');
   };
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const loopCheck = async (list: any[], path: string) => {
     for (const obj of list) {
       if (obj.metadata) {
         await supabase.storage
-          .from("packer-ui")
+          .from('packer-ui')
           .copy(
             `${path}/${obj.name}`,
             `${path}/${obj.name}`.replace(item?.name, name)
           );
         await supabase.storage
-          .from("packer-ui")
+          .from('packer-ui')
           .remove([`${path}/${obj.name}`]);
       } else {
         const { data } = await supabase.storage
-          .from("packer-ui")
+          .from('packer-ui')
           .list(`${path}/${obj.name}`);
         if (data?.length) {
           await loopCheck(data, `${path}/${obj.name}`);
@@ -75,44 +75,44 @@ const ModalFolder = ({ show, setShow, children, item }: ModalFolderProps) => {
   };
   const handleRename = async () => {
     const path_ = `${
-      path.slice(1, path.length) ? `${path.slice(1, path.length)}/` : ""
+      path.slice(1, path.length) ? `${path.slice(1, path.length)}/` : ''
     }${item.name}`;
-    const { data } = await supabase.storage.from("packer-ui").list(path_);
+    const { data } = await supabase.storage.from('packer-ui').list(path_);
     if (data?.length) {
       for (const obj of data) {
         if (!obj.metadata) {
           // eslint-disable-next-line prefer-const
           let child = `${path_}/${obj.name}`;
-          const { data } = await supabase.storage.from("packer-ui").list(child);
+          const { data } = await supabase.storage.from('packer-ui').list(child);
           if (data?.length) {
             await loopCheck(data, child);
           }
         } else {
           const newSourcePath = `${
-            path.slice(1, path.length) ? `${path.slice(1, path.length)}/` : ""
+            path.slice(1, path.length) ? `${path.slice(1, path.length)}/` : ''
           }${item.name}/${obj.name}`;
           const newTargetPath = `${
-            path.slice(1, path.length) ? `${path.slice(1, path.length)}/` : ""
+            path.slice(1, path.length) ? `${path.slice(1, path.length)}/` : ''
           }${name}/${obj.name}`;
           await supabase.storage
-            .from("packer-ui")
+            .from('packer-ui')
             .copy(newSourcePath, newTargetPath);
-          await supabase.storage.from("packer-ui").remove([newSourcePath]);
+          await supabase.storage.from('packer-ui').remove([newSourcePath]);
         }
       }
     } else {
       await supabase.storage
-        .from("packer-ui")
+        .from('packer-ui')
         .copy(
           path_,
           `${
-            path.slice(1, path.length) ? `${path.slice(1, path.length)}/` : ""
+            path.slice(1, path.length) ? `${path.slice(1, path.length)}/` : ''
           }${name}.${typeFile}`
         );
-      await supabase.storage.from("packer-ui").remove([path_]);
+      await supabase.storage.from('packer-ui').remove([path_]);
     }
     dispatch({
-      key: "medias",
+      key: 'medias',
       value: [...medias].map((media) =>
         media.name === item?.name
           ? { ...media, name: item.metadata ? `${name}.${typeFile}` : name }

@@ -1,5 +1,5 @@
-import { ArrowLeft, SquarePen } from "lucide-react";
-import Link from "next/link";
+import { ArrowLeft, SquarePen } from 'lucide-react';
+import Link from 'next/link';
 
 const HeaderDetailModule = () => {
   return (

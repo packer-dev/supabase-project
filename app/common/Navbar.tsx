@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
   Sidebar,
@@ -9,30 +9,30 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/components/ui/sidebar";
-import { Calendar, Inbox, AlarmClock, BookKey } from "lucide-react";
-import Link from "next/link";
-import React from "react";
+} from '@/components/ui/sidebar';
+import { Calendar, Inbox, AlarmClock, BookKey } from 'lucide-react';
+import Link from 'next/link';
+import React from 'react';
 
 const items = [
   {
-    title: "Storage",
-    url: "/storage",
+    title: 'Storage',
+    url: '/storage',
     icon: Inbox,
   },
   {
-    title: "Schema Visualizer",
-    url: "/schema-visualizer",
+    title: 'Schema Visualizer',
+    url: '/schema-visualizer',
     icon: Calendar,
   },
   {
-    title: "English course",
-    url: "/english-course",
+    title: 'English course',
+    url: '/english-course',
     icon: AlarmClock,
   },
   {
-    title: "Coding",
-    url: "/coding",
+    title: 'Coding',
+    url: '/coding',
     icon: BookKey,
   },
 ];

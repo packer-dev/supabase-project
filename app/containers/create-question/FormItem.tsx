@@ -1,5 +1,5 @@
-import { Label } from "@/components/ui/label";
-import { ReactNode } from "react";
+import { Label } from '@/components/ui/label';
+import { ReactNode } from 'react';
 
 type FormItemProps = {
   children?: ReactNode;
@@ -15,12 +15,12 @@ type FormItemProps = {
 
 const FormItem = ({
   children,
-  className = "",
+  className = '',
   required,
   label,
-  styles = { label: "font-semibold" },
+  styles = { label: 'font-semibold' },
   error,
-  name = "",
+  name = '',
 }: FormItemProps) => {
   return (
     <div className={`flex flex-col gap-2 ${className}`.trim()}>

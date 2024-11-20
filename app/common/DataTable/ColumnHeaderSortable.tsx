@@ -1,5 +1,5 @@
-import { Column } from "@tanstack/react-table";
-import SortingButton from "./SortingButton";
+import { Column } from '@tanstack/react-table';
+import SortingButton from './SortingButton';
 
 export default function ColumnHeaderSortable({
   label,

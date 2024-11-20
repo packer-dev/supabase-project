@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import {
   DialogContent,
   DialogFooter,
   DialogHeader,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import supabase from "@/supabase";
-import { DialogTitle } from "@radix-ui/react-dialog";
-import { UseMutateFunction, useQuery } from "@tanstack/react-query";
-import * as yup from "yup";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { Combobox } from "@/app/common/Combobox";
-import { Button } from "@/components/ui/button";
+} from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import supabase from '@/supabase';
+import { DialogTitle } from '@radix-ui/react-dialog';
+import { UseMutateFunction, useQuery } from '@tanstack/react-query';
+import * as yup from 'yup';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { Combobox } from '@/app/common/Combobox';
+import { Button } from '@/components/ui/button';
 
 const schema = yup
   .object({
@@ -43,39 +43,39 @@ const ModalUser = ({ handleSave, userId, loading }: ModalUserProps) => {
   } = useForm({
     resolver: yupResolver(schema),
   });
-  const [role, setRole] = useState("");
+  const [role, setRole] = useState('');
   const fetchRoles = async () => {
     const { data: roles } = await supabase
-      .from("roles")
+      .from('roles')
       .select(`*`)
-      .neq("role_name", "superuser");
+      .neq('role_name', 'superuser');
     if (!Array.isArray(roles)) return [];
     if (roles.length > 0) {
-      const filterRole = roles.find((item) => item.role_name === "admin");
-      setValue("role_id", filterRole?.id);
+      const filterRole = roles.find((item) => item.role_name === 'admin');
+      setValue('role_id', filterRole?.id);
       setRole(filterRole?.id);
     }
     return roles;
   };
   const { data: roles } = useQuery({
-    queryKey: ["fetchRoles"],
+    queryKey: ['fetchRoles'],
     queryFn: fetchRoles,
   });
   const fetchGetUserById = async () => {
     const { data } = await supabase
-      .from("users")
+      .from('users')
       .select(`*`)
-      .eq("password", userId);
+      .eq('password', userId);
     return data;
   };
   const { data: getUser } = useQuery({
-    queryKey: ["getUser"],
+    queryKey: ['getUser'],
     queryFn: fetchGetUserById,
   });
 
   useEffect(() => {
-    setValue("email", getUser?.[0]?.email);
-    setValue("role_id", getUser?.[0]?.role_id);
+    setValue('email', getUser?.[0]?.email);
+    setValue('role_id', getUser?.[0]?.role_id);
     setRole(getUser?.[0]?.role_id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getUser]);
@@ -96,13 +96,13 @@ const ModalUser = ({ handleSave, userId, loading }: ModalUserProps) => {
               Email
             </Label>
             <Input
-              {...register("email")}
+              {...register('email')}
               id="email"
               placeholder="example@gmail.com"
               className="w-full"
             />
-            {errors["email"] && (
-              <p className="text-red-500 text-sm">{errors["email"].message}</p>
+            {errors['email'] && (
+              <p className="text-red-500 text-sm">{errors['email'].message}</p>
             )}
           </div>
           <div className="w-full flex flex-col gap-4">
@@ -112,7 +112,7 @@ const ModalUser = ({ handleSave, userId, loading }: ModalUserProps) => {
             <Combobox
               list={roleData}
               setItem={(item) => {
-                setValue("role_id", item);
+                setValue('role_id', item);
                 setRole(item);
               }}
               defaultValue={role}
@@ -120,7 +120,7 @@ const ModalUser = ({ handleSave, userId, loading }: ModalUserProps) => {
           </div>
         </div>
         <DialogFooter>
-          <Button type="submit">{loading ? "Saving" : "Save"}</Button>
+          <Button type="submit">{loading ? 'Saving' : 'Save'}</Button>
         </DialogFooter>
       </form>
     </DialogContent>

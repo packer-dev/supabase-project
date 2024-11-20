@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from "react";
-import Form from "@/components/shared/Form";
-import { Button } from "@/components/ui/button";
-import { useApi } from "@/services/api";
-import * as yup from "yup";
-import { UseMutateFunction, useQuery } from "@tanstack/react-query";
-import { yupResolver } from "@hookform/resolvers/yup/dist/yup.js";
-import { Label } from "@radix-ui/react-label";
-import { Input } from "@/components/ui/input";
+import React from 'react';
+import Form from '@/components/shared/Form';
+import { Button } from '@/components/ui/button';
+import { useApi } from '@/services/api';
+import * as yup from 'yup';
+import { UseMutateFunction, useQuery } from '@tanstack/react-query';
+import { yupResolver } from '@hookform/resolvers/yup/dist/yup.js';
+import { Label } from '@radix-ui/react-label';
+import { Input } from '@/components/ui/input';
 
 export const schema = yup
   .object({
@@ -32,15 +32,15 @@ const FormLesson = ({ id, mutate, isPending }: FormTopicType) => {
     isPending: isPendingById,
     isLoading,
   } = useQuery({
-    queryKey: ["fetchLessonById", id],
+    queryKey: ['fetchLessonById', id],
     queryFn: fetchLessonById,
   });
   const defaultValues = {
     ...(data || {}),
   };
   const buttonText = () => {
-    if (isPending) return id ? "Editing" : "Creating";
-    return id ? "Edit" : "Create";
+    if (isPending) return id ? 'Editing' : 'Creating';
+    return id ? 'Edit' : 'Create';
   };
   return (
     <Form

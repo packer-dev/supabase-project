@@ -1,19 +1,19 @@
-"use client";
+'use client';
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import React, { Fragment, useContext } from "react";
-import ItemMedia from "./ItemMedia";
-import useFetchData from "@/hooks/useFetchData";
-import supabase from "@/supabase";
-import { StorageContext } from "@/contexts/StorageContext";
-import Image from "next/image";
-import { DialogTrigger } from "@/components/ui/dialog";
-import ModalFolder from "@/app/modals/storage/ModalFolder";
-import ModalDelete from "@/app/modals/storage/ModalDelete";
-import StorageContextMenu from "./StorageContextMenu";
-import { toast } from "@/hooks/use-toast";
-import { ToastAction } from "@/components/ui/toast";
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import React, { Fragment, useContext } from 'react';
+import ItemMedia from './ItemMedia';
+import useFetchData from '@/hooks/useFetchData';
+import supabase from '@/supabase';
+import { StorageContext } from '@/contexts/StorageContext';
+import Image from 'next/image';
+import { DialogTrigger } from '@/components/ui/dialog';
+import ModalFolder from '@/app/modals/storage/ModalFolder';
+import ModalDelete from '@/app/modals/storage/ModalDelete';
+import StorageContextMenu from './StorageContextMenu';
+import { toast } from '@/hooks/use-toast';
+import { ToastAction } from '@/components/ui/toast';
 
 const Storage = () => {
   const {
@@ -32,14 +32,14 @@ const Storage = () => {
     for (const obj of list) {
       if (obj.metadata) {
         await supabase.storage
-          .from("packer-ui")
+          .from('packer-ui')
           .copy(
             `${path_}/${obj.name}`,
             `${path.slice(1, path.length)}/${path_}/${obj.name}`
           );
       } else {
         const { data } = await supabase.storage
-          .from("packer-ui")
+          .from('packer-ui')
           .list(`${path_}/${obj.name}`);
         if (data?.length) {
           await loopCheck(data, `${path_}/${obj.name}`);
@@ -50,60 +50,60 @@ const Storage = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { loading } = useFetchData<any>(
     () =>
-      supabase.storage.from("packer-ui").list(path.slice(1, path.length), {
+      supabase.storage.from('packer-ui').list(path.slice(1, path.length), {
         limit: 100, // You can set a limit on the number of files
         offset: 0, // You can paginate using offset
       }),
     (result) =>
       dispatch({
-        key: "medias",
+        key: 'medias',
         value: result?.data || [],
       }),
     [path, refresh]
   );
   const medias = mediasList.filter(
-    (item) => item.name !== ".emptyFolderPlaceholder"
+    (item) => item.name !== '.emptyFolderPlaceholder'
   );
-  const listFolder = path.split("/");
+  const listFolder = path.split('/');
   const down = async (e: KeyboardEvent) => {
-    if (e.key === "a" && (e.metaKey || e.ctrlKey)) {
+    if (e.key === 'a' && (e.metaKey || e.ctrlKey)) {
       e.preventDefault();
       dispatch({
-        key: "selected",
+        key: 'selected',
         value: medias,
       });
     }
-    if (e.key === "c" && (e.metaKey || e.ctrlKey)) {
+    if (e.key === 'c' && (e.metaKey || e.ctrlKey)) {
       dispatch({
-        key: "copy",
+        key: 'copy',
         value: [...selected].map((item) => ({
           path: `${path}/${item?.name}`,
           name: item?.name,
-          mode: item.metadata ? "file" : "folder",
+          mode: item.metadata ? 'file' : 'folder',
         })),
       });
       toast({
-        title: "Copied successfully",
+        title: 'Copied successfully',
         description: `You copied ${selected.length} items.`,
         action: <ToastAction altText="Goto schedule to undo">Undo</ToastAction>,
       });
     }
-    if (e.key === "v" && (e.metaKey || e.ctrlKey)) {
+    if (e.key === 'v' && (e.metaKey || e.ctrlKey)) {
       if (copies.length > 0) {
         let mediaList = [...medias];
         for (const copy of copies) {
-          if (copy?.mode === "file") {
+          if (copy?.mode === 'file') {
             await supabase.storage
-              .from("packer-ui")
+              .from('packer-ui')
               .copy(
                 copy?.path.slice(1, copy?.path.length),
                 `${path.slice(1, path.length)}/${copy?.name}`
               );
             mediaList = [{ name: copy?.name, metadata: true }, ...mediaList];
           }
-          if (copy?.mode === "folder") {
+          if (copy?.mode === 'folder') {
             const { data } = await supabase.storage
-              .from("packer-ui")
+              .from('packer-ui')
               .list(copy?.path.slice(1, copy?.path.length));
             if (data?.length) {
               await loopCheck(data, copy?.path.slice(1, copy?.path.length));
@@ -111,32 +111,32 @@ const Storage = () => {
             mediaList = [{ name: copy?.name, metadata: false }, ...mediaList];
           }
           dispatch({
-            key: "medias",
+            key: 'medias',
             value: mediaList,
           });
         }
       }
       toast({
-        title: "Parsed successfully",
+        title: 'Parsed successfully',
         description: `You parse ${copies.length} items.`,
         action: <ToastAction altText="Goto schedule to undo">Undo</ToastAction>,
       });
     }
-    if (e.key === "Escape") {
+    if (e.key === 'Escape') {
       dispatch({
-        key: "copy",
+        key: 'copy',
         value: [],
       });
       dispatch({
-        key: "selected",
+        key: 'selected',
         value: [],
       });
     }
   };
   React.useEffect(() => {
-    document.removeEventListener("keydown", down);
-    document.addEventListener("keydown", down);
-    return () => document.removeEventListener("keydown", down);
+    document.removeEventListener('keydown', down);
+    document.addEventListener('keydown', down);
+    return () => document.removeEventListener('keydown', down);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [medias]);
   return (
@@ -149,10 +149,10 @@ const Storage = () => {
         <div className="flex gap-2 items-center">
           <i className="bx bxs-cloud"></i>
           <span
-            onClick={() => dispatch({ key: "path", value: "" })}
+            onClick={() => dispatch({ key: 'path', value: '' })}
             aria-hidden
             className={`font-semibold cursor-pointer ${
-              path === "" ? "" : "text-gray-600"
+              path === '' ? '' : 'text-gray-600'
             }`}
           >
             Home
@@ -168,17 +168,17 @@ const Storage = () => {
                   aria-hidden
                   onClick={() => {
                     dispatch({
-                      key: "path",
+                      key: 'path',
                       value:
-                        "/" +
+                        '/' +
                         listFolder
                           .filter((child) => child)
                           .slice(0, index + 1)
-                          .join("/"),
+                          .join('/'),
                     });
                   }}
                   className={`font-bold cursor-pointer ${
-                    index === listFolder.length - 2 ? "" : "text-gray-600"
+                    index === listFolder.length - 2 ? '' : 'text-gray-600'
                   }`}
                 >
                   {item}
@@ -192,15 +192,15 @@ const Storage = () => {
             aria-hidden
             onClick={() => {
               dispatch({
-                key: "selected",
+                key: 'selected',
                 value: [],
               });
               dispatch({
-                key: "copy",
+                key: 'copy',
                 value: [],
               });
               dispatch({
-                key: "refresh",
+                key: 'refresh',
                 value: Math.random(),
               });
             }}
@@ -216,8 +216,8 @@ const Storage = () => {
             <Button
               onClick={() =>
                 dispatch({
-                  key: "showModal",
-                  value: "delete",
+                  key: 'showModal',
+                  value: 'delete',
                 })
               }
               className="bg-red-500 hover:bg-red-500"
@@ -225,24 +225,24 @@ const Storage = () => {
               Delete
             </Button>
           )}
-          {showModal === "delete" && (
+          {showModal === 'delete' && (
             <ModalDelete
               items={selected}
               show={true}
               setShow={(show) =>
                 dispatch({
-                  key: "showModal",
-                  value: show ? "delete" : "",
+                  key: 'showModal',
+                  value: show ? 'delete' : '',
                 })
               }
             />
           )}
           <ModalFolder
-            show={showModal === "folder"}
+            show={showModal === 'folder'}
             setShow={(show) =>
               dispatch({
-                key: "showModal",
-                value: show ? "folder" : "",
+                key: 'showModal',
+                value: show ? 'folder' : '',
               })
             }
           >
@@ -265,7 +265,7 @@ const Storage = () => {
                 ...medias,
               ];
               dispatch({
-                key: "medias",
+                key: 'medias',
                 value: newResult,
               });
               let newResultLast = [...newResult];
@@ -284,7 +284,7 @@ const Storage = () => {
                     : item
                 );
                 dispatch({
-                  key: "medias",
+                  key: 'medias',
                   value: newResultLast,
                 });
               }
@@ -302,8 +302,8 @@ const Storage = () => {
           aria-hidden
           className={`w-full grid ${
             !loading && !medias?.length
-              ? ""
-              : "lg:grid-cols-5 xl:grid-cols-6 md:grid-cols-4 my-5"
+              ? ''
+              : 'lg:grid-cols-5 xl:grid-cols-6 md:grid-cols-4 my-5'
           } gap-3`}
         >
           {loading && (
@@ -326,7 +326,7 @@ const Storage = () => {
                 key={item?.name}
                 item={item}
                 loading={loading}
-                mode={item?.metadata ? "image" : "folder"}
+                mode={item?.metadata ? 'image' : 'folder'}
               />
             ))}
           {!loading && !medias?.length && (

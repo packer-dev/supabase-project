@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import Form from "@/components/shared/Form";
-import FormField from "@/components/shared/FormField";
-import { Card } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import HeaderDetailModule from "./HeaderDetailModule";
-import TableDetailModule from "./TableDetailModule";
+import Form from '@/components/shared/Form';
+import FormField from '@/components/shared/FormField';
+import { Card } from '@/components/ui/card';
+import { Label } from '@/components/ui/label';
+import HeaderDetailModule from './HeaderDetailModule';
+import TableDetailModule from './TableDetailModule';
 
 const DetailModule = () => {
   //

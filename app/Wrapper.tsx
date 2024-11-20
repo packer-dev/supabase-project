@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { ReactNode, useEffect } from "react";
-import Header from "./common/Header";
-import Navbar from "./common/Navbar";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { useParams } from "next/navigation";
+import { ReactNode, useEffect } from 'react';
+import Header from './common/Header';
+import Navbar from './common/Navbar';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { useParams } from 'next/navigation';
 
 type WrapperProps = {
   children?: ReactNode;
@@ -15,15 +15,15 @@ const Wrapper = ({ children }: WrapperProps) => {
   const router = useParams();
   useEffect(() => {
     // Parse the URL hash parameters
-    if (typeof window !== "undefined") {
+    if (typeof window !== 'undefined') {
       const hashParams = new URLSearchParams(window.location.hash.slice(1));
       const tokenData = {
-        accessToken: hashParams.get("access_token"),
-        expiresAt: hashParams.get("expires_at"),
-        expiresIn: hashParams.get("expires_in"),
-        refreshToken: hashParams.get("refresh_token"),
-        tokenType: hashParams.get("token_type"),
-        type: hashParams.get("type"),
+        accessToken: hashParams.get('access_token'),
+        expiresAt: hashParams.get('expires_at'),
+        expiresIn: hashParams.get('expires_in'),
+        refreshToken: hashParams.get('refresh_token'),
+        tokenType: hashParams.get('token_type'),
+        type: hashParams.get('type'),
       };
     }
   }, [router]);

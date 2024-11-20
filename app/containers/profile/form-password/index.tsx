@@ -1,8 +1,8 @@
-import Form from "@/app/common/Form";
-import FormField from "@/app/common/FormField";
-import FormGroup from "@/app/common/FormGroup";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import Form from '@/app/common/Form';
+import FormField from '@/app/common/FormField';
+import FormGroup from '@/app/common/FormGroup';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 
 const FormPassword = () => {
   return (

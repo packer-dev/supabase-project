@@ -1,12 +1,12 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { MinusCircle, Plus } from "lucide-react";
-import { UseFieldArrayReturn, useFormContext } from "react-hook-form";
-import { FormFields } from "../schema";
-import FormItem from "../FormItem";
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { MinusCircle, Plus } from 'lucide-react';
+import { UseFieldArrayReturn, useFormContext } from 'react-hook-form';
+import { FormFields } from '../schema';
+import FormItem from '../FormItem';
 
 type GivenHeadingProps = {
-  fieldArray: UseFieldArrayReturn<FormFields, never, "id">;
+  fieldArray: UseFieldArrayReturn<FormFields, never, 'id'>;
 };
 
 const GivenInformation = ({ fieldArray }: GivenHeadingProps) => {
@@ -24,7 +24,7 @@ const GivenInformation = ({ fieldArray }: GivenHeadingProps) => {
         <Input
           id="title"
           placeholder="What makes people happy"
-          {...register("givenInformation.title")}
+          {...register('givenInformation.title')}
         />
       </FormItem>
       <FormItem className="" label="List" required>
@@ -56,7 +56,7 @@ const GivenInformation = ({ fieldArray }: GivenHeadingProps) => {
         type="button"
         onClick={() =>
           fieldArray.append({
-            value: "",
+            value: '',
           })
         }
         variant="secondary"

@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import ModalTable from "@/app/modals/schema-visualizer/ModalTable";
-import { Button } from "@/components/ui/button";
-import { Dialog } from "@/components/ui/dialog";
-import { useContext, useRef } from "react";
-import ItemTable from "./ItemTable";
+import ModalTable from '@/app/modals/schema-visualizer/ModalTable';
+import { Button } from '@/components/ui/button';
+import { Dialog } from '@/components/ui/dialog';
+import { useContext, useRef } from 'react';
+import ItemTable from './ItemTable';
 import {
   SchemaVisualizerContext,
   TableProps,
-} from "@/contexts/SchemaVisualizerContext";
+} from '@/contexts/SchemaVisualizerContext';
 
 const SchemaVisualizer = () => {
   const {
@@ -31,7 +31,7 @@ const SchemaVisualizer = () => {
   return (
     <div className="gap-2 flex-col flex">
       <Button
-        onClick={() => dispatch({ key: "showModalTable", value: true })}
+        onClick={() => dispatch({ key: 'showModalTable', value: true })}
         className="w-28"
       >
         Add table
@@ -40,15 +40,15 @@ const SchemaVisualizer = () => {
         <Dialog
           open={showModalTable}
           onOpenChange={(show: boolean) => {
-            dispatch({ key: "showModalTable", value: show });
-            if (!show) dispatch({ key: "tableCurrent", value: null });
+            dispatch({ key: 'showModalTable', value: show });
+            if (!show) dispatch({ key: 'tableCurrent', value: null });
           }}
         >
           <ModalTable
             submit={(table: TableProps) => {
               const result = handleRandomPosition();
               dispatch({
-                key: "tables",
+                key: 'tables',
                 value: tableCurrent
                   ? [...tables].map((item) =>
                       tableCurrent.id === item.id
@@ -60,7 +60,7 @@ const SchemaVisualizer = () => {
                       { ...table, ...(result ? { position: result } : {}) },
                     ],
               });
-              dispatch({ key: "showModalTable", value: !showModalTable });
+              dispatch({ key: 'showModalTable', value: !showModalTable });
             }}
             tableCurrent={tableCurrent}
           />
@@ -86,7 +86,7 @@ const SchemaVisualizer = () => {
             return item;
           });
           dispatch({
-            key: "tables",
+            key: 'tables',
             value: newTableList,
           });
 
@@ -103,7 +103,7 @@ const SchemaVisualizer = () => {
               mapNewTableList(item, index, relationship)
             );
           dispatch({
-            key: "relationships",
+            key: 'relationships',
             value: [...relationships].map((item) => ({
               ...item,
               list: handleCallback(item.list),

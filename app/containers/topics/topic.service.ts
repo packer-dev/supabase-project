@@ -1,5 +1,5 @@
-import { Page } from "@/shared/models";
-import supabase from "@/supabase";
+import { Page } from '@/shared/models';
+import supabase from '@/supabase';
 
 export type Topic = {
   id: string;
@@ -10,23 +10,23 @@ export type Topic = {
 const topics = {
   search: async (value: string): Promise<Page<Topic>> => {
     const { data, error } = await supabase
-      .from("exam_topics")
+      .from('exam_topics')
       .select(`*`)
-      .like("name", `%${value}%`);
+      .like('name', `%${value}%`);
 
     if (error) throw error;
     return data;
   },
   getById: async (id: string) => {
     const { data, error } = await supabase
-      .from("exam_topics")
-      .select("*")
-      .eq("id", id);
+      .from('exam_topics')
+      .select('*')
+      .eq('id', id);
     if (error) throw error;
     return data;
   },
   insert: async (payload: Topic) => {
-    const { data, error } = await supabase.from("exam_topics").insert({
+    const { data, error } = await supabase.from('exam_topics').insert({
       name: payload.name,
       created_at: payload.created_at,
     });
@@ -34,7 +34,7 @@ const topics = {
     return data;
   },
   update: async (payload: Topic) => {
-    const { data, error } = await supabase.from("exam_topics").update({
+    const { data, error } = await supabase.from('exam_topics').update({
       id: payload.id,
       name: payload.name,
       created_at: payload.created_at,
@@ -43,7 +43,7 @@ const topics = {
     return data;
   },
   delete: async (id: string) => {
-    const { error } = await supabase.from("exam_topics").delete().eq("id", id);
+    const { error } = await supabase.from('exam_topics').delete().eq('id', id);
     if (error) throw error;
   },
 };

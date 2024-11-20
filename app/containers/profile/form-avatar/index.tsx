@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { useEffect, useRef, useState } from "react";
-import { Button } from "@/components/ui/button";
-import Uppy from "@uppy/core";
+import { useEffect, useRef, useState } from 'react';
+import { Button } from '@/components/ui/button';
+import Uppy from '@uppy/core';
 import {
   Dialog,
   DialogContent,
@@ -10,21 +10,21 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { Dashboard } from "@uppy/react";
-import ImageEditor from "@uppy/image-editor";
-import GoldenRetriever from "@uppy/golden-retriever";
-import { Camera, Upload } from "lucide-react";
-import { useApi } from "@/services/api";
-import Tus from "@uppy/tus";
+} from '@/components/ui/dialog';
+import { Dashboard } from '@uppy/react';
+import ImageEditor from '@uppy/image-editor';
+import GoldenRetriever from '@uppy/golden-retriever';
+import { Camera, Upload } from 'lucide-react';
+import { useApi } from '@/services/api';
+import Tus from '@uppy/tus';
 
-import "@uppy/core/dist/style.min.css";
-import "@uppy/dashboard/dist/style.min.css";
-import "@uppy/image-editor/dist/style.min.css";
-import Image from "next/image";
+import '@uppy/core/dist/style.min.css';
+import '@uppy/dashboard/dist/style.min.css';
+import '@uppy/image-editor/dist/style.min.css';
+import Image from 'next/image';
 
 export const FormAvatar = () => {
-  const STORAGE_BUCKET = "files";
+  const STORAGE_BUCKET = 'files';
   const [open, setOpen] = useState(false);
 
   const uppyRef = useRef<Uppy>(new Uppy());
@@ -35,15 +35,15 @@ export const FormAvatar = () => {
         maxFileSize: 2 * 1024 * 1024, // 2MB
         maxNumberOfFiles: 5,
         allowedFileTypes: [
-          "image/*",
-          "video/*",
-          "application/pdf",
-          "application/msword",
-          "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-          "application/vnd.ms-excel",
-          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-          "application/vnd.ms-powerpoint",
-          "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+          'image/*',
+          'video/*',
+          'application/pdf',
+          'application/msword',
+          'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+          'application/vnd.ms-excel',
+          'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+          'application/vnd.ms-powerpoint',
+          'application/vnd.openxmlformats-officedocument.presentationml.presentation',
         ],
       },
       autoProceed: false,
@@ -51,26 +51,26 @@ export const FormAvatar = () => {
       .use(ImageEditor)
       .use(GoldenRetriever, { serviceWorker: true })
       .use(Tus, {
-        endpoint: "",
+        endpoint: '',
         retryDelays: [0, 3000, 5000, 10000, 20000],
         chunkSize: 6 * 1024 * 1024,
         removeFingerprintOnSuccess: true,
         headers: () => {
-          const accessToken = "";
+          const accessToken = '';
           return {
-            "x-upsert": "true",
+            'x-upsert': 'true',
             Authorization: `Bearer ${accessToken}`,
           };
         },
         uploadDataDuringCreation: true,
         allowedMetaFields: [
-          "bucketName",
-          "objectName",
-          "contentType",
-          "cacheControl",
+          'bucketName',
+          'objectName',
+          'contentType',
+          'cacheControl',
         ],
         onError: function (error) {
-          console.log("Failed because: " + error);
+          console.log('Failed because: ' + error);
         },
         onShouldRetry(err, retryAttempt, options, next) {
           if (err?.originalResponse?.getStatus() === 401) {
@@ -85,12 +85,12 @@ export const FormAvatar = () => {
         },
       });
 
-    if ("serviceWorker" in navigator) {
+    if ('serviceWorker' in navigator) {
       navigator.serviceWorker
-        .register("/sw.js")
+        .register('/sw.js')
         .then((registration) => {
           console.log(
-            "ServiceWorker registration successful with scope: ",
+            'ServiceWorker registration successful with scope: ',
             registration.scope
           );
         })
@@ -99,7 +99,7 @@ export const FormAvatar = () => {
         });
     }
 
-    uppyRef.current.on("file-added", (file) => {
+    uppyRef.current.on('file-added', (file) => {
       const supabaseMetadata = {
         bucketName: STORAGE_BUCKET,
         objectName: ``,
@@ -110,8 +110,8 @@ export const FormAvatar = () => {
         ...file.meta,
         ...supabaseMetadata,
       };
-      const files = uppyRef.current.getFilesByIds(["imagessss"]);
-      uppyRef.current.emit("file-editor:start", files[0]);
+      const files = uppyRef.current.getFilesByIds(['imagessss']);
+      uppyRef.current.emit('file-editor:start', files[0]);
     });
   }, []);
 
@@ -150,9 +150,9 @@ export const FormAvatar = () => {
                 name: file.name,
                 type: file.type,
                 data: file,
-                source: "Local",
+                source: 'Local',
                 isRemote: false,
-                id: "imagessss",
+                id: 'imagessss',
               });
               setOpen(true);
             }

@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import Wrapper from "./Wrapper";
+import Wrapper from './Wrapper';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const Page = () => {

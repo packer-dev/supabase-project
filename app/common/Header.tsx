@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { Button } from "@/components/ui/button";
-import { useTheme } from "next-themes";
-import React from "react";
+import { Button } from '@/components/ui/button';
+import { useTheme } from 'next-themes';
+import React from 'react';
 
 const Header = () => {
   //
@@ -27,11 +27,11 @@ const Header = () => {
             aria-hidden
             className="text-xl -mb-1 dark:text-white dark:hover:text-gray-300"
             onClick={() => {
-              setTheme(theme === "dark" ? "light" : "dark");
+              setTheme(theme === 'dark' ? 'light' : 'dark');
             }}
           >
-            {theme !== "dark" && <span className="bx bx-moon" />}
-            {theme === "dark" && <span className="bx bxs-moon" />}
+            {theme !== 'dark' && <span className="bx bx-moon" />}
+            {theme === 'dark' && <span className="bx bxs-moon" />}
           </div>
           <span className="bx bx-cog cursor-pointer hover:text-black text-xl dark:text-white dark:hover:text-gray-300" />
           <span className="bx bx-user cursor-pointer hover:text-black text-xl dark:text-white dark:hover:text-gray-300" />

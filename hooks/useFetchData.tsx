@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-"use client";
+'use client';
 
-import React, { DependencyList, useState } from "react";
+import React, { DependencyList, useState } from 'react';
 
 const useFetchData = <T,>(
   promise: () => Promise<T>,

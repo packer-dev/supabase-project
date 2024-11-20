@@ -1,18 +1,18 @@
-import { useFieldArray, useFormContext } from "react-hook-form";
-import FormItem from "../FormItem";
-import { FormFields } from "../schema";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Combobox } from "@/app/common/Combobox";
-import { MinusCircle, Plus } from "lucide-react";
+import { useFieldArray, useFormContext } from 'react-hook-form';
+import FormItem from '../FormItem';
+import { FormFields } from '../schema';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Combobox } from '@/app/common/Combobox';
+import { MinusCircle, Plus } from 'lucide-react';
 
 type ListOfQuestionProps = {
   isYesNo?: boolean;
 };
 
 const ListOfQuestion = ({ isYesNo }: ListOfQuestionProps) => {
-  const value1 = isYesNo ? "Yes" : "True";
-  const value2 = isYesNo ? "No" : "False";
+  const value1 = isYesNo ? 'Yes' : 'True';
+  const value2 = isYesNo ? 'No' : 'False';
   const optionItems = [
     {
       label: value1,
@@ -23,14 +23,14 @@ const ListOfQuestion = ({ isYesNo }: ListOfQuestionProps) => {
       value: value2.toLowerCase(),
     },
     {
-      label: "Not given",
-      value: "Not given",
+      label: 'Not given',
+      value: 'Not given',
     },
   ];
   const { control } = useFormContext<FormFields>();
   const listOfQuestion = useFieldArray<FormFields>({
     control,
-    name: isYesNo ? "yesNo" : "trueFalse",
+    name: isYesNo ? 'yesNo' : 'trueFalse',
   });
   return (
     <FormItem className="mt-6" label="List of question" required>
@@ -53,7 +53,7 @@ const ListOfQuestion = ({ isYesNo }: ListOfQuestionProps) => {
           type="button"
           onClick={() =>
             listOfQuestion.append({
-              value: "",
+              value: '',
             })
           }
           variant="secondary"

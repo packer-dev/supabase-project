@@ -1,5 +1,5 @@
-import { SchemaVisualizerProvider } from "@/contexts/SchemaVisualizerContext";
-import React, { ReactNode } from "react";
+import { SchemaVisualizerProvider } from '@/contexts/SchemaVisualizerContext';
+import React, { ReactNode } from 'react';
 
 type ContainerProps = {
   children?: ReactNode;

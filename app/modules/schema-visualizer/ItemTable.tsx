@@ -3,15 +3,15 @@ import {
   ContextMenuContent,
   ContextMenuItem,
   ContextMenuTrigger,
-} from "@/components/ui/context-menu";
-import { Dialog } from "@/components/ui/dialog";
+} from '@/components/ui/context-menu';
+import { Dialog } from '@/components/ui/dialog';
 import {
   SchemaVisualizerContext,
   TableProps,
-} from "@/contexts/SchemaVisualizerContext";
-import React, { useContext } from "react";
-import ModalForeign from "../../modals/schema-visualizer/ModalForeign";
-import ItemColumn from "../ItemColumn";
+} from '@/contexts/SchemaVisualizerContext';
+import React, { useContext } from 'react';
+import ModalForeign from '../../modals/schema-visualizer/ModalForeign';
+import ItemColumn from '../ItemColumn';
 
 const ItemTable = ({ item }: { item: TableProps }) => {
   const {
@@ -23,7 +23,7 @@ const ItemTable = ({ item }: { item: TableProps }) => {
       <ContextMenuTrigger
         onDragOver={() => {
           dispatch({
-            key: "current",
+            key: 'current',
             value: item,
           });
         }}
@@ -44,22 +44,22 @@ const ItemTable = ({ item }: { item: TableProps }) => {
                 open={!!showModalForeign}
                 onOpenChange={(open) =>
                   dispatch({
-                    key: "showModalForeign",
-                    value: open ? showModalForeign : "",
+                    key: 'showModalForeign',
+                    value: open ? showModalForeign : '',
                   })
                 }
               >
                 <ModalForeign
                   type={
                     item.columns.find(
-                      (item) => item.type && item.mode === "primary"
+                      (item) => item.type && item.mode === 'primary'
                     )?.type
                   }
                   current={item}
                   closeDialog={() =>
                     dispatch({
-                      key: "showModalForeign",
-                      value: "",
+                      key: 'showModalForeign',
+                      value: '',
                     })
                   }
                 />
@@ -73,8 +73,8 @@ const ItemTable = ({ item }: { item: TableProps }) => {
         <ContextMenuContent>
           <ContextMenuItem
             onClick={() => {
-              dispatch({ key: "showModalTable", value: true });
-              dispatch({ key: "tableCurrent", value: item });
+              dispatch({ key: 'showModalTable', value: true });
+              dispatch({ key: 'tableCurrent', value: item });
             }}
             className="flex items-center gap-2 cursor-pointer"
           >
@@ -84,11 +84,11 @@ const ItemTable = ({ item }: { item: TableProps }) => {
           <ContextMenuItem
             onClick={() => {
               dispatch({
-                key: "tables",
+                key: 'tables',
                 value: [...tables].filter((table) => table.id !== item.id),
               });
               dispatch({
-                key: "relationships",
+                key: 'relationships',
                 value: [...relationships].filter(
                   (relationship) =>
                     relationship.list.findIndex(

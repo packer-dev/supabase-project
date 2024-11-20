@@ -1,5 +1,5 @@
-// import { createServerClient } from "@supabase/ssr";
-// import { NextResponse, type NextRequest } from "next/server";
+// import { createServerClient } from '@supabase/ssr';
+// import { NextResponse, type NextRequest } from 'next/server';
 
 // export async function updateSession(request: NextRequest) {
 //   let supabaseResponse = NextResponse.next({
@@ -33,15 +33,15 @@
 //   // supabase.auth.getUser(). A simple mistake could make it very hard to debug
 //   // issues with users being randomly logged out.
 
-//   const { data } = await supabase.from("users").select();
+//   const { data } = await supabase.from('users').select();
 //   if (
 //     !data &&
-//     !request.nextUrl.pathname.startsWith("/login") &&
-//     !request.nextUrl.pathname.startsWith("/auth")
+//     !request.nextUrl.pathname.startsWith('/login') &&
+//     !request.nextUrl.pathname.startsWith('/auth')
 //   ) {
 //     // no user, potentially respond by redirecting the user to the login page
 //     const url = request.nextUrl.clone();
-//     url.pathname = "/login";
+//     url.pathname = '/login';
 //     return NextResponse.redirect(url);
 //   }
 

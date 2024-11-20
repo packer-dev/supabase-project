@@ -8,4 +8,5 @@ export interface DataTableProps {
   onEdit?: (row: any) => void;
   onDelete?: (row: any) => void;
   onCellClick?: (row: any, cell: any) => void;
+  cellInsideClick?: boolean;
 }

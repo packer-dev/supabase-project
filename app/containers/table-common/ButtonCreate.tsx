@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import { DialogContent } from "@radix-ui/react-dialog";
-import { useMutation } from "@tanstack/react-query";
-import { PlusCircleIcon } from "lucide-react";
-import React, { ReactNode } from "react";
-import { yupResolver } from "@hookform/resolvers/yup";
+} from '@/components/ui/dialog';
+import { DialogContent } from '@radix-ui/react-dialog';
+import { useMutation } from '@tanstack/react-query';
+import { PlusCircleIcon } from 'lucide-react';
+import React, { ReactNode } from 'react';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 type ButtonCreateType = {
   id: string | null;
@@ -41,8 +41,8 @@ const ButtonCreate = ({
     },
   });
   const buttonText = () => {
-    if (mutation.isPending) return id ? "Editing" : "Creating";
-    return id ? "Edit" : "Create";
+    if (mutation.isPending) return id ? 'Editing' : 'Creating';
+    return id ? 'Edit' : 'Create';
   };
 
   return (
@@ -59,7 +59,7 @@ const ButtonCreate = ({
         <DialogHeader className="-mt-2 mb-4">
           <DialogTitle>
             <p className="text-xl font-semibold">
-              {id ? "Edit" : "Create new"} {name}
+              {id ? 'Edit' : 'Create new'} {name}
             </p>
           </DialogTitle>
         </DialogHeader>

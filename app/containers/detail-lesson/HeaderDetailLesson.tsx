@@ -1,6 +1,6 @@
-import { ArrowLeft, SquarePen } from "lucide-react";
-import Link from "next/link";
-import React from "react";
+import { ArrowLeft, SquarePen } from 'lucide-react';
+import Link from 'next/link';
+import React from 'react';
 
 const HeaderDetailLesson = () => {
   return (

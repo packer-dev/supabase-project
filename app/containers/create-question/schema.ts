@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import * as yup from "yup";
+import * as yup from 'yup';
 
 const renderSchemaByType = (type: string): any => {
   switch (type) {
-    // case "yesNo":
+    // case 'yesNo':
     //   return {
 
     //   };
-    // case "trueFalse":
+    // case 'trueFalse':
     //   return {};
-    case "headings":
+    case 'headings':
       return {
         givenHeadings: yup
           .array()
@@ -23,7 +23,7 @@ const renderSchemaByType = (type: string): any => {
           .required(),
         ...questionList,
       };
-    case "information":
+    case 'information':
       return {
         givenInformation: yup
           .object({
@@ -42,13 +42,13 @@ const renderSchemaByType = (type: string): any => {
           .required(),
         ...questionList,
       };
-    case "multipleChoice":
+    case 'multipleChoice':
       return {
         multipleChoice: yup
           .array()
           .of(
             yup.object({
-              question: yup.string().when("is_done", {
+              question: yup.string().when('is_done', {
                 is: false,
                 then: (schema_) => schema_.required(),
                 otherwise: (schema_) => schema_.optional(),
@@ -57,7 +57,7 @@ const renderSchemaByType = (type: string): any => {
                 .array()
                 .of(
                   yup.object({
-                    content: yup.string().when("is_new", {
+                    content: yup.string().when('is_new', {
                       is: false,
                       then: (schema_) => schema_.required(),
                       otherwise: (schema_) => schema_.optional(),
@@ -138,35 +138,35 @@ export type FormFields = {
 export const defaultValues = (type: string) => {
   let result = {};
   switch (type) {
-    case "headings":
+    case 'headings':
       result = {
         givenHeadings: [
           {
-            value: "",
+            value: '',
           },
         ],
       };
       break;
-    case "information":
+    case 'information':
       result = {
         givenInformation: {
-          title: "",
+          title: '',
           items: [
             {
-              value: "",
+              value: '',
             },
           ],
         },
       };
       break;
-    case "multipleChoice":
+    case 'multipleChoice':
       result = {
         multipleChoice: [
           {
-            content: "",
+            content: '',
             answers: [
               {
-                content: "",
+                content: '',
                 is_new: true,
                 is_correct: false,
               },
@@ -184,8 +184,8 @@ export const defaultValues = (type: string) => {
     ...result,
     questionList: [
       {
-        section: "",
-        correctHeading: "",
+        section: '',
+        correctHeading: '',
       },
     ],
   };
@@ -193,57 +193,57 @@ export const defaultValues = (type: string) => {
 
 export const questionTypes = [
   {
-    label: "Yes/No/Not Given",
-    value: "Yes/No/Not Given",
-    mode: "yesNo",
-    name: "",
+    label: 'Yes/No/Not Given',
+    value: 'Yes/No/Not Given',
+    mode: 'yesNo',
+    name: '',
   },
   {
-    label: "True/False/Not Given",
-    value: "True/False/Not Given",
-    mode: "trueFalse",
-    name: "",
+    label: 'True/False/Not Given',
+    value: 'True/False/Not Given',
+    mode: 'trueFalse',
+    name: '',
   },
   {
-    label: "Multiple choice",
-    value: "Multiple choice",
-    mode: "multipleChoice",
-    name: "",
+    label: 'Multiple choice',
+    value: 'Multiple choice',
+    mode: 'multipleChoice',
+    name: '',
   },
   {
-    label: "Matching Headings",
-    value: "Matching Headings",
-    mode: "headings",
-    name: "Given headings",
+    label: 'Matching Headings',
+    value: 'Matching Headings',
+    mode: 'headings',
+    name: 'Given headings',
   },
   {
-    label: "Matching Information",
-    value: "Matching Information",
-    mode: "information",
-    name: "Given information",
+    label: 'Matching Information',
+    value: 'Matching Information',
+    mode: 'information',
+    name: 'Given information',
   },
   {
-    label: "Matching Features",
-    value: "Matching Features",
-    mode: "information",
-    name: "Given features",
+    label: 'Matching Features',
+    value: 'Matching Features',
+    mode: 'information',
+    name: 'Given features',
   },
   {
-    label: "Matching Sentence Endings",
-    value: "Matching Sentence Endings",
-    mode: "information",
-    name: "Given sentence endings",
+    label: 'Matching Sentence Endings',
+    value: 'Matching Sentence Endings',
+    mode: 'information',
+    name: 'Given sentence endings',
   },
   {
-    label: "Sentence Completion",
-    value: "Sentence Completion",
-    mode: "completion",
-    name: "Given words",
+    label: 'Sentence Completion',
+    value: 'Sentence Completion',
+    mode: 'completion',
+    name: 'Given words',
   },
   {
-    label: "Summary Completion",
-    value: "Summary Completion",
-    mode: "completion",
-    name: "Given words",
+    label: 'Summary Completion',
+    value: 'Summary Completion',
+    mode: 'completion',
+    name: 'Given words',
   },
 ];

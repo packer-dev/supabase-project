@@ -1,19 +1,19 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-"use client";
+'use client';
 
-import { Input } from "@/components/ui/input";
-import FormItem from "./FormItem";
-import { Button } from "@/components/ui/button";
-import { SubmitHandler, useFormContext } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { Combobox } from "@/app/common/Combobox";
-import { useEffect, useState } from "react";
-import { schema, FormFields, questionTypes, defaultValues } from "./schema";
-import MultipleChoiceQuestion from "./matching-section/MultipleChoiceQuestion";
-import ListOfQuestion from "./matching-section/ListOfQuestion";
-import MatchingSection from "./matching-section";
-import Form from "@/app/common/Form";
+import { Input } from '@/components/ui/input';
+import FormItem from './FormItem';
+import { Button } from '@/components/ui/button';
+import { SubmitHandler, useFormContext } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { Combobox } from '@/app/common/Combobox';
+import { useEffect, useState } from 'react';
+import { schema, FormFields, questionTypes, defaultValues } from './schema';
+import MultipleChoiceQuestion from './matching-section/MultipleChoiceQuestion';
+import ListOfQuestion from './matching-section/ListOfQuestion';
+import MatchingSection from './matching-section';
+import Form from '@/app/common/Form';
 
 type CreateQuestionProps = {
   setQuestionType: (questionType: any) => void;
@@ -31,7 +31,7 @@ const CreateQuestion = ({
     clearErrors,
   } = useFormContext<FormFields>();
   useEffect(() => {
-    setValue("questionType", questionType?.value);
+    setValue('questionType', questionType?.value);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [questionType]);
   return (
@@ -42,30 +42,30 @@ const CreateQuestion = ({
           className="w-40"
           label="Question start from"
           required
-          error={errors["questionStartFrom"]?.message}
+          error={errors['questionStartFrom']?.message}
           name="questionStartFrom"
         >
           <Input
             id="questionStartFrom"
             placeholder="2"
-            {...register("questionStartFrom")}
+            {...register('questionStartFrom')}
           />
         </FormItem>
         <FormItem
           className="flex-1"
           label="Question type"
           required
-          error={errors["questionType"]?.message}
+          error={errors['questionType']?.message}
           name="questionType"
         >
           <Combobox
             list={questionTypes}
             setItem={(item) => {
-              setValue("questionType", item?.value);
+              setValue('questionType', item?.value);
               setQuestionType(item);
-              clearErrors("questionType");
+              clearErrors('questionType');
             }}
-            defaultValue={questionType?.value || ""}
+            defaultValue={questionType?.value || ''}
           />
         </FormItem>
       </div>
@@ -73,7 +73,7 @@ const CreateQuestion = ({
         className="mt-6"
         label="Question instruction"
         required
-        error={errors["questionInstruction"]?.message}
+        error={errors['questionInstruction']?.message}
       >
         <div
           className="w-full h-40 rounded-sm border border-gray-200 flex items-center justify-center bg-gray-100 text-gray-500 text-sm font-semibold 
@@ -105,8 +105,8 @@ const CreateQuestionContainer = () => {
     <Form
       onSubmit={handleCreateQuestion}
       className="p-3"
-      yupResolver={yupResolver(schema(questionType?.mode ?? "")) as any}
-      defaultValues={defaultValues(questionType?.mode ?? "")}
+      yupResolver={yupResolver(schema(questionType?.mode ?? '')) as any}
+      defaultValues={defaultValues(questionType?.mode ?? '')}
     >
       <CreateQuestion
         questionType={questionType}
@@ -123,16 +123,16 @@ type RenderByQuestionTypeProps = {
 
 const RenderByQuestionType = ({ type, label }: RenderByQuestionTypeProps) => {
   switch (type) {
-    case "yesNo":
+    case 'yesNo':
       return <ListOfQuestion isYesNo />;
-    case "trueFalse":
+    case 'trueFalse':
       return <ListOfQuestion />;
-    case "multipleChoice":
+    case 'multipleChoice':
       return <MultipleChoiceQuestion />;
-    case "information":
-    case "headings":
+    case 'information':
+    case 'headings':
       return (
-        <MatchingSection label={label} haveList={type === "information"} />
+        <MatchingSection label={label} haveList={type === 'information'} />
       );
     default:
       return <></>;
