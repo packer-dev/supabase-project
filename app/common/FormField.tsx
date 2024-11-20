@@ -1,6 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+'use client';
 'use client';
 
+import { Label } from '@/components/ui/label';
 import { Children, createElement } from 'react';
 import { useFormContext } from 'react-hook-form';
 
@@ -9,6 +10,8 @@ export default function FormField({
   name,
   transform,
   onChange: _onChange,
+  label,
+  required,
 }: any) {
   const methods = useFormContext();
 
@@ -21,20 +24,21 @@ export default function FormField({
       _onChange?.(event);
       return transform
         ? registered.onChange({
-            target: { name, value: transform(event) },
-          })
+          target: { name, value: transform(event) },
+        })
         : registered.onChange(event);
     },
     onBlur: (event: any) =>
       transform
         ? registered.onBlur({
-            target: { name, value: transform(event) },
-          })
+          target: { name, value: transform(event) },
+        })
         : registered.onBlur(event),
   };
 
   return (
-    <div>
+    <>
+      {label && <Label htmlFor={name}>{label}</Label>}
       {Children.map(children, (child) =>
         createElement(child.type, {
           ...child.props,
@@ -46,6 +50,6 @@ export default function FormField({
           {methods.formState.errors?.[name]?.message?.toString()}
         </p>
       )}
-    </div>
+    </>
   );
 }

@@ -4,7 +4,7 @@ import Wrapper from '../Wrapper';
 import Profile from '../containers/profile';
 
 const Page = () => {
-  const isDefault = false;
+  const isDefault = true;
   return <Wrapper>{isDefault ? <Profile /> : <OrderDataTable />}</Wrapper>;
 };
 
