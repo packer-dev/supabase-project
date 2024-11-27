@@ -40,11 +40,7 @@ const FormProfile = ({ loading }: FormProfileProps) => {
   };
   useEffect(() => {
     setValue('full_name', auth?.user?.full_name ?? 'Packer Tra');
-    setValue(
-      'email',
-      //  auth?.user?.email ??
-      'packer.tra@gmail.com'
-    );
+    setValue('email', 'dev@gmail.com');
     console.log('updated');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
