@@ -12,7 +12,7 @@ import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import * as yup from 'yup';
 
-export const FORM_PROFILE_EMIT_EVENT = "FORM_PROFILE_EMIT_EVENT"
+export const FORM_PROFILE_EMIT_EVENT = 'FORM_PROFILE_EMIT_EVENT';
 
 type FormProfileProps = {
   loading: boolean;
@@ -35,15 +35,17 @@ const FormProfile = ({ loading }: FormProfileProps) => {
     user: {
       id: '73',
       full_name: null,
-      email: null
-    }
-  }
+      email: null,
+    },
+  };
   useEffect(() => {
     setValue('full_name', auth?.user?.full_name ?? 'Packer Tra');
-    setValue('email',
+    setValue(
+      'email',
       //  auth?.user?.email ??
-      'packer.tra@gmail.com');
-    console.log('updated')
+      'packer.tra@gmail.com'
+    );
+    console.log('updated');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
@@ -80,9 +82,9 @@ const FormProfileContainer = () => {
     user: {
       id: '73',
       full_name: '',
-      email: 'packer.tra@avepoint.com'
-    }
-  }
+      email: 'dev@gmail.com',
+    },
+  };
   const mutation = useMutation({
     mutationKey: [FORM_PROFILE_EMIT_EVENT],
     mutationFn: async (data: FormProfileValues) => {
@@ -90,7 +92,6 @@ const FormProfileContainer = () => {
         full_name: data.full_name,
         userId: auth?.user?.id ?? '',
       });
-
     },
     onSuccess: () => {
       toast({
@@ -105,10 +106,14 @@ const FormProfileContainer = () => {
     },
   });
   return (
-    <Form onSubmit={mutation.mutate} yupResolver={yupResolver(schema)} defaultValues={{
-      full_name: 'Packer Tra',
-      email: 'packer.tra@gmail.com'
-    }}>
+    <Form
+      onSubmit={mutation.mutate}
+      yupResolver={yupResolver(schema)}
+      defaultValues={{
+        full_name: 'Packer Tra',
+        email: 'packer.tra@gmail.com',
+      }}
+    >
       <FormProfile loading={mutation.isPending} />
     </Form>
   );
